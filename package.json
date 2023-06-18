@@ -1,0 +1,65 @@
+{
+	"name": "template-nextjs-13-app-router",
+	"version": "1.0.1",
+	"private": true,
+	"scripts": {
+		"check-branch-name": "chmod 755 githooks/check_branch_name.sh && bash githooks/check_branch_name.sh",
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"prepare": "husky install",
+		"pre-commit": "npm run check-branch-name && lint-staged",
+		"push-u": "git push origin $(git branch | sed 's/^..//') -u"
+	},
+	"lint-staged": {
+		"*.{ts,tsx}": "eslint --fix",
+		"*.css": "stylelint --fix"
+	},
+	"engines": {
+		"node": "18.x",
+		"npm": "9.x"
+	},
+	"dependencies": {
+		"@types/node": "20.3.0",
+		"@types/react": "18.2.11",
+		"@types/react-dom": "18.2.4",
+		"autoprefixer": "10.4.14",
+		"class-variance-authority": "^0.6.0",
+		"clsx": "^1.2.1",
+		"eslint": "8.42.0",
+		"eslint-config-next": "13.4.5",
+		"i18next": "^22.5.1",
+		"lucide-react": "^0.244.0",
+		"md5-typescript": "^1.0.5",
+		"next": "13.4.5",
+		"next-i18next": "^13.3.0",
+		"next-intl": "^2.15.0-beta.5",
+		"postcss": "8.4.24",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-hook-form": "^7.44.3",
+		"react-i18next": "^12.3.1",
+		"react-intersection-observer": "^9.4.4",
+		"tailwind-merge": "^1.13.2",
+		"tailwind-styled-components": "^2.2.0",
+		"tailwindcss": "3.3.2",
+		"tailwindcss-animate": "^1.0.6",
+		"typescript": "5.1.3"
+	},
+	"devDependencies": {
+		"@browserbite-io/eslint-config": "^2.0.0",
+		"@browserbite-io/prettier-config": "^1.0.0",
+		"@commitlint/cli": "^17.6.5",
+		"@commitlint/config-conventional": "^17.6.5",
+		"@typescript-eslint/parser": "^5.59.11",
+		"eslint-import-resolver-typescript": "^3.5.5",
+		"husky": "^8.0.3",
+		"lint-staged": "^13.2.2",
+		"remark": "^14.0.3",
+		"stylelint": "^15.7.0",
+		"stylelint-config-standard": "^33.0.0",
+		"stylelint-order": "^6.0.3"
+	},
+	"prettier": "@browserbite-io/prettier-config"
+}

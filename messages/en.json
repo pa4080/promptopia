@@ -1,0 +1,9 @@
+{
+	"Site": {
+		"title": "MLT Next.js Starter",
+		"description": "A Next.js starter template for Metalevel.tech projects"
+	},
+	"Index": {
+		"title": "Hello world!"
+	}
+}

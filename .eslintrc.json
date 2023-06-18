@@ -1,0 +1,6 @@
+{
+	"extends": ["next/core-web-vitals", "@browserbite-io/eslint-config"],
+	"rules": {
+		"react/no-unknown-property": ["error", { "ignore": ["jsx"] }]
+	}
+}
