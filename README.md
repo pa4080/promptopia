@@ -2,9 +2,12 @@
 
 This project is based on [**Next.js 13 Full Course 2023 | Build and Deploy a Full Stack App Using the Official React Framework**](https://youtu.be/wm5gMKuwSYk)
 
+Note: **This is a [TypeScript](https://www.typescriptlang.org/) implementation of the tutorial.**
+
 References:
 
 - <https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing>
+- <https://gist.github.com/adrianhajdin/6df61c6cd5ed052dce814a765bff9032>
 - <https://nextjs.org/docs>
 - <https://next-intl-docs.vercel.app/docs/next-13>
 
@@ -42,7 +45,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
 
 ## UseForm
 
@@ -83,9 +85,15 @@ Run the add command without any arguments to view a list of all available compon
 npx shadcn-ui add
 ```
 
-### TailWind CSS
+## TailWind CSS
 
 - <https://tailwindcss.com/docs/align-items>
 - <https://marketplace.visualstudio.com/items?itemName=dimitribarbot.tailwind-styled-components-extractor>
 - <https://github.com/ben-rogerson/twin.macro>
 - (<https://dev.to/dbshanks/an-efficient-react-tailwindcss-styled-components-workflow-458m>)
+
+## Promptopia additional packages
+
+```bash
+npm i bcrypt mongodb mongoose next-auth
+```

@@ -40,6 +40,10 @@ module.exports = {
 			},
 		},
 		extend: {
+			fontFamily: {
+				satoshi: ["Satoshi", "sans-serif"],
+				inter: ["Inter", "sans-serif"],
+			},
 			colors: {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
@@ -74,6 +78,7 @@ module.exports = {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
+				"primary-orange": "#FF5722",
 				...mltColors,
 			},
 			backgroundColor: {
