@@ -9,7 +9,7 @@ message="There is something wrong with your branch name. Branch names in this pr
 if [[ ! $local_branch_name =~ $valid_branch_regex ]]; then
     echo "$message"
     echo "Your branch name: $local_branch_name"
-    #exit 1
+    exit 1
 fi
 
 exit 0
