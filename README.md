@@ -1,5 +1,7 @@
 # Next.js 13 Full Course 2023
 
+***Fullstack CRUD App with Next.js, MongoDB, Tailwind CSS, and TypeScript***
+
 This project is based on [**Next.js 13 Full Course 2023 | Build and Deploy a Full Stack App Using the Official React Framework**](https://youtu.be/wm5gMKuwSYk)
 
 Notes:

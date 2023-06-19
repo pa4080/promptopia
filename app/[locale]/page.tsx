@@ -1,20 +1,22 @@
 import React from "react";
-
 import { useTranslations } from "next-intl";
 
-import TextGradient from "@/app/components/fragments/TextGradient";
+import Feed from "../components/Feed";
 
-// http://localhost:3000
-// http://localhost:3000/bg
-
-export default function Index() {
-	const t = useTranslations("Index");
+const Home: React.FC = () => {
+	const t = useTranslations("Home");
 
 	return (
-		<div className="flex flex-auto w-full h-screen items-center justify-center">
-			<h1 className="text-4xl md:text-6xl text-center font-bold">
-				<TextGradient>{t("title")}</TextGradient>
+		<section className="w-full flex-center flex-col">
+			<h1 className="head_text text-center">
+				{t("headingLn1")}
+				<br /*className="max-md:hidden"*/ />{" "}
+				<span className="orange_gradient">{t("headingLn2")}</span>
 			</h1>
-		</div>
+			<p className="desc text-center">{t("subHeading")}</p>
+			<Feed />
+		</section>
 	);
-}
+};
+
+export default Home;

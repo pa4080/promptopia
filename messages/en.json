@@ -1,9 +1,25 @@
 {
 	"Site": {
-		"title": "MLT Next.js Starter",
-		"description": "A Next.js starter template for Metalevel.tech projects"
+		"title": "Promptopia",
+		"description": "A Next.js App Router Exercise by @Spas. Z. Spasov"
 	},
-	"Index": {
-		"title": "Hello world!"
+	"Nav": {
+		"home": "Home",
+		"about": "About",
+		"login": "Login",
+		"logout": "Logout",
+		"signUp": "Sign Up",
+		"signIn": "Sign In",
+		"signOut": "Sign Out",
+		"search": "Search",
+		"searchPlaceholder": "Search for a tag or username",
+		"createPost": "Create Post",
+		"logoSubText": "romptopia"
+	},
+	"Home": {
+		"headingLn1": "Discover & Share",
+		"headingLn2": "AI-Powered Prompts",
+		"subHeading": "Promptopia is an open-source AI prompting tool for modern word to discover, create and share creative prompts",
+		"inputPlaceholder": "Search for a tag or username"
 	}
 }
