@@ -1,9 +1,22 @@
 {
 	"Site": {
-		"title": "MLT Next.js Стартер",
-		"description": "Шаблон за Next.js за проекти на Metalevel.tech"
+		"title": "Promptopia",
+		"description": "A Next.js App Router Exercise by @Spas. Z. Spasov"
+	},
+	"Header": {
+		"home": "Home",
+		"about": "About",
+		"login": "Login",
+		"logout": "Logout",
+		"signUp": "Sign Up",
+		"signIn": "Sign In",
+		"search": "Search",
+		"searchPlaceholder": "Search for a tag or username"
 	},
 	"Index": {
-		"title": "Здравей свят!"
+		"heading1": "Discover & Share",
+		"heading2": "AI-Powered Prompts",
+		"subHeading": "Promptopia is an open-source AI prompting tool for modern word to discover, create and share creative prompts",
+		"inputPlaceholder": "Search for a tag or username"
 	}
 }
