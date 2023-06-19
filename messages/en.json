@@ -13,8 +13,10 @@
 		"signOut": "Sign Out",
 		"search": "Search",
 		"searchPlaceholder": "Search for a tag or username",
-		"createPost": "Create Post",
-		"logoSubText": "romptopia"
+		"createPrompt": "Create Prompt",
+		"logoSubText": "romptopia",
+		"altUserProfile": "User Profile",
+		"myProfile": "My Profile"
 	},
 	"Home": {
 		"headingLn1": "Discover & Share",
