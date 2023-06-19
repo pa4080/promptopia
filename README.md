@@ -2,7 +2,12 @@
 
 This project is based on [**Next.js 13 Full Course 2023 | Build and Deploy a Full Stack App Using the Official React Framework**](https://youtu.be/wm5gMKuwSYk)
 
-Note: **This is a [TypeScript](https://www.typescriptlang.org/) implementation of the tutorial.**
+Notes:
+
+- **This is a [TypeScript](https://www.typescriptlang.org/) implementation of the tutorial.**
+- Another cool feature that is implemented here is the [Internationalization](https://next-intl-docs.vercel.app/docs/next-13) support. It is enabled via `middleware.ts` as it is described in the official documentation. It is possible to use the client components or the (beta) server side rendering.
+
+  If one prefers they can setup [`next-i18next`](https://github.com/i18next/next-i18next) instead.
 
 References:
 
