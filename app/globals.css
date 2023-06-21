@@ -179,11 +179,15 @@ body {
 }
 
 .black_btn {
-	@apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+	@apply rounded-full border border-mlt-dark-5 bg-mlt-dark-5 py-1 px-5 text-white font-bold transition-all hover:bg-white hover:text-mlt-dark-3 text-center text-sm font-inter flex items-center justify-center;
+
+	transform: scale(0.99);
 }
 
 .outline_btn {
-	@apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+	@apply rounded-full border border-mlt-dark-5 bg-transparent py-1 px-5 text-mlt-dark-3 font-bold transition-all bg-white hover:bg-mlt-dark-5 hover:text-white text-center text-sm font-inter flex items-center justify-center;
+
+	transform: scale(0.99);
 }
 
 .head_text {
@@ -238,9 +242,25 @@ body {
 
 /* Nav Component */
 .logo_text {
-	@apply max-sm:hidden font-Unicephalon font-semibold text-lg text-secondary-orange;
+	@apply max-sm:hidden font-Unicephalon font-semibold text-lg;
 
 	letter-spacing: 1.8px;
+}
+
+.logo_text_str0 {
+	@apply text-secondary-orange;
+}
+
+.logo_text_str1 {
+	color: #ff8500;
+}
+
+.logo_text_str2 {
+	color: #ef720e;
+}
+
+.logo_text_str3 {
+	color: #ea620c;
 }
 
 .dropdown {

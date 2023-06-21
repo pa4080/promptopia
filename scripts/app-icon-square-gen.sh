@@ -30,4 +30,4 @@ convert -background transparent "$FAVICON_SOURCE_FILE" -clone 0 -resize "64x64" 
 cp "$FAVICON_SOURCE_FILE" "${FAVICON_SVG_DEST_DIRECTORY}/favicon.svg"
 
 # Inspect the result
-#identify ${LOGO_DEST_DIRECTORY}/*
+#identify ${LOGO_DEST_DIRECTORY}

@@ -7,6 +7,8 @@ import { Inter } from "next/font/google";
 
 import Nav from "@/app/components/Nav";
 
+import Provider from "../components/Provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata() {
@@ -44,16 +46,18 @@ const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) =
 	return (
 		<html lang={locale}>
 			<body className={inter.className}>
-				<div className="main">
-					<div className="gradient" />
-				</div>
-				<main className="app">
-					<NextIntlClientProvider locale={locale} messages={messages}>
-						<Nav />
+				<Provider>
+					<div className="main">
+						<div className="gradient" />
+					</div>
+					<main className="app">
+						<NextIntlClientProvider locale={locale} messages={messages}>
+							<Nav />
 
-						{children}
-					</NextIntlClientProvider>
-				</main>
+							{children}
+						</NextIntlClientProvider>
+					</main>
+				</Provider>
 			</body>
 		</html>
 	);
