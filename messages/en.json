@@ -14,7 +14,13 @@
 		"search": "Search",
 		"searchPlaceholder": "Search for a tag or username",
 		"createPrompt": "Create Prompt",
-		"logoSubText": "romptopia",
+		"logoSubText": {
+			"str0": "romptopia",
+			"str1": "m",
+			"str2": "l",
+			"str3": "t"
+		},
+
 		"altUserProfile": "User Profile",
 		"myProfile": "My Profile"
 	},

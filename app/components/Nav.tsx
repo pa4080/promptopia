@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,7 +22,9 @@ type ProvidersType = Record<LiteralUnion<BuiltInProviderType, string>, ClientSaf
 const Nav: React.FC = () => {
 	const t = useTranslations("Nav");
 
-	const isUserLoggedIn = true;
+	const { data: session } = useSession();
+
+	// console.log(session);
 
 	const [providers, setProviders] = useState<ProvidersType>(null);
 	const [toggleDropDown, setToggleDropDown] = useState(false);
@@ -34,10 +36,6 @@ const Nav: React.FC = () => {
 			setProviders(response);
 		})();
 	}, []);
-
-	const signOut = () => {
-		return null;
-	};
 
 	const openMobileNavBar = () => {
 		setToggleDropDown((prevState) => !prevState);
@@ -54,26 +52,31 @@ const Nav: React.FC = () => {
 	*/
 
 	return (
-		<nav className="flex-between w-full mb-16 pt-4 sm:pt-8">
+		<nav className="flex-between w-full mb-16 pt-4 sm:pt-8 h-16">
 			<Link className="flex gap-1 flex-center" href="/">
 				<Image
 					alt="Promptopia MLT logo"
-					className="object-contain"
-					height={32}
+					className="object-contain w-10 h-10"
+					height={40}
 					src={logo}
-					width={32}
+					width={40}
 				/>
-				<p className="logo_text">{t("logoSubText")}</p>
+				<p className="logo_text">
+					<span className="logo_text_str0">{t("logoSubText.str0")}</span>
+					<span className="logo_text_str1">.{t("logoSubText.str1")}</span>
+					<span className="logo_text_str2">{t("logoSubText.str2")}</span>
+					<span className="logo_text_str3">{t("logoSubText.str3")}</span>
+				</p>
 			</Link>
 
 			<div className="sm:flex hidden">
-				{isUserLoggedIn ? (
-					<div className="flex gap-3 md:gap-5">
+				{session?.user ? (
+					<div className="flex-center gap-3 md:gap-3">
 						<Link className="black_btn" href="/create-prompt">
 							{t("createPrompt")}
 						</Link>
 
-						<button className="outline_btn" type="button" onClick={signOut}>
+						<button className="outline_btn" type="button" onClick={() => signOut()}>
 							{t("signOut")}
 						</button>
 
@@ -82,7 +85,7 @@ const Nav: React.FC = () => {
 								alt={t("altUserProfile")}
 								className="rounded-full"
 								height={37}
-								src={logo}
+								src={session?.user?.image ?? logo}
 								width={37}
 							/>
 						</Link>
@@ -91,7 +94,12 @@ const Nav: React.FC = () => {
 					<>
 						{providers &&
 							Object.values(providers).map((provider) => (
-								<button key={provider.name} type="button" onClick={() => signIn(provider.id)}>
+								<button
+									key={provider.name}
+									className="black_btn"
+									type="button"
+									onClick={() => signIn(provider.id)}
+								>
 									{t("signIn")}
 								</button>
 							))}
@@ -100,7 +108,7 @@ const Nav: React.FC = () => {
 			</div>
 
 			<div className="sm:hidden flex relative">
-				{isUserLoggedIn ? (
+				{session?.user ? (
 					<div className="flex">
 						<div
 							className={`flex-center w-12 h-12 cursor-pointer rounded-full z-10 ${
@@ -112,7 +120,7 @@ const Nav: React.FC = () => {
 								alt={t("altUserProfile")}
 								className="rounded-full"
 								height={37}
-								src={logo}
+								src={session?.user?.image ?? logo}
 								width={37}
 							/>
 						</div>
@@ -150,7 +158,12 @@ const Nav: React.FC = () => {
 					<>
 						{providers &&
 							Object.values(providers).map((provider) => (
-								<button key={provider.name} type="button" onClick={() => signIn(provider.id)}>
+								<button
+									key={provider.name}
+									className="black_btn"
+									type="button"
+									onClick={() => signIn(provider.id)}
+								>
 									{t("signIn")}
 								</button>
 							))}

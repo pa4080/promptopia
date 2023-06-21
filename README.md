@@ -11,6 +11,8 @@ Notes:
 
   If one prefers they can setup [`next-i18next`](https://github.com/i18next/next-i18next) instead.
 
+  *Currently the we are supporting only English language, but the project is ready to be extended to support more languages.*
+
 References:
 
 - <https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing>
@@ -104,3 +106,32 @@ npx shadcn-ui add
 ```bash
 npm i bcrypt mongodb mongoose next-auth
 ```
+
+## NextAuth (GoogleProvider) and Google OAuth
+
+- <https://next-auth.js.org/getting-started/example>
+- <https://next-auth.js.org/configuration/initialization#route-handlers-app>
+- <https://next-auth.js.org/getting-started/typescript>
+- <https://next-auth.js.org/providers/google>
+- <https://youtu.be/wm5gMKuwSYk?t=4800>
+- <https://console.cloud.google.com/apis/credentials/>
+- <https://next-auth.js.org/configuration/options#options> (`NEXTAUTH_SECRET`)
+
+...Access blocked: This app’s request is invalid:
+
+- <https://youtu.be/wm5gMKuwSYk?t=6217>
+- <https://next-auth.js.org/getting-started/rest-api#getpost-apiauthcallbackprovider>
+  `/api/auth/callback/:provider` > `/api/auth/callback/google` > In the google's OAuth2.0 configuration
+- <https://console.cloud.google.com/apis/credentials/oauthclient/>
+
+## MongoDB
+
+See my dedicated to **Next.js and MongoDB integration** exercise repository:
+
+<https://github.com/metalevel-tech/exc-nextjs-2023-with-mongodb-example>
+
+More references:
+
+- [How to Integrate Vercel & MongoDB Step-by-Step: YouTube](https://youtu.be/JIlYroSsInU)
+- <https://www.mongodb.com/atlas>
+- <https://youtu.be/wm5gMKuwSYk?t=5285>

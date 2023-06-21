@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-// const { i18n } = require("./next-i18next.config");
-
 const withNextIntl = require("next-intl/plugin")(
 	// This is the default (also the `src` folder is supported out of the box)
 	"./i18n.ts"
 );
+
+/**
+ * Tutorial Ref.:
+ * > https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing/blob/main/next.config.js
+ */
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,9 +17,9 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "media.rawg.io",
+				hostname: "lh3.googleusercontent.com",
 				port: "",
-				pathname: "/media/**",
+				pathname: "/**",
 			},
 		],
 	},
