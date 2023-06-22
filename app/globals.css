@@ -190,6 +190,22 @@ body {
 	transform: scale(0.99);
 }
 
+.login_provider_btn {
+	@apply border border-mlt-gray-3 p-2 rounded-full bg-white hover:bg-secondary-orange hover:border-secondary-orange transition-all duration-300 opacity-80 drop-shadow-md;
+
+	transform: scale(1.02);
+}
+
+.login_provider_btn .icon {
+	@apply transition-all duration-300;
+
+	filter: invert(0) saturate(0.8);
+}
+
+.login_provider_btn:hover .icon {
+	filter: invert(1) saturate(0) grayscale(1) brightness(10);
+}
+
 .head_text {
 	@apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
 }
