@@ -58,11 +58,13 @@ const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) =
 					<div className="main">
 						<div className="gradient" />
 					</div>
-					<main className="app">
+					<main className="app pb-24">
 						<NextIntlClientProvider locale={locale} messages={messages}>
-							<Nav />
+							<div className="app_inner">
+								<Nav />
 
-							{children}
+								{children}
+							</div>
 						</NextIntlClientProvider>
 					</main>
 				</Provider>

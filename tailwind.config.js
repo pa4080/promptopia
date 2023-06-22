@@ -82,6 +82,8 @@ module.exports = {
 				"primary-orange": "#FF5722",
 				"primary-orange-dark": "#d4491d",
 				"secondary-orange": "#ef720e",
+				"scrollbar-orange": "#ef720e7a",
+				"scrollbar-orange-hover": "#ef720eaa",
 				...mltColors,
 			},
 			backgroundColor: {
