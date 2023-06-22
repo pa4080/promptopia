@@ -191,7 +191,7 @@ body {
 }
 
 .login_provider_btn {
-	@apply border border-mlt-gray-3 p-2 rounded-full bg-white hover:bg-secondary-orange hover:border-secondary-orange transition-all duration-300 opacity-80 drop-shadow-md;
+	@apply border border-mlt-gray-4 rounded-full bg-white hover:bg-secondary-orange hover:border-secondary-orange transition-all duration-300 opacity-90 drop-shadow-md w-10 h-10 flex-center;
 
 	transform: scale(1.02);
 }
@@ -199,7 +199,7 @@ body {
 .login_provider_btn .icon {
 	@apply transition-all duration-300;
 
-	filter: invert(0) saturate(0.8);
+	filter: invert(0) saturate(0.85);
 }
 
 .login_provider_btn:hover .icon {

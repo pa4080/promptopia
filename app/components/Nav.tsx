@@ -87,6 +87,23 @@ const Nav: React.FC = () => {
 		</>
 	);
 
+	const avatar = (
+		<div
+			className={`flex-center w-12 h-12 cursor-pointer rounded-full z-10  ${
+				toggleDropDown ? "bg-white drop-shadow-sm" : "bg-white drop-shadow-md "
+			}`}
+			onClick={openMobileNavBar}
+		>
+			<Image
+				alt={t("altUserProfile")}
+				className="rounded-full"
+				height={37}
+				src={session?.user?.image ?? logo}
+				width={37}
+			/>
+		</div>
+	);
+
 	return (
 		<nav className="flex-between w-full mb-16 pt-4 sm:pt-8 h-16">
 			<Link className="flex gap-1 flex-center" href="/">
@@ -117,15 +134,7 @@ const Nav: React.FC = () => {
 								{t("signOut")}
 							</button>
 
-							<Link href="/profile">
-								<Image
-									alt={t("altUserProfile")}
-									className="rounded-full"
-									height={37}
-									src={session?.user?.image ?? logo}
-									width={37}
-								/>
-							</Link>
+							<Link href="/profile">{avatar}</Link>
 						</>
 					) : (
 						listLoginProviders
@@ -136,20 +145,7 @@ const Nav: React.FC = () => {
 			<div className="sm:hidden flex relative">
 				{session?.user ? (
 					<div className="flex">
-						<div
-							className={`flex-center w-12 h-12 cursor-pointer rounded-full z-10 ${
-								toggleDropDown ? "bg-white drop-shadow-sm" : "bg-transparent"
-							}`}
-							onClick={openMobileNavBar}
-						>
-							<Image
-								alt={t("altUserProfile")}
-								className="rounded-full"
-								height={37}
-								src={session?.user?.image ?? logo}
-								width={37}
-							/>
-						</div>
+						{avatar}
 						{toggleDropDown && (
 							<div className="dropdown">
 								<Link
