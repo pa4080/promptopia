@@ -116,6 +116,7 @@ npm i bcrypt mongodb mongoose next-auth
 - <https://youtu.be/wm5gMKuwSYk?t=4800>
 - <https://console.cloud.google.com/apis/credentials/>
 - <https://next-auth.js.org/configuration/options#options> (`NEXTAUTH_SECRET`)
+- **<https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/>**
 
 ...Access blocked: This app’s request is invalid:
 

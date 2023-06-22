@@ -2,8 +2,8 @@
  * This file comes from:
  * > [Next.js 13 Full Course 2023 Tutorial](https://youtu.be/wm5gMKuwSYk?t=5190)
  *
- * See also ./mongodb.ts for more details, where is used the approach provided by Vercel:
- *  npx create-next-app@latest --example with-mongodb
+ * See also ./mongodb-nextjs-example.ts for more details, where is used
+ * the approach provided by Next.js/Vercel... and deploying .env file.
  *
  * In the tutorial is used some deprecated options, read more here:
  * > https://mongoosejs.com/docs/5.x/docs/deprecations.html
@@ -25,8 +25,7 @@ export const connectMongoDb = async () => {
 
 	if (isConnected) {
 		// eslint-disable-next-line no-console
-		console.log("MongoDB is already connected.");
-
+		// console.log("MongoDB is already connected.");
 		return;
 	}
 
@@ -38,7 +37,7 @@ export const connectMongoDb = async () => {
 		isConnected = true;
 
 		// eslint-disable-next-line no-console
-		console.log("MongoDB connected!");
+		// console.log("MongoDB connected!");
 	} catch (error) {
 		console.error("MongoDB connect Error:", error);
 	}
