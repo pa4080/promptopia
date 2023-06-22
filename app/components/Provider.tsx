@@ -7,7 +7,7 @@ import { Session } from "next-auth";
 
 interface Props {
 	children: React.ReactNode;
-	session: Session | null;
+	session?: Session | null;
 }
 
 /**
@@ -20,8 +20,8 @@ interface Props {
  * you can avoid checking the session twice on pages that
  * support both server and client side rendering.
  */
-const Provider: React.FC<Props> = ({ children, session }) => {
-	return <SessionProvider session={session}>{children}</SessionProvider>;
+const Provider: React.FC<Props> = ({ children }) => {
+	return <SessionProvider>{children}</SessionProvider>;
 };
 
 export default Provider;
