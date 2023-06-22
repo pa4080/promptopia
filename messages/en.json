@@ -14,7 +14,7 @@
 		"signOut": "Sign Out",
 		"search": "Search",
 		"searchPlaceholder": "Search for a tag or username",
-		"createPrompt": "Create Prompt",
+		"createPrompt": "Add Prompt",
 		"logoSubText": {
 			"str0": "romptopia",
 			"str1": "m",
@@ -31,5 +31,24 @@
 		"headingLn2": "AI-Powered Prompts",
 		"subHeading": "Promptopia is an open-source AI prompting tool for modern word to discover, create and share creative prompts",
 		"inputPlaceholder": "Search for a tag or username"
+	},
+	"Form": {
+		"postType": "{ type } Post",
+		"postTypeDesc": "{ type } and share amazing prompts with the world, and let your imagination run wild with any AI-powered platform.",
+		"yourPrompt": "Your Prompt",
+		"yourPromptPlaceholder": "Write your prompt here",
+		"tags": "#Tags",
+		"tagPlaceholder": "Comma, separated, tags",
+		"link": "Link to AI Platform",
+		"linkPlaceholder": "https://chat.openai.com/share/...",
+		"cancel": "Cancel",
+		"submit": "Submit { type }",
+		"processing": "{ type } ...",
+		"Types": {
+			"create": "Create",
+			"update": "Update",
+			"delete": "Delete",
+			"edit": "Edit"
+		}
 	}
 }

@@ -7,7 +7,7 @@ const Home: React.FC = () => {
 	const t = useTranslations("Home");
 
 	return (
-		<section className="w-full flex-center flex-col">
+		<section className="w-full flex_center flex-col">
 			<h1 className="head_text text-center">
 				{t("headingLn1")}
 				<br /*className="max-md:hidden"*/ />{" "}

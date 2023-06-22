@@ -210,20 +210,48 @@ body {
 	}
 }
 
-.black_btn {
+/* .black_btn {
 	@apply rounded-full border border-mlt-dark-5 bg-mlt-dark-5 py-1 px-4 text-white font-bold transition-all hover:bg-white hover:text-mlt-dark-3 text-center text-sm font-inter flex items-center justify-center;
 
 	transform: scale(0.99);
-}
+} */
 
-.outline_btn {
+/* ._btn gray_light {
 	@apply rounded-full border border-mlt-dark-5 bg-transparent py-1 px-4 text-mlt-dark-3 font-bold transition-all bg-white hover:bg-mlt-dark-5 hover:text-white text-center text-sm font-inter flex items-center justify-center;
 
 	transform: scale(0.99);
+} */
+
+._btn {
+	@apply rounded-full py-1 px-4 font-bold transition-all text-center text-sm font-inter flex items-center justify-center;
+
+	/* transform: scale(0.99); */
+}
+
+._btn.orange_invert {
+	@apply bg-secondary-orange text-white border border-transparent
+	hover:bg-white hover:text-primary-orange hover:border-secondary-orange
+	hover:drop-shadow-lg;
+}
+
+._btn.gray_invert {
+	@apply bg-mlt-gray-6 text-mlt-dark-2 hover:bg-mlt-dark-3 hover:text-white;
+}
+
+._btn.gray_light {
+	@apply bg-mlt-gray-6 text-mlt-dark-2 hover:bg-mlt-gray-5;
+}
+
+._btn.gray_heavy {
+	@apply bg-mlt-gray-4 text-mlt-dark-2 hover:bg-mlt-gray-3;
+}
+
+._btn.gray_heavy_invert {
+	@apply bg-mlt-gray-4 text-mlt-dark-2 hover:bg-mlt-dark-3 hover:text-white;
 }
 
 .login_provider_btn {
-	@apply border border-mlt-gray-4 rounded-full bg-white hover:bg-secondary-orange hover:border-secondary-orange transition-all duration-300 opacity-90 drop-shadow-md w-10 h-10 flex-center;
+	@apply border border-mlt-gray-4 rounded-full bg-white hover:bg-secondary-orange hover:border-secondary-orange transition-all duration-300 opacity-90 drop-shadow-md w-10 h-10 flex_center;
 
 	transform: scale(1.02);
 }
@@ -282,6 +310,10 @@ body {
 }
 
 /* Form Component */
+.form_input_title {
+	@apply font-Unicephalon font-semibold text-base text-mlt-dark-6;
+}
+
 .form_input {
 	@apply w-full flex rounded-lg mt-2 p-3 text-base text-mlt-dark-0 opacity-70 outline-0 active:drop-shadow-lg focus:drop-shadow-lg transition-all duration-300 active:opacity-95 focus:opacity-95 active:text-mlt-dark-4 focus:text-mlt-dark-4;
 }
@@ -326,18 +358,18 @@ body {
 	@apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
 }
 
-.flex-center {
+.flex_center {
 	@apply flex justify-center items-center;
 }
 
-.flex-start {
+.flex_start {
 	@apply flex justify-start items-start;
 }
 
-.flex-end {
+.flex_end {
 	@apply flex justify-end items-center;
 }
 
-.flex-between {
+.flex_between {
 	@apply flex justify-between items-center;
 }
