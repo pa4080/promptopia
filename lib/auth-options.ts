@@ -2,6 +2,7 @@
  * https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/
  * https://next-auth.js.org/configuration/nextjs#getServerSession
  * https://next-auth.js.org/getting-started/client#usesession
+ * https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
  *
  * There are three locations where we can obtain the session data.
  * 1) The first is server-side in a React server component
@@ -17,6 +18,7 @@
  */
 
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 // import CredentialsProvider from "next-auth/providers/credentials";
 
 import { connectMongoDb } from "@/lib/mongodb-mongoose-connect";
@@ -25,8 +27,8 @@ import User from "@/models/user";
 
 import type { NextAuthOptions } from "next-auth";
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
-// console.log({ GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET });
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } =
+	process.env;
 
 export const authOptions: NextAuthOptions = {
 	session: {
@@ -36,6 +38,11 @@ export const authOptions: NextAuthOptions = {
 		GoogleProvider({
 			clientId: String(GOOGLE_CLIENT_ID),
 			clientSecret: String(GOOGLE_CLIENT_SECRET),
+		}),
+		GithubProvider({
+			clientId: String(GITHUB_CLIENT_ID),
+			clientSecret: String(GITHUB_CLIENT_SECRET),
+			authorization: { params: { scope: "user:email login name avatar_url" } },
 		}),
 	],
 	callbacks: {
@@ -64,9 +71,12 @@ export const authOptions: NextAuthOptions = {
 				if (!userExist) {
 					await User.create({
 						email: profile?.email,
-						username: profile?.name?.replace(/\s/g, "").toLocaleLowerCase(),
-						name: profile?.name,
-						image: profile?.picture,
+						username: (profile?.name ?? profile?.username ?? profile?.login)
+							?.replace(/(\s|\.|-)/g, ".")
+							.replace(/\.+/g, ".")
+							.toLocaleLowerCase(),
+						name: profile?.name ?? profile?.login ?? profile?.username,
+						image: profile?.picture ?? profile?.image ?? profile?.avatar_url,
 					});
 				}
 

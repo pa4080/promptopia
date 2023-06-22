@@ -14,5 +14,8 @@ declare module "next-auth" {
 
 	interface Profile extends DefaultProfile {
 		picture: string;
+		avatar_url: string;
+		login: string;
+		username: string;
 	}
 }
