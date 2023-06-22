@@ -5,7 +5,11 @@ import { getTranslations } from "next-intl/server";
 
 import { Inter } from "next/font/google";
 
+import { getServerSession } from "next-auth";
+
 import Nav from "@/app/components/Nav";
+
+import { authOptions } from "@/lib/auth-options";
 
 import Provider from "../components/Provider";
 
@@ -30,6 +34,9 @@ interface LocaleLayoutProps {
 const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) => {
 	const locale = useLocale();
 
+	const session = await getServerSession(authOptions);
+	// console.log(session);
+
 	// Show a 404 error if the user requests an unknown locale
 	if (params.locale !== locale) {
 		notFound();
@@ -46,7 +53,7 @@ const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) =
 	return (
 		<html lang={locale}>
 			<body className={inter.className}>
-				<Provider>
+				<Provider session={session}>
 					<div className="main">
 						<div className="gradient" />
 					</div>
