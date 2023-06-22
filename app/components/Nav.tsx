@@ -17,6 +17,10 @@ import { BuiltInProviderType } from "next-auth/providers";
 
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 
+import Icon from "./Icon";
+
+const providersIcons = ["google", "github"];
+
 type ProvidersType = Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
 
 const Nav: React.FC = () => {
@@ -51,11 +55,43 @@ const Nav: React.FC = () => {
 	}, [toggleDropDown]);
 	*/
 
+	const listLoginProviders: JSX.Element = (
+		<>
+			{providers &&
+				Object.values(providers).map((provider) => {
+					if (providersIcons.includes(provider.id)) {
+						return (
+							<button
+								key={provider.name}
+								aria-label={t("signInWith", { provider: provider.name })}
+								className="login_provider_btn"
+								type="button"
+								onClick={() => signIn(provider.id)}
+							>
+								<Icon icon={{ name: provider.id, size: 22 }} />
+							</button>
+						);
+					}
+
+					return (
+						<button
+							key={provider.name}
+							className="black_btn"
+							type="button"
+							onClick={() => signIn(provider.id)}
+						>
+							{t("signIn")}
+						</button>
+					);
+				})}
+		</>
+	);
+
 	return (
 		<nav className="flex-between w-full mb-16 pt-4 sm:pt-8 h-16">
 			<Link className="flex gap-1 flex-center" href="/">
 				<Image
-					alt="Promptopia MLT logo"
+					alt={t("altLogo")}
 					className="object-contain w-10 h-10"
 					height={40}
 					src={logo}
@@ -70,41 +106,31 @@ const Nav: React.FC = () => {
 			</Link>
 
 			<div className="sm:flex hidden">
-				{session?.user ? (
-					<div className="flex-center gap-3 md:gap-3">
-						<Link className="black_btn" href="/create-prompt">
-							{t("createPrompt")}
-						</Link>
+				<div className="flex-center gap-3 md:gap-3">
+					{session?.user ? (
+						<>
+							<Link className="black_btn" href="/create-prompt">
+								{t("createPrompt")}
+							</Link>
 
-						<button className="outline_btn" type="button" onClick={() => signOut()}>
-							{t("signOut")}
-						</button>
+							<button className="outline_btn" type="button" onClick={() => signOut()}>
+								{t("signOut")}
+							</button>
 
-						<Link href="/profile">
-							<Image
-								alt={t("altUserProfile")}
-								className="rounded-full"
-								height={37}
-								src={session?.user?.image ?? logo}
-								width={37}
-							/>
-						</Link>
-					</div>
-				) : (
-					<>
-						{providers &&
-							Object.values(providers).map((provider) => (
-								<button
-									key={provider.name}
-									className="black_btn"
-									type="button"
-									onClick={() => signIn(provider.id)}
-								>
-									{t("signIn")}
-								</button>
-							))}
-					</>
-				)}
+							<Link href="/profile">
+								<Image
+									alt={t("altUserProfile")}
+									className="rounded-full"
+									height={37}
+									src={session?.user?.image ?? logo}
+									width={37}
+								/>
+							</Link>
+						</>
+					) : (
+						listLoginProviders
+					)}
+				</div>
 			</div>
 
 			<div className="sm:hidden flex relative">
@@ -155,19 +181,7 @@ const Nav: React.FC = () => {
 						)}
 					</div>
 				) : (
-					<>
-						{providers &&
-							Object.values(providers).map((provider) => (
-								<button
-									key={provider.name}
-									className="black_btn"
-									type="button"
-									onClick={() => signIn(provider.id)}
-								>
-									{t("signIn")}
-								</button>
-							))}
-					</>
+					<div className="flex-center gap-3 md:gap-3">{listLoginProviders}</div>
 				)}
 			</div>
 		</nav>

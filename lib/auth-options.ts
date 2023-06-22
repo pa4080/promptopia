@@ -3,6 +3,7 @@
  * https://next-auth.js.org/configuration/nextjs#getServerSession
  * https://next-auth.js.org/getting-started/client#usesession
  * https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
+ * https://developers.google.com/identity/protocols/oauth2
  *
  * There are three locations where we can obtain the session data.
  * 1) The first is server-side in a React server component
@@ -54,17 +55,25 @@ export const authOptions: NextAuthOptions = {
 
 			return session; // The return type will match the one returned in `useSession()`
 		},
-		async signIn({ profile }) {
+		async signIn({ account, profile }) {
+			// https://next-auth.js.org/providers/google
+			if (account?.provider === "google" && !profile?.email_verified) {
+				return false;
+			}
+
 			try {
 				await connectMongoDb();
 
 				// Check if the user already exists in the database
 				const userExist = await User.findOne({ email: profile?.email });
 
-				// NOTE:
-				// .picture does not exist on {session}
-				// .image does not exist on {profile}
-				// at all they are the same thing ..?!? see also <Nav />
+				/**
+				 * NOTE:
+				 * .picture does not exist on {session}
+				 * .image does not exist on {profile}
+				 * at all they are the same thing...
+				 * See also <Nav /> and @/types/next-auth.d.ts
+				 */
 				// console.log(profile);
 
 				// If not create a new user in the database

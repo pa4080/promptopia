@@ -10,6 +10,7 @@
 		"logout": "Logout",
 		"signUp": "Sign Up",
 		"signIn": "Sign In",
+		"signInWith": "Sign In {provider}",
 		"signOut": "Sign Out",
 		"search": "Search",
 		"searchPlaceholder": "Search for a tag or username",
@@ -20,6 +21,7 @@
 			"str2": "l",
 			"str3": "t"
 		},
+		"altLogo": "Promptopia.MLT Logo",
 
 		"altUserProfile": "User Profile",
 		"myProfile": "My Profile"
