@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://metalevel.tech/sitemap.xml
+Sitemap: https://promptopia.metalevel.tech/sitemap.xml

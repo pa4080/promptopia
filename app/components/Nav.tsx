@@ -76,7 +76,7 @@ const Nav: React.FC = () => {
 					return (
 						<button
 							key={provider.name}
-							className="black_btn"
+							className="_btn gray_invert "
 							type="button"
 							onClick={() => signIn(provider.id)}
 						>
@@ -87,9 +87,26 @@ const Nav: React.FC = () => {
 		</>
 	);
 
+	const avatar = (
+		<div
+			className={`flex_center w-12 h-12 cursor-pointer rounded-full z-10  ${
+				toggleDropDown ? "bg-white drop-shadow-sm" : "bg-white drop-shadow-md "
+			}`}
+			onClick={openMobileNavBar}
+		>
+			<Image
+				alt={t("altUserProfile")}
+				className="rounded-full"
+				height={37}
+				src={session?.user?.image ?? logo}
+				width={37}
+			/>
+		</div>
+	);
+
 	return (
-		<nav className="flex-between w-full mb-16 pt-4 sm:pt-8 h-16">
-			<Link className="flex gap-1 flex-center" href="/">
+		<nav className="flex_between w-full mb-16 pt-4 sm:pt-8 h-16">
+			<Link className="flex gap-1 flex_center" href="/">
 				<Image
 					alt={t("altLogo")}
 					className="object-contain w-10 h-10"
@@ -106,26 +123,18 @@ const Nav: React.FC = () => {
 			</Link>
 
 			<div className="sm:flex hidden">
-				<div className="flex-center gap-3 md:gap-3">
+				<div className="flex_center gap-3 md:gap-3">
 					{session?.user ? (
 						<>
-							<Link className="black_btn" href="/create-prompt">
+							<Link className="_btn gray_invert " href="/create-prompt">
 								{t("createPrompt")}
 							</Link>
 
-							<button className="outline_btn" type="button" onClick={() => signOut()}>
+							<button className="_btn gray_light" type="button" onClick={() => signOut()}>
 								{t("signOut")}
 							</button>
 
-							<Link href="/profile">
-								<Image
-									alt={t("altUserProfile")}
-									className="rounded-full"
-									height={37}
-									src={session?.user?.image ?? logo}
-									width={37}
-								/>
-							</Link>
+							<Link href="/profile">{avatar}</Link>
 						</>
 					) : (
 						listLoginProviders
@@ -136,20 +145,7 @@ const Nav: React.FC = () => {
 			<div className="sm:hidden flex relative">
 				{session?.user ? (
 					<div className="flex">
-						<div
-							className={`flex-center w-12 h-12 cursor-pointer rounded-full z-10 ${
-								toggleDropDown ? "bg-white drop-shadow-sm" : "bg-transparent"
-							}`}
-							onClick={openMobileNavBar}
-						>
-							<Image
-								alt={t("altUserProfile")}
-								className="rounded-full"
-								height={37}
-								src={session?.user?.image ?? logo}
-								width={37}
-							/>
-						</div>
+						{avatar}
 						{toggleDropDown && (
 							<div className="dropdown">
 								<Link
@@ -168,7 +164,7 @@ const Nav: React.FC = () => {
 								</Link>
 
 								<button
-									className="mt-2 w-full black_btn"
+									className="mt-2 w-full _btn gray_heavy_invert "
 									type="button"
 									onClick={() => {
 										setToggleDropDown(false);
@@ -181,7 +177,7 @@ const Nav: React.FC = () => {
 						)}
 					</div>
 				) : (
-					<div className="flex-center gap-3 md:gap-3">{listLoginProviders}</div>
+					<div className="flex_center gap-3 md:gap-3">{listLoginProviders}</div>
 				)}
 			</div>
 		</nav>
