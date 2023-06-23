@@ -1,7 +1,7 @@
 // Ref.: https://youtu.be/wm5gMKuwSYk?t=7575
 import { Schema, model, models } from "mongoose";
 
-const PromptSchema = new Schema({
+const PostSchema = new Schema({
 	creator: {
 		// This is the database ObjectId
 		// of the user who created the prompt,
@@ -17,6 +17,10 @@ const PromptSchema = new Schema({
 		type: Array,
 		required: [true, "At least one Tag is required!"],
 	},
+	model: {
+		type: String,
+		required: [true, "Model is required!"],
+	},
 	link: {
 		type: String,
 		required: false,
@@ -24,5 +28,5 @@ const PromptSchema = new Schema({
 	},
 });
 
-const Prompt = models.Prompt || model("Prompt", PromptSchema);
-export default Prompt;
+const Post = models.Post || model("Post", PostSchema);
+export default Post;

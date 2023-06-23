@@ -1,9 +1,9 @@
-import { Post } from "@/interfaces/Post";
+import { PostType } from "@/interfaces/Post";
 
 export interface FormProps {
 	handleSubmit: (e: React.SyntheticEvent) => void;
-	post: Post;
-	setPost: React.Dispatch<React.SetStateAction<Post>>;
+	post: PostType;
+	setPost: React.Dispatch<React.SetStateAction<PostType>>;
 	submitting: boolean;
 	type: FormTypes;
 }

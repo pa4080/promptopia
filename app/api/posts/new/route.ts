@@ -2,29 +2,30 @@
 // https://nextjs.org/docs/app/api-reference/functions/next-response
 import { NextResponse, NextRequest } from "next/server";
 
-import Prompt from "@/models/prompt";
+import Post from "@/models/post";
 
 import { connectMongoDb } from "@/lib/mongodb-mongoose-connect";
 
 export async function POST(req: NextRequest) {
-	const { userId, prompt, tags, link } = await req.json();
+	const { userId, prompt, tags, model, link } = await req.json();
 
 	try {
 		await connectMongoDb();
-		const newPrompt = new Prompt({
+		const new_Post = new Post({
 			creator: userId,
 			prompt,
 			tags,
+			model,
 			link,
 		});
 
-		await newPrompt.save();
+		await new_Post.save();
 
 		return NextResponse.json(
 			{
 				body: {
 					message: "Prompt created successfully!",
-					prompt: newPrompt,
+					prompt: new_Post,
 				},
 			},
 			{ status: 201 }

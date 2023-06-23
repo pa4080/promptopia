@@ -38,6 +38,8 @@
 		--ring: 215 20.2% 65.1%;
 		--radius: 0.5rem;
 		--scrollbar-width: 16px;
+
+		accent-color: theme("colors.scrollbar-purple");
 	}
 
 	.dark {
@@ -87,7 +89,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-tap-highlight-color: transparent;
 	-webkit-touch-callout: none;
-	scrollbar-color: theme("colors.scrollbar-orange-hover") transparent;
+	scrollbar-color: theme("colors.scrollbar-purple-hover") transparent;
 	scrollbar-width: auto;
 }
 
@@ -103,12 +105,12 @@ body {
 *::-webkit-scrollbar-thumb {
 	border: calc(var(--scrollbar-width) / 2.8) solid transparent;
 	border-radius: var(--scrollbar-width);
-	background-color: theme("colors.scrollbar-orange");
+	background-color: theme("colors.scrollbar-purple");
 	background-clip: content-box;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-	background-color: theme("colors.scrollbar-orange-hover");
+	background-color: theme("colors.scrollbar-purple-hover");
 }
 
 /** 
@@ -210,22 +212,14 @@ body {
 	}
 }
 
-/* .black_btn {
-	@apply rounded-full border border-mlt-dark-5 bg-mlt-dark-5 py-1 px-4 text-white font-bold transition-all hover:bg-white hover:text-mlt-dark-3 text-center text-sm font-inter flex items-center justify-center;
-
-	transform: scale(0.99);
-} */
-
-/* ._btn gray_light {
-	@apply rounded-full border border-mlt-dark-5 bg-transparent py-1 px-4 text-mlt-dark-3 font-bold transition-all bg-white hover:bg-mlt-dark-5 hover:text-white text-center text-sm font-inter flex items-center justify-center;
-
-	transform: scale(0.99);
-} */
-
 ._btn {
-	@apply rounded-full py-1 px-4 font-bold transition-all text-center text-sm font-inter flex items-center justify-center;
+	@apply rounded-full py-2 px-6 font-bold transition-all text-center text-sm font-inter flex items-center justify-center;
 
 	/* transform: scale(0.99); */
+}
+
+._btn:active {
+	@apply drop-shadow-md opacity-75;
 }
 
 ._btn.orange_invert {
@@ -286,10 +280,6 @@ body {
 	@apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
 }
 
-.search_input {
-	@apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
-}
-
 .copy_btn {
 	@apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
 }
@@ -297,7 +287,8 @@ body {
 /* https://tailwindcss-glassmorphism.vercel.app/ */
 .glassmorphism {
 	/* @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5; */
-	@apply rounded-xl border border-mlt-purple-secondary/20 bg-mlt-purple-primary/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] drop-shadow-sm backdrop-blur p-5;
+	@apply rounded-xl border-2 border-mlt-purple-secondary/40 bg-mlt-purple-secondary/10
+	shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] drop-shadow-lg backdrop-blur p-5;
 }
 
 .prompt_layout {
@@ -315,11 +306,23 @@ body {
 }
 
 .form_input {
-	@apply w-full flex rounded-lg mt-2 p-3 text-base text-mlt-dark-0 opacity-70 outline-0 active:drop-shadow-lg focus:drop-shadow-lg transition-all duration-300 active:opacity-95 focus:opacity-95 active:text-mlt-dark-4 focus:text-mlt-dark-4;
+	@apply w-full flex rounded-lg mt-2 p-3 text-base text-mlt-dark-0 opacity-70 outline-0 active:drop-shadow-lg focus:drop-shadow-lg transition-all duration-300 active:opacity-95 focus:opacity-95 active:text-mlt-dark-4 focus:text-mlt-dark-4 focus:outline-0;
+}
+
+/* .form_input:hover:active:focus:focus-visible:focus-within:visited:target {} */
+
+.form_input:focus-visible {
+	outline: none;
+}
+
+.search_input {
+	@apply opacity-100 active:opacity-100 focus:opacity-100 drop-shadow-md
+	border-2 border-mlt-purple-secondary/30 font-medium text-mlt-dark-5
+	active:border-mlt-purple-secondary/60 focus:border-mlt-purple-secondary/60;
 }
 
 .form_textarea {
-	@apply h-[180px];
+	@apply h-[180px] min-h-[50px];
 }
 
 /* Nav Component */
@@ -334,7 +337,7 @@ body {
 }
 
 .logo_text_str1 {
-	color: #ff8500;
+	color: #ffa600;
 }
 
 .logo_text_str2 {

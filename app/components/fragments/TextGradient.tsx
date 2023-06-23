@@ -1,4 +1,5 @@
 // Ref.: https://youtu.be/Xc6G3oV24yE
+// This is done in much easier way by pure Tailwind CSS :)
 
 import React from "react";
 

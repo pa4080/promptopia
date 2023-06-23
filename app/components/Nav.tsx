@@ -17,7 +17,7 @@ import { BuiltInProviderType } from "next-auth/providers";
 
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 
-import Icon from "./Icon";
+import Icon from "./fragments/Icon";
 
 const providersIcons = ["google", "github"];
 
@@ -55,7 +55,7 @@ const Nav: React.FC = () => {
 	}, [toggleDropDown]);
 	*/
 
-	const listLoginProviders: JSX.Element = (
+	const listLoginProviders = (
 		<>
 			{providers &&
 				Object.values(providers).map((provider) => {
@@ -106,7 +106,10 @@ const Nav: React.FC = () => {
 
 	return (
 		<nav className="flex_between w-full mb-16 pt-4 sm:pt-8 h-16">
-			<Link className="flex gap-1 flex_center" href="/">
+			<Link
+				className="flex gap-1 flex_center hover:drop-shadow-md transition-all duration-300"
+				href="/"
+			>
 				<Image
 					alt={t("altLogo")}
 					className="object-contain w-10 h-10"
@@ -114,11 +117,13 @@ const Nav: React.FC = () => {
 					src={logo}
 					width={40}
 				/>
-				<p className="logo_text">
+				<p className="logo_text relative">
 					<span className="logo_text_str0">{t("logoSubText.str0")}</span>
-					<span className="logo_text_str1">.{t("logoSubText.str1")}</span>
-					<span className="logo_text_str2">{t("logoSubText.str2")}</span>
-					<span className="logo_text_str3">{t("logoSubText.str3")}</span>
+					<span className="max-md:block max-md:absolute max-md:right-0 max-md:text-sm max-md:-bottom-4">
+						<span className="logo_text_str1">.{t("logoSubText.str1")}</span>
+						<span className="logo_text_str1">{t("logoSubText.str2")}</span>
+						<span className="logo_text_str3">{t("logoSubText.str3")}</span>
+					</span>
 				</p>
 			</Link>
 

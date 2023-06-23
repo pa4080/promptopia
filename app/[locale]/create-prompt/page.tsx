@@ -4,22 +4,22 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Form from "@/app/components/Form";
-import { Post, postInit } from "@/interfaces/Post";
+import { PostType, postInit } from "@/interfaces/Post";
 
-import { FormTypes } from "../../../interfaces/Form";
+import { FormTypes } from "@/interfaces/Form";
 
-const CreatePrompt: React.FC = () => {
+const CreatePost: React.FC = () => {
 	const router = useRouter();
 	const { data: session } = useSession();
 	const [submitting, setSubmitting] = useState(false);
-	const [post, setPost] = useState<Post>(postInit);
+	const [post, setPost] = useState<PostType>(postInit);
 
-	const createPrompt = async (e: React.SyntheticEvent) => {
+	const createPost = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		setSubmitting(true);
 
 		try {
-			const response = await fetch("/api/prompt/new", {
+			const response = await fetch("/api/posts/new", {
 				method: "POST",
 				body: JSON.stringify({
 					...post,
@@ -39,7 +39,7 @@ const CreatePrompt: React.FC = () => {
 
 	return (
 		<Form
-			handleSubmit={createPrompt}
+			handleSubmit={createPost}
 			post={post}
 			setPost={setPost}
 			submitting={submitting}
@@ -48,4 +48,4 @@ const CreatePrompt: React.FC = () => {
 	);
 };
 
-export default CreatePrompt;
+export default CreatePost;

@@ -72,13 +72,16 @@ const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, ty
 					></input>
 				</label>
 
-				<div className="flex_end mx-2 gap-4 flex-row">
-					<Link className="text-sm text-mlt-dark-4 hover:text-red-600" href="/">
-						{t("cancel")}
-					</Link>
-					<button className="_btn orange_invert" disabled={submitting} type="submit">
-						{submitting ? t("processing", i18nFormType) : t("submit", i18nFormType)}
-					</button>
+				<div className="flex_between">
+					<div className="font-Unicephalon text-mlt-purple-primary">{post.model}</div>
+					<div className="flex_end mx-2 gap-4 flex-row">
+						<Link className="text-sm text-mlt-dark-4 hover:text-primary-orange" href="/">
+							{t("cancel")}
+						</Link>
+						<button className="_btn orange_invert" disabled={submitting} type="submit">
+							{submitting ? t("processing", i18nFormType) : t("submit", i18nFormType)}
+						</button>
+					</div>
 				</div>
 			</form>
 		</section>

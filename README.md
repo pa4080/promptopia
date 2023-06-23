@@ -33,6 +33,13 @@ References:
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## TODO
+
+- [ ] Apply `useForm()` hook for the `<Form />` component.
+- [ ] Upload images to <https://apidocs.imgur.com/#intro> or something similar.
+- [ ] Complete the google application.
+- [ ] Modify `/api/posts/new/` and other similar routes to `/api/posts` REST API.
+
 ## Getting Started
 
 First, run the development server:
@@ -111,6 +118,10 @@ npx shadcn-ui add
 - <https://marketplace.visualstudio.com/items?itemName=dimitribarbot.tailwind-styled-components-extractor>
 - <https://github.com/ben-rogerson/twin.macro>
 - (<https://dev.to/dbshanks/an-efficient-react-tailwindcss-styled-components-workflow-458m>)
+
+Plugins:
+
+- [Flowbite (quick start)](https://flowbite.com/docs/getting-started/quickstart/) used for the [radio buttons](https://flowbite.com/docs/forms/radio/).
 
 ## Promptopia additional packages
 

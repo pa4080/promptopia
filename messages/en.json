@@ -50,5 +50,14 @@
 			"delete": "Delete",
 			"edit": "Edit"
 		}
+	},
+	"Feed": {
+		"searchForPlaceholder": "Search for a prompt, tag or user",
+		"searchFor": {
+			"prompt": "Prompt",
+			"tag": "Tag",
+			"user": "User"
+		},
+		"model": "Model"
 	}
 }
