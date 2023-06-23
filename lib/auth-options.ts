@@ -78,14 +78,18 @@ export const authOptions: NextAuthOptions = {
 
 				// If not create a new user in the database
 				if (!userExist) {
+					const name = String(profile?.name ?? profile?.login ?? profile?.username);
+
 					await User.create({
-						email: profile?.email,
-						username: (profile?.name ?? profile?.username ?? profile?.login)
-							?.replace(/(\s|\.|-)/g, ".")
-							.replace(/\.+/g, ".")
-							.toLocaleLowerCase(),
-						name: profile?.name ?? profile?.login ?? profile?.username,
-						image: profile?.picture ?? profile?.image ?? profile?.avatar_url,
+						email: String(profile?.email),
+						username: String(
+							`${profile?.email}${name}${account?.provider}`
+								?.replace(/(\s|\.|-|@)/g, ".")
+								.replace(/\.+/g, "")
+								.toLocaleLowerCase()
+						),
+						name,
+						image: String(profile?.picture ?? profile?.image ?? profile?.avatar_url),
 					});
 				}
 
