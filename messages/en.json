@@ -58,6 +58,13 @@
 			"tag": "Tag",
 			"user": "User"
 		},
-		"model": "Model"
+		"model": "Model",
+		"aiModelsTypes:": {
+			"gpt": { "name": "GPT", "label": "GPT" },
+			"stableDiffusion": { "name": "Stable Diffusion", "label": "SD" }
+		}
+	},
+	"PostCard": {
+		"altProfilePicture": "Prompt Creator Profile Picture"
 	}
 }

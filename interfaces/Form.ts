@@ -1,4 +1,4 @@
-import { PostType } from "@/interfaces/Post";
+import { PostType, PostTypeApiRespError } from "@/interfaces/Post";
 
 export interface FormProps {
 	handleSubmit: (e: React.SyntheticEvent) => void;
@@ -6,6 +6,7 @@ export interface FormProps {
 	setPost: React.Dispatch<React.SetStateAction<PostType>>;
 	submitting: boolean;
 	type: FormTypes;
+	errors: PostTypeApiRespError | null;
 }
 
 export enum FormTypes {

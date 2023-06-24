@@ -25,8 +25,10 @@ const UserSchema = new Schema({
 });
 
 /**
- * For a regular (express) always on always running backend server,
+ * For a regular  always on always 
+ * running backend server (as express.js),
  * we would do something like this:
+ * 
 const User = model("User", UserSchema);
 export default User;
 */

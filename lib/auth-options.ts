@@ -56,6 +56,8 @@ export const authOptions: NextAuthOptions = {
 			return session; // The return type will match the one returned in `useSession()`
 		},
 		async signIn({ account, profile }) {
+			// console.log(profile, account);
+
 			// https://next-auth.js.org/providers/google
 			if (account?.provider === "google" && !profile?.email_verified) {
 				return false;
@@ -68,13 +70,10 @@ export const authOptions: NextAuthOptions = {
 				const userExist = await User.findOne({ email: profile?.email });
 
 				/**
-				 * NOTE:
-				 * .picture does not exist on {session}
-				 * .image does not exist on {profile}
-				 * at all they are the same thing...
-				 * See also <Nav /> and @/types/next-auth.d.ts
+				 * NOTE: .picture does not exist on { session } depending on the provider
+				 * .image does not exist on { profile } - i.e. for GitHub 'avatar_url'...
+				 * @see '@/app/components/Nav.tsx' and '@/types/next-auth.d.ts'
 				 */
-				// console.log(profile);
 
 				// If not create a new user in the database
 				if (!userExist) {

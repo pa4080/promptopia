@@ -17,14 +17,17 @@ const PostSchema = new Schema({
 		type: Array,
 		required: [true, "At least one Tag is required!"],
 	},
-	model: {
+	aiModelType: {
 		type: String,
-		required: [true, "Model is required!"],
+		required: [true, "AI-Model type is required!"],
 	},
 	link: {
 		type: String,
-		required: false,
-		match: [/^https:\/\//, "You need to use https:// for the link!"],
+		match: [/^https:\/\//, "You need to use https:// for the Link!"],
+	},
+	image: {
+		type: String,
+		match: [/^https:\/\//, "You need to use https:// for the Image link!"],
 	},
 });
 

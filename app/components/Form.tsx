@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { FormProps } from "@/interfaces/Form";
 
-const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, type }) => {
+const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, type, errors }) => {
 	const t = useTranslations("Form");
 
 	const i18nFormType = { type: t(`Types.${type}`) };
@@ -35,6 +35,7 @@ const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, ty
 						value={post.prompt}
 						onChange={(e) => setPost({ ...post, prompt: e.target.value })}
 					/>
+					{errors && <p className="text-red-500 text-xs italic">error</p>}
 				</label>
 
 				<label htmlFor="prompt-tag">
@@ -46,9 +47,7 @@ const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, ty
 						id="prompt-tag"
 						placeholder={t("tagPlaceholder")}
 						value={post.tags.join(", ")}
-						onChange={(e) =>
-							setPost({ ...post, tags: e.target.value.split(",").map((tag) => tag.trim()) })
-						}
+						onChange={(e) => setPost({ ...post, tags: e.target.value.split(",") })}
 					></input>
 				</label>
 
@@ -72,8 +71,8 @@ const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, ty
 					></input>
 				</label>
 
-				<div className="flex_between">
-					<div className="font-Unicephalon text-mlt-purple-primary">{post.model}</div>
+				<div className="flex_between_center">
+					<div className="font-Unicephalon text-mlt-purple-primary">{post.aiModelType}</div>
 					<div className="flex_end mx-2 gap-4 flex-row">
 						<Link className="text-sm text-mlt-dark-4 hover:text-primary-orange" href="/">
 							{t("cancel")}

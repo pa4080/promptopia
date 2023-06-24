@@ -87,7 +87,7 @@ const Nav: React.FC = () => {
 		</>
 	);
 
-	const avatar = (
+	const profilePicture = (
 		<div
 			className={`flex_center w-12 h-12 cursor-pointer rounded-full z-10  ${
 				toggleDropDown ? "bg-white drop-shadow-sm" : "bg-white drop-shadow-md "
@@ -105,7 +105,7 @@ const Nav: React.FC = () => {
 	);
 
 	return (
-		<nav className="flex_between w-full mb-16 pt-4 sm:pt-8 h-16">
+		<nav className="flex_between_center w-full mb-16 pt-4 sm:pt-8 h-16">
 			<Link
 				className="flex gap-1 flex_center hover:drop-shadow-md transition-all duration-300"
 				href="/"
@@ -139,7 +139,7 @@ const Nav: React.FC = () => {
 								{t("signOut")}
 							</button>
 
-							<Link href="/profile">{avatar}</Link>
+							<Link href="/profile">{profilePicture}</Link>
 						</>
 					) : (
 						listLoginProviders
@@ -150,7 +150,7 @@ const Nav: React.FC = () => {
 			<div className="sm:hidden flex relative">
 				{session?.user ? (
 					<div className="flex">
-						{avatar}
+						{profilePicture}
 						{toggleDropDown && (
 							<div className="dropdown">
 								<Link

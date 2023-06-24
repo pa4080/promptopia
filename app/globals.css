@@ -373,6 +373,10 @@ body {
 	@apply flex justify-end items-center;
 }
 
-.flex_between {
+.flex_between_center {
 	@apply flex justify-between items-center;
+}
+
+.flex_between_start {
+	@apply flex justify-between items-start;
 }
