@@ -1,12 +1,14 @@
 import React, { CSSProperties, useRef, useState } from "react";
 
-import CheckItem from "./CheckItem";
+import CheckListItem from "./CheckListItem";
 import { IconEmbSvgPathType } from "./IconEmbedSVG";
 
-export type ListItemsType = Array<{
+export type ListItemType = {
 	label: string;
 	checked: boolean;
-}>;
+	value?: string;
+};
+export type ListItemsType = ListItemType[];
 export type ListType = "singleSelect" | "multiSelect";
 
 interface Props {
@@ -14,11 +16,13 @@ interface Props {
 	label?: string;
 	type?: ListType;
 	style?: CSSProperties;
+	handleAssign?: (item?: string) => void;
 	icon?: {
 		size?: number;
 		color?: string;
 		type?: IconEmbSvgPathType;
 		style?: CSSProperties;
+		// className?: string;
 	};
 }
 
@@ -30,15 +34,23 @@ interface Props {
  * @param icon Type and style of the Icons
  * @returns CheckList component
  */
-const CheckList: React.FC<Props> = ({ items, label, type = "singleSelect", style, icon }) => {
+const CheckList: React.FC<Props> = ({
+	items,
+	label,
+	type = "singleSelect",
+	style,
+	// className,
+	handleAssign,
+	icon,
+}) => {
 	const [itemsState, setItemsState] = useState(items);
 
 	const itemsRefArr = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-	const handleSelect = (itemLabel: string) => {
+	const handleSelect = ({ label, value }: ListItemType) => {
 		if (type === "singleSelect") {
 			for (const item of itemsState) {
-				if (item.label === itemLabel) {
+				if (item.label === label) {
 					item.checked = true;
 				} else {
 					item.checked = false;
@@ -46,35 +58,36 @@ const CheckList: React.FC<Props> = ({ items, label, type = "singleSelect", style
 			}
 		} else if (type === "multiSelect") {
 			for (const item of itemsState) {
-				if (item.label === itemLabel) {
+				if (item.label === label) {
 					item.checked = !item.checked;
 				}
 			}
 		}
 
 		Object.assign(items, itemsState);
+		handleAssign?.(value);
 		setItemsState([...itemsState]);
 	};
 
 	return (
 		<div className="flex flex-col gap-2 w-full">
-			<div className="font-Unicephalon text-mlt-purple-primary text-sm">{label}</div>
+			<div className="list_label">{label}</div>
 			<div className="flex_start gap-4 w-full items-center" style={{ ...style }}>
-				{itemsState.map((i, index) => (
+				{itemsState.map((stateItem, index) => (
 					<div
 						key={index}
-						ref={(ref) => (itemsRefArr.current[i.label] = ref)}
-						className="flex text-mlt-dark-4 gap-1 items-center"
-						onClick={() => handleSelect(i.label)}
+						ref={(ref) => (itemsRefArr.current[stateItem.label] = ref)}
+						className="flex gap-1 items-center list_item"
+						onClick={() => handleSelect(stateItem)}
 					>
-						<CheckItem
-							checked={i.checked}
+						<CheckListItem
+							checked={stateItem.checked}
 							color={icon?.color}
 							size={icon?.size}
 							style={icon?.style}
 							type={icon?.type}
 						/>
-						<span>{i.label}</span>
+						<span>{stateItem.label}</span>
 					</div>
 				))}
 			</div>

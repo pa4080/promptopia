@@ -18,7 +18,7 @@ const PostSchema = new Schema({
 		required: [true, "At least one Tag is required!"],
 	},
 	aiModelType: {
-		type: String,
+		type: String, // actually it is a value of AiModelTypes
 		required: [true, "AI-Model type is required!"],
 	},
 	link: {

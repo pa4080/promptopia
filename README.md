@@ -36,6 +36,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## TODO
 
 - [ ] Apply `useForm()` hook for the `<Form />` component.
+- [ ] Display the `<Form />` errors.
 - [ ] Upload images to <https://apidocs.imgur.com/#intro> or something similar.
 - [ ] Complete the google application.
 - [ ] Modify `/api/posts/new/` and other similar routes to `/api/posts` REST API.

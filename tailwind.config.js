@@ -40,6 +40,10 @@ module.exports = {
 			},
 		},
 		extend: {
+			// https://tailwindcss.com/docs/screens
+			screens: {
+				usm: "480px",
+			},
 			fontFamily: {
 				satoshi: ["Satoshi", "sans-serif"],
 				inter: ["Inter", "sans-serif"],

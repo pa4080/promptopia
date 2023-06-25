@@ -10,18 +10,18 @@ interface Props {
 	style?: CSSProperties;
 }
 
-const CheckItem: React.FC<Props> = ({
-	size = 24,
+const CheckListItem: React.FC<Props> = ({
+	size = 32,
 	color = "mlt-purple-secondary",
 	checked,
 	type = "check-square",
 	style,
 }) => {
-	let opacity1 = "44";
+	let opacity1 = "40";
 	let opacity2 = "00";
 
 	if (checked) {
-		opacity1 = "44";
+		opacity1 = "40";
 		opacity2 = "FF";
 	}
 
@@ -39,4 +39,4 @@ const CheckItem: React.FC<Props> = ({
 	);
 };
 
-export default CheckItem;
+export default CheckListItem;

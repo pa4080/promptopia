@@ -2,9 +2,9 @@ import { UserTypeFromDb } from "@/interfaces/User";
 
 export interface PostType {
 	prompt: string;
-	tags: string[];
+	tags: string[] | string;
 	link: string;
-	aiModelType: aiModelsTypes;
+	aiModelType: AiModelTypes;
 	image: string;
 }
 
@@ -13,7 +13,7 @@ export interface PostTypeFromDb extends PostType {
 	creator: UserTypeFromDb;
 }
 
-enum aiModelsTypes {
+export enum AiModelTypes {
 	GPT = "gpt",
 	SD = "stableDiffusion",
 }
@@ -21,9 +21,9 @@ enum aiModelsTypes {
 export const postInit: PostType = {
 	prompt: "",
 	tags: [],
-	aiModelType: aiModelsTypes.GPT,
+	aiModelType: AiModelTypes.GPT,
 	link: "",
-	image: "123",
+	image: "",
 };
 
 export type PostTypeApiRespError = {

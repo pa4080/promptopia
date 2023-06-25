@@ -14,6 +14,7 @@ const CreatePost: React.FC = () => {
 	const [submitting, setSubmitting] = useState(false);
 	const [post, setPost] = useState<PostType>(postInit);
 	const [errors, setErrors] = useState<PostTypeApiRespError | null>(null);
+	const [fileName, setFileName] = useState<string | undefined>(undefined);
 
 	const createPost = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
@@ -24,7 +25,9 @@ const CreatePost: React.FC = () => {
 				method: "POST",
 				body: JSON.stringify({
 					...post,
-					tags: post.tags.map((tag) => tag.trim()),
+					tags: String(post.tags)
+						.split(",")
+						.map((tag) => tag.trim()),
 					userId: session?.user.id,
 				}),
 			});
@@ -41,9 +44,45 @@ const CreatePost: React.FC = () => {
 		}
 	};
 
+	// const uploadFile = async (file: File) => {
+	// 	const uploadFile = async (file: File) => {
+	// };
+
+	const handleChange_UploadFile = async (e: React.FormEvent<HTMLInputElement>) => {
+		// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+		// https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
+		// (e) => setPost({ ...post, image: e.target.value })
+
+		if (e.currentTarget.files?.length && e.currentTarget.files?.length > 0) {
+			e.preventDefault();
+
+			const promptFile: File = e.currentTarget.files[0];
+			// const promptFileURL = URL.createObjectURL(promptFile);
+			const formData = new FormData();
+
+			formData.append("fileToUpload", promptFile);
+			formData.forEach((value, key) => {
+				// eslint-disable-next-line no-console
+				console.log({ [key]: value });
+			});
+
+			const response = await fetch("/api/upload", {
+				method: "POST",
+				body: formData,
+			});
+
+			// eslint-disable-next-line no-console
+			console.log(response);
+
+			setFileName(promptFile.name);
+		}
+	};
+
 	return (
 		<Form
 			errors={errors}
+			fileName={fileName}
+			handleChange_UploadFile={handleChange_UploadFile}
 			handleSubmit={createPost}
 			post={post}
 			setPost={setPost}
