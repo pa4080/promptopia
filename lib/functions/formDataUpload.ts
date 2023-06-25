@@ -3,7 +3,7 @@ export const formDataUpload = async (forData: FormData) => {
 		return;
 	}
 
-	const response = await fetch("/api/upload", {
+	const response = await fetch("/api/files", {
 		method: "POST",
 		body: forData,
 	});

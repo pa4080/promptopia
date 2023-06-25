@@ -1,8 +1,8 @@
 /**
  * @see https://reacthustle.com/blog/how-to-upload-retrieve-images-to-mongodb-using-nextjs-13-app-router
  * @see https://www.mongodb.com/docs/manual/core/gridfs/
- * @see /app/api/upload/route.ts
- * @see /app/api/uploads/[filename]/route.ts
+ * @see /app/api/files/route.ts
+ * @see /app/api/files/[filename]/route.ts
  * @see /app/[locale]/create-prompt/page.tsx
  * @see /app/components/Form.tsx
  */

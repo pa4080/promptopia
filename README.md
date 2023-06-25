@@ -48,6 +48,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [x] <s>Upload images to <https://apidocs.imgur.com/#intro> or something similar.</s> Currently we are using the the Mongo's GridFS.
   - [ ] Rewrite the API to use **Mongoose**.
   - [ ] Limit the image size to ~100-200KB.
+  - [ ] 1) Upload the file, 2) Get the file ID, 3) Attach the file ID to the post and populate it on retrieve.
   - [ ] Further use Imgur or similar service.
   - <https://reacthustle.com/blog/how-to-upload-retrieve-images-to-mongodb-using-nextjs-13-app-router>
   - <https://www.mongodb.com/docs/manual/core/gridfs/>
