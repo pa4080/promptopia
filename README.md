@@ -1,6 +1,6 @@
 # Next.js 13 Full Course 2023
 
-***Fullstack CRUD App with Next.js, MongoDB, Tailwind CSS, and TypeScript***
+***Fullstack <s>CRUD</s> REST App with Next.js, MongoDB, Tailwind CSS, and TypeScript***
 
 This project is based on [**Next.js 13 Full Course 2023 | Build and Deploy a Full Stack App Using the Official React Framework**](https://youtu.be/wm5gMKuwSYk), with the following objectives:
 
@@ -24,6 +24,13 @@ Notes:
 
   *Currently the we are supporting only English language, but the project is ready to be extended to support more languages.*
 
+- Many improvements and added features as:
+
+  - Fetch a as many data as possible within the backend.
+  - Two major types of Prompt/Posts: 1) GPT and 2) Stable Diffusion (I decide to do not spend more time to improve these categories names).
+    - For the GPT category one may attach a link to a shared chat...
+    - For the Stable Diffusion category one may upload an image...
+
 References:
 
 - <https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing>
@@ -38,7 +45,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - [ ] Apply `useForm()` hook for the `<Form />` component.
 - [ ] Display the `<Form />` errors.
-- [ ] Upload images to <https://apidocs.imgur.com/#intro> or something similar.
+- [x] <s>Upload images to <https://apidocs.imgur.com/#intro> or something similar.</s> Currently we are using the the Mongo's GridFS.
+  - [ ] Rewrite the API to use **Mongoose**.
+  - [ ] Limit the image size to ~100-200KB.
+  - [ ] Further use Imgur or similar service.
+  - <https://reacthustle.com/blog/how-to-upload-retrieve-images-to-mongodb-using-nextjs-13-app-router>
+  - <https://www.mongodb.com/docs/manual/core/gridfs/>
 - [ ] Complete the google application.
 - [ ] Modify `/api/posts/new/` and other similar routes to `/api/posts` REST API.
 
