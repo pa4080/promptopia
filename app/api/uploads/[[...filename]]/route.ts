@@ -1,15 +1,20 @@
 // app/api/uploads/[filename]/route.ts
 import { NextResponse, NextRequest } from "next/server";
 
+import { ObjectId, GridFSFile } from "mongodb";
+
 import { connectToDb, fileExists } from "@/lib/mongo";
 
 import { Readable } from "stream";
+
+const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
+const MONGODB_FILES_BUCKET_NAME = "images";
 
 interface Context {
 	params: { filename: string[] };
 }
 
-function _obj(params: Context["params"]) {
+function _filename(params: Context["params"]) {
 	return Object.keys(params).length > 0 ? { filename: params?.filename[0] } : {};
 }
 
@@ -29,30 +34,57 @@ function _obj(params: Context["params"]) {
  *    Or also can retrieve the files by _id.
  */
 export async function GET(request: NextRequest, { params }: Context) {
-	const { bucket } = await connectToDb();
+	try {
+		const { bucket, client } = await connectToDb();
 
-	const files = await bucket.find(_obj(params)).toArray();
+		if (params?.filename.length > 1) {
+			if (params?.filename[0] === "id") {
+				const _id = new ObjectId(params?.filename[1]);
+				const db = client.db(MONGODB_DB_NAME);
+				const collection = db.collection(MONGODB_FILES_BUCKET_NAME);
 
-	switch (files.length) {
-		case 0: {
-			return new NextResponse(null, { status: 404, statusText: "Not found" });
+				const file = (await collection.find({ _id }).toArray())[0] as GridFSFile;
+
+				const stream = bucket.openDownloadStream(_id) as unknown as ReadableStream;
+
+				return new NextResponse(stream, {
+					headers: {
+						"Content-Type": file?.contentType || "image",
+					},
+					status: 200,
+				});
+			} else {
+				throw new Error(
+					"Invalid query. When 1 parameter is provided, it must be filename. When two are provided, the first must be string 'id' and the second must be the id."
+				);
+			}
+		} else {
+			const files = await bucket.find(_filename(params)).toArray();
+
+			switch (files.length) {
+				case 0: {
+					return new NextResponse(null, { status: 404, statusText: "Not found" });
+				}
+
+				case 1: {
+					const file = files.at(0)!;
+					const stream = bucket.openDownloadStreamByName(
+						file.filename
+					) as unknown as ReadableStream;
+
+					return new NextResponse(stream, {
+						headers: {
+							"Content-Type": file.contentType!,
+						},
+						status: 200,
+					});
+				}
+
+				default:
+					return NextResponse.json(files, { status: 200 });
+			}
 		}
-
-		case 1: {
-			const file = files.at(0)!;
-			const stream = bucket.openDownloadStreamByName(
-				params?.filename[0]
-			) as unknown as ReadableStream;
-
-			return new NextResponse(stream, {
-				headers: {
-					"Content-Type": file.contentType!,
-				},
-				status: 200,
-			});
-		}
-
-		default:
-			return NextResponse.json(files, { status: 200 });
+	} catch (error) {
+		return NextResponse.json(error, { status: 500 });
 	}
 }

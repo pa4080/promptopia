@@ -22,7 +22,8 @@ declare global {
 const MONGODB_URI = process.env.MONGODB_URI;
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
 const MONGODB_OPTIONS: MongoClientOptions = {};
-const bucketName = "images";
+const MONGODB_FILES_BUCKET_NAME = "images";
+// rename it fo "grid_fs" so the resultant collections will be: 'grid_fs.files' and 'grid_fs.chunks'
 
 /**
  * Initializes the connection to mongodb and creates a GridFSBucket
@@ -38,7 +39,7 @@ export async function connectToDb() {
 
 	const client = (global.client = new MongoClient(MONGODB_URI, MONGODB_OPTIONS));
 	const bucket = (global.bucket = new GridFSBucket(client.db(MONGODB_DB_NAME), {
-		bucketName,
+		bucketName: MONGODB_FILES_BUCKET_NAME,
 	}));
 
 	await global.client.connect();
@@ -51,7 +52,10 @@ export async function connectToDb() {
 // utility to check if file exists
 export async function fileExists(filename: string): Promise<boolean> {
 	const { client } = await connectToDb();
-	const count = await client.db().collection(`${bucketName}.files`).countDocuments({ filename });
+	const count = await client
+		.db()
+		.collection(`${MONGODB_FILES_BUCKET_NAME}.files`)
+		.countDocuments({ filename });
 
 	return !!count;
 }
