@@ -1,12 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+import slugify from "slugify";
+
 import Form from "@/app/components/Form";
-import { PostType, PostTypeApiRespError, postInit } from "@/interfaces/Post";
+import { AiModelTypes, PostType, PostTypeApiRespError, postInit } from "@/interfaces/Post";
 
 import { FormTypes } from "@/interfaces/Form";
+import { formDataUpload as doFormDataUpload } from "@/lib/functions/formDataUpload";
 
 const CreatePost: React.FC = () => {
 	const router = useRouter();
@@ -14,11 +17,53 @@ const CreatePost: React.FC = () => {
 	const [submitting, setSubmitting] = useState(false);
 	const [post, setPost] = useState<PostType>(postInit);
 	const [errors, setErrors] = useState<PostTypeApiRespError | null>(null);
-	const [fileName, setFileName] = useState<string | undefined>(undefined);
+	const [formDataToUpload, setFormDataToUpload] = useState<FormData | undefined>(undefined);
+
+	const handleChange_FileUpload = async (e: React.FormEvent<HTMLInputElement>) => {
+		e.preventDefault();
+		if (e.currentTarget.files?.length && e.currentTarget.files?.length > 0) {
+			const promptFile: File = e.currentTarget.files[0];
+			const formData = new FormData();
+
+			formData.append("fileToUpload", promptFile);
+			/**
+			 * "fileToUpload" is a name of the form field.
+			 * The form can have multiple fields.
+			 * We can loop through the fields like this:
+			 * 
+			 formData.forEach((value, key) => {
+				 console.log({ [key]: value });
+			 });
+			 */
+
+			setFormDataToUpload(formData);
+			setPost((prevPost) => ({ ...prevPost, image: promptFile.name }));
+		}
+	};
 
 	const createPost = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		setSubmitting(true);
+
+		let postImageName: string = post.image;
+
+		if (post.aiModelType === AiModelTypes.SD && !formDataToUpload) {
+			// eslint-disable-next-line no-console
+			console.log("No file to upload. Should this option be mandatory?");
+
+			return;
+		}
+
+		if (formDataToUpload) {
+			postImageName = slugify(post.image, { lower: true, remove: /[*+~()'"!:@]/g, locale: "en" });
+			const fileToRename = formDataToUpload.get("fileToUpload") as File;
+
+			formDataToUpload.set("fileToUpload", fileToRename, postImageName);
+			const upload = await doFormDataUpload(formDataToUpload);
+
+			// eslint-disable-next-line no-console
+			console.log(`Upload of "${postImageName}" is ${upload ? "successful!" : "not successful."}`);
+		}
 
 		try {
 			const response = await fetch("/api/posts", {
@@ -28,6 +73,7 @@ const CreatePost: React.FC = () => {
 					tags: String(post.tags)
 						.split(",")
 						.map((tag) => tag.trim()),
+					image: postImageName,
 					userId: session?.user.id,
 				}),
 			});
@@ -44,48 +90,14 @@ const CreatePost: React.FC = () => {
 		}
 	};
 
-	// const uploadFile = async (file: File) => {
-	// 	const uploadFile = async (file: File) => {
-	// };
-
-	const fileUpload = async (formData: FormData) => {
-		const response = await fetch("/api/upload", {
-			method: "POST",
-			body: formData,
-		});
-
+	useEffect(() => {
 		// eslint-disable-next-line no-console
-		console.log(response);
-	};
-
-	const handleChange_FileUpload = async (e: React.FormEvent<HTMLInputElement>) => {
-		if (e.currentTarget.files?.length && e.currentTarget.files?.length > 0) {
-			e.preventDefault();
-
-			const promptFile: File = e.currentTarget.files[0];
-			// const promptFileURL = URL.createObjectURL(promptFile);
-			const formData = new FormData();
-
-			formData.append("fileToUpload", promptFile);
-			/**
-			 * "fileToUpload" is a name of the form field.
-			 * The form can have multiple fields.
-			 * We can loop through the fields like this:
-			 * 
-			 formData.forEach((value, key) => {
-				 console.log({ [key]: value });
-			 });
-			 */
-
-			await fileUpload(formData);
-			setFileName(promptFile.name);
-		}
-	};
+		console.log(errors);
+	}, [errors]);
 
 	return (
 		<Form
 			errors={errors}
-			fileName={fileName}
 			handleChange_FileUpload={handleChange_FileUpload}
 			handleSubmit={createPost}
 			post={post}

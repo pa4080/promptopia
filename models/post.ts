@@ -27,7 +27,7 @@ const PostSchema = new Schema({
 	},
 	image: {
 		type: String,
-		match: [/^https:\/\//, "You need to use https:// for the Image link!"],
+		// match: [/^https:\/\//, "You need to use https:// for the Image link!"],
 	},
 });
 

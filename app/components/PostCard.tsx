@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
+import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 
 interface Props {
 	post: PostTypeFromDb;
@@ -18,6 +19,10 @@ interface Props {
 const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
 	const t = useTranslations("PostCard");
 
+	if (!post || !post?.creator) {
+		return null;
+	}
+
 	return (
 		<div className="prompt-card">
 			<div className="flex_between_start gap-5">
@@ -27,13 +32,13 @@ const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
 							alt={t("altProfilePicture")}
 							className="rounded-full object-contain"
 							height={45}
-							src={post.creator.image}
+							src={post?.creator?.image ?? logo}
 							width={45}
 						/>
 					</div>
 					<div className="flex flex-col">
-						<h3>{post.creator.name}</h3>
-						<p>{post.creator.email}</p>
+						<h3>{post?.creator?.name}</h3>
+						<p>{post?.creator?.email}</p>
 					</div>
 				</div>
 			</div>

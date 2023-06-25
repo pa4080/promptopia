@@ -30,6 +30,7 @@ References:
 - <https://gist.github.com/adrianhajdin/6df61c6cd5ed052dce814a765bff9032>
 - <https://nextjs.org/docs>
 - <https://next-intl-docs.vercel.app/docs/next-13>
+- <https://www.npmjs.com/package/slugify>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -98,7 +99,7 @@ Beautifully designed components that you can copy and paste into your apps. Acce
 **Use the CLI to add components to your project.** Use the `init` command to initialize dependencies for a new project. The `init` command installs dependencies, adds the cn util, *configures `tailwind.config.js`*, and CSS variables for the project.
 
 ```bash
-npx shadcn-ui init
+npx shadcn-ui init slugify
 ```
 
 Use the `add` command to add components to your project and installs all required dependencies.
