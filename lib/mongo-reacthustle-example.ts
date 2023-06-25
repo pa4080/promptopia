@@ -22,7 +22,7 @@ declare global {
 const MONGODB_URI = process.env.MONGODB_URI;
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
 const MONGODB_OPTIONS: MongoClientOptions = {};
-const MONGODB_FILES_BUCKET_NAME = "images";
+const MONGODB_FILES_BUCKET_NAME = process.env.MONGODB_FILES_BUCKET_NAME;
 // rename it fo "grid_fs" so the resultant collections will be: 'grid_fs.files' and 'grid_fs.chunks'
 
 /**

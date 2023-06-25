@@ -3,12 +3,12 @@ import { NextResponse, NextRequest } from "next/server";
 
 import { ObjectId, GridFSFile } from "mongodb";
 
-import { connectToDb, fileExists } from "@/lib/mongo";
+import { connectToDb, fileExists } from "@/lib/mongo-reacthustle-example";
 
 import { Readable } from "stream";
 
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
-const MONGODB_FILES_BUCKET_NAME = "images";
+const MONGODB_FILES_BUCKET_NAME = process.env.MONGODB_FILES_BUCKET_NAME;
 
 interface Context {
 	params: { filename: string[] };
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 			if (params?.filename[0] === "id") {
 				const _id = new ObjectId(params?.filename[1]);
 				const db = client.db(MONGODB_DB_NAME);
-				const collection = db.collection(MONGODB_FILES_BUCKET_NAME);
+				const collection = db.collection(`${MONGODB_FILES_BUCKET_NAME}.files`);
 
 				const file = (await collection.find({ _id }).toArray())[0] as GridFSFile;
 
