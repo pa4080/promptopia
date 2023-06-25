@@ -1,19 +1,21 @@
 // app/api/uploads/[filename]/route.ts
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-import { connectToDb } from "@/lib/mongo";
+import { connectToDb, fileExists } from "@/lib/mongo";
 
-type Params = {
-	params: { filename: string };
-};
+import { Context } from "@/interfaces/Api";
 
-export async function GET(req: Request, { params }: Params) {
-	// console.log(params); // { filename: 'apple-touch-icon-120x120.png' }
+import { Readable } from "stream";
 
+function _fileName(params: Context["params"]) {
+	return Object.keys(params).length > 0 ? params?.filename[0] : null;
+}
+
+export async function GET(req: Request, { params }: Context) {
 	// 1. get GridFS bucket
 	const { bucket } = await connectToDb();
 
-	const filename = params.filename as string;
+	const filename = _fileName(params);
 
 	// 2. validate the filename
 	if (!filename) {

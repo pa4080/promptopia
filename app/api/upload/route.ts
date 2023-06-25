@@ -1,4 +1,3 @@
-// app/api/upload
 import { NextResponse, NextRequest } from "next/server";
 
 import { connectToDb, fileExists } from "@/lib/mongo";
