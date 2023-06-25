@@ -15,8 +15,8 @@ if (!process.env.MONGODB_URI) {
 	throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
 }
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.MONGODB_DB_NAME;
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
 
 let isConnected = false; // track the connection status
 
@@ -30,8 +30,8 @@ export const connectMongoDb = async () => {
 	}
 
 	try {
-		await mongoose.connect(uri, {
-			dbName: dbName,
+		await mongoose.connect(MONGODB_URI, {
+			dbName: MONGODB_DB_NAME,
 		});
 
 		isConnected = true;

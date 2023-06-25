@@ -26,10 +26,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import Post from "@/models/post";
 import { connectMongoDb } from "@/lib/mongodb-mongoose-connect";
-
-interface Context {
-	params: { id: string[] };
-}
+import { Context } from "@/interfaces/Api";
 
 function _obj(params: Context["params"]) {
 	return Object.keys(params).length > 0 ? { _id: params?.id[0] } : {};

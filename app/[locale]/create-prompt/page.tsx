@@ -48,11 +48,17 @@ const CreatePost: React.FC = () => {
 	// 	const uploadFile = async (file: File) => {
 	// };
 
-	const handleChange_UploadFile = async (e: React.FormEvent<HTMLInputElement>) => {
-		// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
-		// https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData
-		// (e) => setPost({ ...post, image: e.target.value })
+	const fileUpload = async (formData: FormData) => {
+		const response = await fetch("/api/upload", {
+			method: "POST",
+			body: formData,
+		});
 
+		// eslint-disable-next-line no-console
+		console.log(response);
+	};
+
+	const handleChange_FileUpload = async (e: React.FormEvent<HTMLInputElement>) => {
 		if (e.currentTarget.files?.length && e.currentTarget.files?.length > 0) {
 			e.preventDefault();
 
@@ -61,19 +67,17 @@ const CreatePost: React.FC = () => {
 			const formData = new FormData();
 
 			formData.append("fileToUpload", promptFile);
-			formData.forEach((value, key) => {
-				// eslint-disable-next-line no-console
-				console.log({ [key]: value });
-			});
+			/**
+			 * "fileToUpload" is a name of the form field.
+			 * The form can have multiple fields.
+			 * We can loop through the fields like this:
+			 * 
+			 formData.forEach((value, key) => {
+				 console.log({ [key]: value });
+			 });
+			 */
 
-			const response = await fetch("/api/upload", {
-				method: "POST",
-				body: formData,
-			});
-
-			// eslint-disable-next-line no-console
-			console.log(response);
-
+			await fileUpload(formData);
 			setFileName(promptFile.name);
 		}
 	};
@@ -82,7 +86,7 @@ const CreatePost: React.FC = () => {
 		<Form
 			errors={errors}
 			fileName={fileName}
-			handleChange_UploadFile={handleChange_UploadFile}
+			handleChange_FileUpload={handleChange_FileUpload}
 			handleSubmit={createPost}
 			post={post}
 			setPost={setPost}

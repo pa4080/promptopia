@@ -7,11 +7,30 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { FormProps } from "@/interfaces/Form";
+import { AiModelTypes } from "@/interfaces/Post";
 
-const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, type, errors }) => {
+import CheckList from "@/app/components/fragments/CheckList";
+
+import IconEmbedSVG from "./fragments/IconEmbedSVG";
+
+const Form: React.FC<FormProps> = ({
+	handleSubmit,
+	post,
+	setPost,
+	submitting,
+	type,
+	errors,
+	handleChange_FileUpload,
+	fileName,
+}) => {
 	const t = useTranslations("Form");
+	const tCommon = useTranslations("Common");
 
 	const i18nFormType = { type: t(`Types.${type}`) };
+
+	const handlePostModelTypeChange = (aiModelType: AiModelTypes) => {
+		setPost((prevPost) => ({ ...prevPost, aiModelType }));
+	};
 
 	return (
 		<section className="w-full max-w-full flex_start flex-col">
@@ -46,34 +65,76 @@ const Form: React.FC<FormProps> = ({ handleSubmit, post, setPost, submitting, ty
 						className="form_input"
 						id="prompt-tag"
 						placeholder={t("tagPlaceholder")}
-						value={post.tags.join(", ")}
-						onChange={(e) => setPost({ ...post, tags: e.target.value.split(",") })}
-					></input>
+						value={String(post.tags)}
+						onChange={(e) => setPost({ ...post, tags: e.target.value })}
+					/>
 				</label>
 
-				<label htmlFor="prompt-link">
-					<span
-						className="form_input_title"
-						style={{
-							opacity: 0.75,
-							filter: "sepia(.4)",
-						}}
-					>
-						{t("link")}
-					</span>
+				{post.aiModelType === AiModelTypes.GPT && (
+					<label htmlFor="prompt-link">
+						<span
+							className="form_input_title"
+							style={{
+								opacity: 0.75,
+								filter: "sepia(.4)",
+							}}
+						>
+							{t("linkLabel")}
+						</span>
 
-					<input
-						className="form_input"
-						id="prompt-link"
-						placeholder={t("linkPlaceholder")}
-						value={post.link}
-						onChange={(e) => setPost({ ...post, link: e.target.value })}
-					></input>
-				</label>
+						<input
+							className="form_input"
+							id="prompt-link"
+							placeholder={t("linkPlaceholder")}
+							type="url"
+							value={post.link}
+							onChange={(e) => setPost({ ...post, link: e.target.value })}
+						/>
+					</label>
+				)}
 
-				<div className="flex_between_center">
-					<div className="font-Unicephalon text-mlt-purple-primary">{post.aiModelType}</div>
-					<div className="flex_end mx-2 gap-4 flex-row">
+				{post.aiModelType === AiModelTypes.SD && (
+					<label htmlFor="prompt-image">
+						<span
+							className="form_input_title"
+							style={{
+								opacity: 0.75,
+								filter: "sepia(.4)",
+							}}
+						>
+							{t("imageLabel")}
+						</span>
+
+						<div className="input_file_wrapper">
+							<input
+								accept="image/*"
+								id="prompt-image"
+								placeholder={t("imagePlaceholder")}
+								type="file"
+								// value={fileName}
+								onChange={handleChange_FileUpload}
+							/>
+							<IconEmbedSVG height={28} type="cloud-arrow-up" width={40} />
+							<p className="max-w-[70%] overflow-hidden text-ellipsis">
+								{fileName ?? t("imageNoFile")}
+							</p>
+						</div>
+					</label>
+				)}
+				<div className="flex_between_start">
+					<div className="text-mlt-purple-secondary/100">
+						<CheckList
+							handleAssign={(itemLabel) => handlePostModelTypeChange(itemLabel as AiModelTypes)}
+							icon={{ size: 22 }}
+							items={Object.values(AiModelTypes).map((modelType) => ({
+								label: tCommon(`aiModelsTypes.${modelType}.label`),
+								checked: post.aiModelType === modelType,
+								value: modelType,
+							}))}
+							type="singleSelect"
+						/>
+					</div>
+					<div className="flex_end gap-4 flex-row w-full">
 						<Link className="text-sm text-mlt-dark-4 hover:text-primary-orange" href="/">
 							{t("cancel")}
 						</Link>
