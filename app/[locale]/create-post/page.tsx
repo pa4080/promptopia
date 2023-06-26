@@ -117,7 +117,8 @@ const CreatePost: React.FC = () => {
 					tags: String(post.tags)
 						.split(",")
 						.map((tag) => tag.trim().toLowerCase())
-						.filter((value, index, array) => array.indexOf(value) === index),
+						.filter((value, index, array) => array.indexOf(value) === index)
+						.sort((a, b) => a.localeCompare(b)),
 					// https://stackoverflow.com/a/14438954/6543935
 					image: image_id,
 					creator: session?.user.id,
