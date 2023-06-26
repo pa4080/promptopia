@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { FormProps } from "@/interfaces/Form";
-import { AiModelTypes } from "@/interfaces/Post";
+import { AiModelTypes, PostTypeFromDb } from "@/interfaces/Post";
 
 import CheckList from "@/app/components/fragments/CheckList";
 
@@ -32,6 +32,12 @@ const Form: React.FC<FormProps> = ({
 		setPost((prevPost) => ({ ...prevPost, aiModelType }));
 	};
 
+	const haveError = (errorKey: keyof PostTypeFromDb) =>
+		!!(errors && errors?.[errorKey] && errors?.[errorKey]?.message);
+
+	const displayAnError = (errorKey: keyof PostTypeFromDb) =>
+		haveError(errorKey) && <p className="form_error">{errors?.[errorKey]?.message}</p>;
+
 	return (
 		<section className="w-full max-w-full flex_start flex-col">
 			<h1 className="head_text text-left">
@@ -54,7 +60,7 @@ const Form: React.FC<FormProps> = ({
 						value={post.prompt}
 						onChange={(e) => setPost({ ...post, prompt: e.target.value })}
 					/>
-					{errors && <p className="text-red-500 text-xs italic">error</p>}
+					{displayAnError("prompt")}
 				</label>
 
 				<label htmlFor="prompt-tag">
@@ -68,6 +74,7 @@ const Form: React.FC<FormProps> = ({
 						value={String(post.tags)}
 						onChange={(e) => setPost({ ...post, tags: e.target.value })}
 					/>
+					{displayAnError("tags")}
 				</label>
 
 				{post.aiModelType === AiModelTypes.GPT && (
@@ -90,6 +97,7 @@ const Form: React.FC<FormProps> = ({
 							value={post.link}
 							onChange={(e) => setPost({ ...post, link: e.target.value })}
 						/>
+						{displayAnError("link")}
 					</label>
 				)}
 
@@ -114,13 +122,19 @@ const Form: React.FC<FormProps> = ({
 								// value={fileName}
 								onChange={handleChange_FileUpload}
 							/>
-							<IconEmbedSVG height={28} type="cloud-arrow-up" width={40} />
+							{postImageFilename && !haveError("image") ? (
+								<IconEmbedSVG height={28} type="cloud-check" width={40} />
+							) : (
+								<IconEmbedSVG height={28} type="cloud-arrow-up" width={40} />
+							)}
 							<p className="max-w-[70%] overflow-hidden text-ellipsis">
 								{postImageFilename || t("imageNoFile")}
 							</p>
 						</div>
+						{displayAnError("image")}
 					</label>
 				)}
+
 				<div className="flex_between_start">
 					<div className="text-mlt-purple-secondary/100">
 						<CheckList

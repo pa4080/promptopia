@@ -75,5 +75,9 @@
 	},
 	"PostCard": {
 		"altProfilePicture": "Prompt Creator Profile Picture"
+	},
+	"CreatePost": {
+		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",
+		"imageRequiredError": "For this kind of prompt post the image is required!"
 	}
 }

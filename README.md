@@ -43,8 +43,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## TODO
 
+- [x] Display the `<Form />` errors.
 - [ ] Apply `useForm()` hook for the `<Form />` component.
-- [ ] Display the `<Form />` errors.
 - [x] <s>Upload images to <https://apidocs.imgur.com/#intro> or something similar.</s> Currently we are using the the Mongo's GridFS.
   - [ ] Rewrite the API to use **Mongoose**.
   - [ ] Limit the image size to ~100-200KB.

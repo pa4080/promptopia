@@ -27,13 +27,14 @@ export const postInit: PostType = {
 	link: "",
 };
 
-export type PostTypeApiRespError = {
-	[key in keyof PostType]: {
-		kind: string; // "regexp", "required", etc.
-		message: string; // the actual error message
-		name: string; // ValidatorError
-		path: string; // image, link, etc.
-		properties: {}; // contains the same information as the other fields
-		value: string; // the actual value that caused the error
+export type PostErrorsType = {
+	// [key: string]: {}
+	[key in keyof PostTypeFromDb]: {
+		kind?: string; // "regexp", "required", etc.
+		message?: string; // the actual error message
+		name?: string; // ValidatorError
+		path?: string; // image, link, etc.
+		properties?: {}; // contains the same information as the other fields
+		value?: string; // the actual value that caused the error
 	};
 };

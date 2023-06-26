@@ -395,3 +395,8 @@ body {
 .flex_between_start {
 	@apply flex justify-between items-start flex-col usm:flex-row gap-4;
 }
+
+/* Error messages */
+.form_error {
+	@apply text-red-500 text-xs italic pt-2;
+}

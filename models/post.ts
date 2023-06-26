@@ -37,6 +37,7 @@ const PostSchema = new Schema({
 	image: {
 		type: Schema.Types.ObjectId,
 		ref: "GridFS",
+		required: [true, "For this kind of prompt post the image is required!"],
 	},
 });
 
