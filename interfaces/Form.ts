@@ -8,6 +8,7 @@ export interface FormProps {
 	submitting: boolean;
 	type: FormTypes;
 	errors: PostTypeApiRespError | null;
+	postImageFilename: string | null;
 }
 
 export enum FormTypes {

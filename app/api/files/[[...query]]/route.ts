@@ -84,11 +84,17 @@ export async function GET(request: NextRequest, { params }: Context) {
 	}
 }
 
+/**
+ * Post a file to the database.
+ * the request must be a...
+ */
 export async function POST(request: NextRequest) {
 	try {
 		const { bucket } = await connectToDb();
 		// get the form data
 		const data = await request.formData();
+
+		const response = [];
 
 		// map through all the entries
 		for (const entry of Array.from(data.entries())) {
@@ -124,13 +130,14 @@ export async function POST(request: NextRequest) {
 				// pipe the readable stream to a writeable stream to save it to the database
 				stream.pipe(uploadStream);
 
-				// const res = stream.pipe(uploadStream);
-				// console.log(res.id.toString());
+				const res = stream.pipe(uploadStream);
+
+				response.push({ filename, _id: res.id.toString() });
 			}
 		}
 
 		// return the response after all the entries have been processed.
-		return NextResponse.json({ success: true });
+		return NextResponse.json(response, { status: 201 });
 	} catch (error) {
 		return NextResponse.json(error, { status: 500 });
 	}

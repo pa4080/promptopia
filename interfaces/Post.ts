@@ -1,3 +1,5 @@
+import { GridFSFile } from "mongodb";
+
 import { UserTypeFromDb } from "@/interfaces/User";
 
 export interface PostType {
@@ -5,12 +7,12 @@ export interface PostType {
 	tags: string[] | string;
 	link: string;
 	aiModelType: AiModelTypes;
-	image: string;
 }
 
 export interface PostTypeFromDb extends PostType {
 	_id: string;
 	creator: UserTypeFromDb;
+	image: GridFSFile;
 }
 
 export enum AiModelTypes {
@@ -23,7 +25,6 @@ export const postInit: PostType = {
 	tags: [],
 	aiModelType: AiModelTypes.GPT,
 	link: "",
-	image: "",
 };
 
 export type PostTypeApiRespError = {

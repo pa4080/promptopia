@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
+import { GridFSFile } from "mongodb";
 import slugify from "slugify";
 
-import Form from "@/app/components/Form";
-import { AiModelTypes, PostType, PostTypeApiRespError, postInit } from "@/interfaces/Post";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
+import { AiModelTypes, PostType, PostTypeApiRespError, postInit } from "@/interfaces/Post";
 import { FormTypes } from "@/interfaces/Form";
-import { formDataUpload as doFormDataUpload } from "@/lib/functions/formDataUpload";
+import Form from "@/app/components/Form";
 
 const CreatePost: React.FC = () => {
 	const router = useRouter();
@@ -18,6 +18,7 @@ const CreatePost: React.FC = () => {
 	const [post, setPost] = useState<PostType>(postInit);
 	const [errors, setErrors] = useState<PostTypeApiRespError | null>(null);
 	const [formDataToUpload, setFormDataToUpload] = useState<FormData | undefined>(undefined);
+	const [postImageFilename, setPostImageFilename] = useState<string | null>(null);
 
 	const handleChange_FileUpload = async (e: React.FormEvent<HTMLInputElement>) => {
 		e.preventDefault();
@@ -37,15 +38,13 @@ const CreatePost: React.FC = () => {
 			 */
 
 			setFormDataToUpload(formData);
-			setPost((prevPost) => ({ ...prevPost, image: promptFile.name }));
+			setPostImageFilename(promptFile.name);
 		}
 	};
 
 	const createPost = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		setSubmitting(true);
-
-		let postImageName: string = post.image;
 
 		if (post.aiModelType === AiModelTypes.SD && !formDataToUpload) {
 			// eslint-disable-next-line no-console
@@ -54,15 +53,32 @@ const CreatePost: React.FC = () => {
 			return;
 		}
 
+		let image_id: string | null = null;
+
 		if (formDataToUpload) {
-			postImageName = slugify(post.image, { lower: true, remove: /[*+~()'"!:@]/g, locale: "en" });
+			const postImageFnToUpload = slugify(String(postImageFilename), {
+				lower: true,
+				remove: /[*+~()'"!:@]/g,
+				locale: "en",
+			});
 			const fileToRename = formDataToUpload.get("fileToUpload") as File;
 
-			formDataToUpload.set("fileToUpload", fileToRename, postImageName);
-			const upload = await doFormDataUpload(formDataToUpload);
+			formDataToUpload.set("fileToUpload", fileToRename, postImageFnToUpload);
+			const response = await fetch("/api/files", {
+				method: "POST",
+				body: formDataToUpload,
+			});
+
+			if (response.ok) {
+				image_id = (await response.json())[0]._id;
+			}
 
 			// eslint-disable-next-line no-console
-			console.log(`Upload of "${postImageName}" is ${upload ? "successful!" : "not successful."}`);
+			console.log(
+				`Upload of "${postImageFnToUpload} (_id: ${image_id})" is ${
+					response ? "successful!" : "not successful."
+				}`
+			);
 		}
 
 		try {
@@ -73,8 +89,8 @@ const CreatePost: React.FC = () => {
 					tags: String(post.tags)
 						.split(",")
 						.map((tag) => tag.trim()),
-					image: postImageName,
-					userId: session?.user.id,
+					image: image_id,
+					creator: session?.user.id,
 				}),
 			});
 
@@ -101,6 +117,7 @@ const CreatePost: React.FC = () => {
 			handleChange_FileUpload={handleChange_FileUpload}
 			handleSubmit={createPost}
 			post={post}
+			postImageFilename={postImageFilename}
 			setPost={setPost}
 			submitting={submitting}
 			type={FormTypes.CREATE}

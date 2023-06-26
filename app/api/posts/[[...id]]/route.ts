@@ -38,7 +38,7 @@ function _obj(params: Context["params"]) {
 export async function GET(request: NextRequest, { params }: Context) {
 	try {
 		await connectMongoDb();
-		const posts = await Post.find(_obj(params)).populate("creator");
+		const posts = await Post.find(_obj(params)).populate(["creator", "image"]);
 
 		return NextResponse.json({ posts }, { status: 200 });
 	} catch (error) {
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 }
 
 export async function POST(request: NextRequest) {
-	const { userId: creator, prompt, tags, aiModelType, link, image } = await request.json();
+	const { creator, prompt, tags, aiModelType, link, image } = await request.json();
 
 	try {
 		await connectMongoDb();

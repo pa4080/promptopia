@@ -21,6 +21,7 @@ const Form: React.FC<FormProps> = ({
 	type,
 	errors,
 	handleChange_FileUpload,
+	postImageFilename,
 }) => {
 	const t = useTranslations("Form");
 	const tCommon = useTranslations("Common");
@@ -115,7 +116,7 @@ const Form: React.FC<FormProps> = ({
 							/>
 							<IconEmbedSVG height={28} type="cloud-arrow-up" width={40} />
 							<p className="max-w-[70%] overflow-hidden text-ellipsis">
-								{post.image || t("imageNoFile")}
+								{postImageFilename || t("imageNoFile")}
 							</p>
 						</div>
 					</label>

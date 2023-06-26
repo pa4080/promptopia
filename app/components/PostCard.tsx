@@ -16,7 +16,7 @@ interface Props {
 	handleDelete?: (tag: string) => void;
 }
 
-const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
+export const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
 	const t = useTranslations("PostCard");
 
 	if (!post || !post?.creator) {
@@ -46,4 +46,12 @@ const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
 	);
 };
 
-export default PostCard;
+interface PromptCardListProps {
+	data: PostTypeFromDb[];
+	handleTagClick: (tag: string) => void;
+}
+
+const PromptCardList: React.FC<PromptCardListProps> = ({ data, handleTagClick }) =>
+	data.map((post) => <PostCard key={post._id} handleTagClick={handleTagClick} post={post} />);
+
+export default PromptCardList;

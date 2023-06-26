@@ -6,17 +6,9 @@ import { useTranslations } from "next-intl";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
 
-import PostCard from "./PostCard";
+import PromptCardList from "./PostCard";
 
 import CheckList from "./fragments/CheckList";
-
-interface PromptCardListProps {
-	data: PostTypeFromDb[];
-	handleTagClick: (tag: string) => void;
-}
-
-const PromptCardList: React.FC<PromptCardListProps> = ({ data, handleTagClick }) =>
-	data.map((post) => <PostCard key={post._id} handleTagClick={handleTagClick} post={post} />);
 
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
