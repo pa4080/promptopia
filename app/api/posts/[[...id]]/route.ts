@@ -24,8 +24,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
+import { connectToMongoDb } from "@/lib/mongodb-mongoose";
 import Post from "@/models/post";
-import { connectMongoDb } from "@/lib/mongodb-mongoose-connect";
 
 interface Context {
 	params: { id: string[] };
@@ -37,7 +37,7 @@ function _obj(params: Context["params"]) {
 
 export async function GET(request: NextRequest, { params }: Context) {
 	try {
-		await connectMongoDb();
+		await connectToMongoDb();
 		const posts = await Post.find(_obj(params)).populate(["creator", "image"]);
 
 		return NextResponse.json({ posts }, { status: 200 });
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 	const { creator, prompt, tags, aiModelType, link, image } = await request.json();
 
 	try {
-		await connectMongoDb();
+		await connectToMongoDb();
 		const new_Post = new Post({ creator, prompt, tags, aiModelType, link, image });
 
 		await new_Post.save();

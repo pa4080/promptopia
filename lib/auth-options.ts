@@ -22,7 +22,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 // import CredentialsProvider from "next-auth/providers/credentials";
 
-import { connectMongoDb } from "@/lib/mongodb-mongoose-connect";
+import { connectToMongoDb } from "@/lib/mongodb-mongoose";
 
 import User from "@/models/user";
 
@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
 			}
 
 			try {
-				await connectMongoDb();
+				await connectToMongoDb();
 
 				// Check if the user already exists in the database
 				const userExist = await User.findOne({ email: profile?.email });

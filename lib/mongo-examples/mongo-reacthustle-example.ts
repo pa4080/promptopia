@@ -1,4 +1,6 @@
 /**
+ * @see [The_commit_where__it_is_used](https://github.com/metalevel-tech/exc-nextjs-2023-shared-prompts/commit/9758814a477f14a048f20dc20c74ce3d80a2e003)
+ *
  * @see https://reacthustle.com/blog/how-to-upload-retrieve-images-to-mongodb-using-nextjs-13-app-router
  * @see https://www.mongodb.com/docs/manual/core/gridfs/
  * @see /app/api/files/route.ts
@@ -53,7 +55,7 @@ export async function connectToDb() {
 export async function fileExists(filename: string): Promise<boolean> {
 	const { client } = await connectToDb();
 	const count = await client
-		.db()
+		.db(MONGODB_DB_NAME)
 		.collection(`${MONGODB_FILES_BUCKET_NAME}.files`)
 		.countDocuments({ filename });
 

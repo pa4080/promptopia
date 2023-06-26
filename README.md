@@ -44,16 +44,22 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## TODO
 
 - [x] Display the `<Form />` errors.
-- [ ] Apply `useForm()` hook for the `<Form />` component.
-- [x] <s>Upload images to <https://apidocs.imgur.com/#intro> or something similar.</s> Currently we are using the the Mongo's GridFS.
-  - [ ] Rewrite the API to use **Mongoose**.
-  - [ ] Limit the image size to ~100-200KB.
-  - [ ] 1) Upload the file, 2) Get the file ID, 3) Attach the file ID to the post and populate it on retrieve.
-  - [ ] Further use Imgur or similar service.
+- [x] <s>Upload images to [imgur.com](https://apidocs.imgur.com/#intro) or something similar.</s> 
+
+  Currently we are using the the Mongo's GridFS.
   - <https://reacthustle.com/blog/how-to-upload-retrieve-images-to-mongodb-using-nextjs-13-app-router>
   - <https://www.mongodb.com/docs/manual/core/gridfs/>
+  - [x] Modify `/api/posts/new/`... to `/api/files` REST API ready path.
+  - [x] Rewrite the `/api/files/` to use **Mongoose**.
+  - [x] Limit the image size to ~100-200KB.
+  - [x] 1) Upload the file, 2) Get the file ID, 3) Attach the file ID to the post and populate it on retrieve.
+  - [ ] Further use Imgur or similar service.
+- [ ] Combine the API requests to `/api/posts/` and `/api/files/` to a single one. This will reduce the number of requests to the server.
+
+  The request should use `new FormData()` withe `post` and `file` fields.
+  
 - [ ] Complete the google application.
-- [ ] Modify `/api/posts/new/` and other similar routes to `/api/posts` REST API.
+- [ ] Apply `useForm()` hook for the `<Form />` component.
 
 ## Getting Started
 

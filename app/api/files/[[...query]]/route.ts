@@ -1,14 +1,11 @@
-// app/api/files/[filename]/route.ts
 import { NextResponse, NextRequest } from "next/server";
 
 import { ObjectId, GridFSFile } from "mongodb";
 
-import { connectToDb, fileExists } from "@/lib/mongo-reacthustle-example";
+import { gridFSBucket } from "@/lib/mongodb-mongoose";
+import { GridFS } from "@/models/grid_fs";
 
 import { Readable } from "stream";
-
-const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
-const MONGODB_FILES_BUCKET_NAME = process.env.MONGODB_FILES_BUCKET_NAME;
 
 interface Context {
 	params: { query: string[] };
@@ -30,16 +27,14 @@ function _filename(params: Context["params"]) {
  */
 export async function GET(request: NextRequest, { params }: Context) {
 	try {
-		const { bucket, client } = await connectToDb();
+		// connect to the database and get the bucket
+		const bucket = await gridFSBucket();
 
 		if (params?.query.length > 1) {
 			if (params?.query[0] === "id") {
 				const _id = new ObjectId(params?.query[1]);
-				const db = client.db(MONGODB_DB_NAME);
-				const collection = db.collection(`${MONGODB_FILES_BUCKET_NAME}.files`);
 
-				const file = (await collection.find({ _id }).toArray())[0] as GridFSFile;
-
+				const file = (await GridFS.find({ _id }))[0] as GridFSFile;
 				const stream = bucket.openDownloadStream(_id) as unknown as ReadableStream;
 
 				return new NextResponse(stream, {
@@ -56,7 +51,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 		} else {
 			const files = await bucket.find(_filename(params)).toArray();
 
-			switch (files.length) {
+			switch (files?.length) {
 				case 0: {
 					return new NextResponse(null, { status: 404, statusText: "Not found" });
 				}
@@ -90,7 +85,8 @@ export async function GET(request: NextRequest, { params }: Context) {
  */
 export async function POST(request: NextRequest) {
 	try {
-		const { bucket } = await connectToDb();
+		// connect to the database and get the bucket
+		const bucket = await gridFSBucket();
 		// get the form data
 		const data = await request.formData();
 
@@ -109,14 +105,6 @@ export async function POST(request: NextRequest) {
 				const blob = value as Blob;
 				const filename = blob.name;
 
-				const existing = await fileExists(filename);
-
-				if (existing) {
-					// If file already exists, let's skip it.
-					// If you want a different behavior such as override, modify this part.
-					continue;
-				}
-
 				//convert the blob to stream
 				const buffer = Buffer.from(await blob.arrayBuffer());
 				const stream = Readable.from(buffer);
@@ -128,9 +116,9 @@ export async function POST(request: NextRequest) {
 				});
 
 				// pipe the readable stream to a writeable stream to save it to the database
-				stream.pipe(uploadStream);
+				stream.pipe(uploadStream!);
 
-				const res = stream.pipe(uploadStream);
+				const res = stream.pipe(uploadStream!);
 
 				response.push({ filename, _id: res.id.toString() });
 			}

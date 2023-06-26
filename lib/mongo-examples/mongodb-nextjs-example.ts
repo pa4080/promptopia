@@ -4,7 +4,7 @@
  * > In this state, it establishes jus a connection with
  * > MongoDB/Atlas, and doesn't select any database...
  *
- * See also ./mongodb-mongoose-connect.ts which is the current connector in use.
+ * See also ./mongodb-mongoose.ts which is the current connector in use.
  *
  * The integration with MongoDB/Atlas is created via the Vercel Dashboard,
  * where MONGODB_URI is set as an environment variable manually.
