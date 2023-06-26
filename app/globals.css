@@ -39,7 +39,7 @@
 		--radius: 0.5rem;
 		--scrollbar-width: 16px;
 
-		accent-color: theme("colors.scrollbar-purple");
+		accent-color: theme("colors.mlt-purple-secondary_tr1");
 	}
 
 	.dark {
@@ -89,7 +89,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-tap-highlight-color: transparent;
 	-webkit-touch-callout: none;
-	scrollbar-color: theme("colors.scrollbar-purple-hover") transparent;
+	scrollbar-color: theme("colors.mlt-purple-secondary_tr2") transparent;
 	scrollbar-width: auto;
 }
 
@@ -105,12 +105,12 @@ body {
 *::-webkit-scrollbar-thumb {
 	border: calc(var(--scrollbar-width) / 2.8) solid transparent;
 	border-radius: var(--scrollbar-width);
-	background-color: theme("colors.scrollbar-purple");
+	background-color: theme("colors.mlt-purple-secondary_tr1");
 	background-clip: content-box;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-	background-color: theme("colors.scrollbar-purple-hover");
+	background-color: theme("colors.mlt-purple-secondary_tr2");
 }
 
 /** 
@@ -223,8 +223,8 @@ body {
 }
 
 ._btn.orange_invert {
-	@apply bg-secondary-orange text-white border border-transparent
-	hover:bg-white hover:text-primary-orange hover:border-secondary-orange
+	@apply bg-mlt-orange-secondary text-white border border-transparent
+	hover:bg-white hover:text-mlt-orange-primary hover:border-mlt-orange-secondary
 	hover:drop-shadow-lg;
 }
 
@@ -245,7 +245,7 @@ body {
 }
 
 .login_provider_btn {
-	@apply border border-mlt-gray-4 rounded-full bg-white hover:bg-secondary-orange hover:border-secondary-orange transition-all duration-300 opacity-90 drop-shadow-md w-10 h-10 flex_center;
+	@apply border border-mlt-gray-4 rounded-full bg-white hover:bg-mlt-orange-secondary hover:border-mlt-orange-secondary transition-all duration-300 opacity-90 drop-shadow-md w-10 h-10 flex_center;
 
 	transform: scale(1.02);
 }
@@ -281,7 +281,31 @@ body {
 }
 
 .copy_btn {
-	@apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
+	@apply w-10 h-10 rounded-full hover:bg-mlt-orange-secondary/10
+	transition-colors duration-300 flex justify-center items-center cursor-pointer
+	hover:drop-shadow-lg;
+
+	user-select: none;
+}
+
+.copy_btn:active {
+	filter: brightness(0.9) saturate(0.95);
+}
+
+.copy_btn > svg {
+	transition: transform 0.15s ease-in-out;
+	transform: scale(1.05) translate(3px, -0.5px);
+}
+
+.copy_btn:hover > svg {
+	filter: brightness(1.1) saturate(1.1);
+	transition: transform 0.2s ease-in-out;
+	transform: scale(1.3) translate(3px, -0.5px);
+}
+
+.copy_btn:active > svg {
+	transition: transform 0.15s ease-in-out;
+	transform: scale(1.2) translate(3px, -0.5px);
 }
 
 /* https://tailwindcss-glassmorphism.vercel.app/ */
@@ -348,7 +372,7 @@ body {
 }
 
 .logo_text_str0 {
-	@apply text-secondary-orange;
+	@apply text-mlt-orange-secondary;
 }
 
 .logo_text_str1 {
@@ -364,7 +388,7 @@ body {
 }
 
 .dropdown {
-	@apply absolute -right-2 -top-2 mt-0 w-full p-5 pt-16 pb-3 rounded-lg min-w-[210px] flex flex-col gap-4 justify-end items-end shadow-lg shadow-secondary-orange/10 bg-mlt-gray-6 drop-shadow-lg;
+	@apply absolute -right-2 -top-2 mt-0 w-full p-5 pt-16 pb-3 rounded-lg min-w-[210px] flex flex-col gap-4 justify-end items-end shadow-lg shadow-mlt-orange-secondary/10 bg-mlt-gray-6 drop-shadow-lg;
 }
 
 .dropdown_link {
@@ -373,7 +397,9 @@ body {
 
 /* PromptCard Component */
 .prompt_card {
-	@apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
+	@apply flex-1 break-inside-avoid rounded-lg border-2 border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit transition-all duration-300
+	drop-shadow-lg shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.05)]
+	hover:shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.15)];
 }
 
 .flex_center {

@@ -74,7 +74,8 @@
 		}
 	},
 	"PostCard": {
-		"altProfilePicture": "Prompt Creator Profile Picture"
+		"altProfilePicture": "Prompt Creator Profile Picture",
+		"altCopyPrompt": "Copy Prompt"
 	},
 	"CreatePost": {
 		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",

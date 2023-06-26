@@ -4,7 +4,7 @@ import { UserTypeFromDb } from "@/interfaces/User";
 
 export interface PostType {
 	prompt: string;
-	tags: string[] | string;
+	tags: string[];
 	link: string;
 	aiModelType: AiModelTypes;
 }

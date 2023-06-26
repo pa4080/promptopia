@@ -34,6 +34,7 @@ const CreatePost: React.FC = () => {
 
 		return prevErrorsCopy as PostErrorsType;
 	};
+
 	const handleChange_FileUpload = async (e: React.FormEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		if (e.currentTarget.files?.length && e.currentTarget.files?.length > 0) {
@@ -115,7 +116,9 @@ const CreatePost: React.FC = () => {
 					...post,
 					tags: String(post.tags)
 						.split(",")
-						.map((tag) => tag.trim()),
+						.map((tag) => tag.trim().toLowerCase())
+						.filter((value, index, array) => array.indexOf(value) === index),
+					// https://stackoverflow.com/a/14438954/6543935
 					image: image_id,
 					creator: session?.user.id,
 				}),

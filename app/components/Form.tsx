@@ -149,7 +149,7 @@ const Form: React.FC<FormProps> = ({
 						/>
 					</div>
 					<div className="flex_end gap-4 flex-row w-full">
-						<Link className="text-sm text-mlt-dark-4 hover:text-primary-orange" href="/">
+						<Link className="text-sm text-mlt-dark-4 hover:text-mlt-orange-primary" href="/">
 							{t("cancel")}
 						</Link>
 						<button className="_btn orange_invert" disabled={submitting} type="submit">
