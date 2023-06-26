@@ -3,13 +3,16 @@
  */
 import { Schema, model, models } from "mongoose";
 
+import { GridFS } from "./grid_fs";
+import User from "./user";
+
 const PostSchema = new Schema({
 	creator: {
 		// This is the database ObjectId
 		// of the user who created the prompt,
 		// it should be the same as the userId.
 		type: Schema.Types.ObjectId,
-		ref: "User",
+		ref: User,
 	},
 	prompt: {
 		type: String,
@@ -29,7 +32,7 @@ const PostSchema = new Schema({
 	},
 	image: {
 		type: Schema.Types.ObjectId,
-		ref: "GridFS",
+		ref: GridFS,
 	},
 });
 
