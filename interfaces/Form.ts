@@ -1,11 +1,14 @@
-import { Post } from "@/interfaces/Post";
+import { PostType, PostErrorsType } from "@/interfaces/Post";
 
 export interface FormProps {
 	handleSubmit: (e: React.SyntheticEvent) => void;
-	post: Post;
-	setPost: React.Dispatch<React.SetStateAction<Post>>;
+	handleChange_FileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	post: PostType;
+	setPost: React.Dispatch<React.SetStateAction<PostType>>;
 	submitting: boolean;
 	type: FormTypes;
+	errors: PostErrorsType | null;
+	postImageFilename: string | null;
 }
 
 export enum FormTypes {

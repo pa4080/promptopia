@@ -1,4 +1,5 @@
 // Ref.: https://youtu.be/Xc6G3oV24yE
+// This is done in much easier way by pure Tailwind CSS :)
 
 import React from "react";
 
@@ -9,11 +10,11 @@ interface Props {
 }
 
 const TextGradient: React.FC<Props> = ({ children }) => {
-	const mltColors = twTheme.theme.extend.colors as unknown as { [key: string]: string };
+	const ThemeColors = twTheme.theme.extend.colors as unknown as { [key: string]: string };
 
-	const colorLeft = mltColors["mlt-blue-primary"];
-	const colorRight = mltColors["mlt-purple-primary"];
-	const colorFallback = mltColors["mlt-gray-4"];
+	const colorLeft = ThemeColors["mlt-blue-primary"];
+	const colorRight = ThemeColors["mlt-purple-primary"];
+	const colorFallback = ThemeColors["mlt-gray-4"];
 
 	return (
 		<span

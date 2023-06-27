@@ -1,4 +1,6 @@
 /**
+ * @see [The_commit_where__it_is_used](https://github.com/metalevel-tech/exc-nextjs-2023-shared-prompts/commit/9758814a477f14a048f20dc20c74ce3d80a2e003)
+ *
  * This file comes from:
  * > [Next.js 13 Full Course 2023 Tutorial](https://youtu.be/wm5gMKuwSYk?t=5190)
  *
@@ -15,12 +17,12 @@ if (!process.env.MONGODB_URI) {
 	throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
 }
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.MONGODB_DB_NAME;
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
 
 let isConnected = false; // track the connection status
 
-export const connectMongoDb = async () => {
+export const connectToMongoDb = async () => {
 	mongoose.set("strictQuery", true);
 
 	if (isConnected) {
@@ -30,8 +32,8 @@ export const connectMongoDb = async () => {
 	}
 
 	try {
-		await mongoose.connect(uri, {
-			dbName: dbName,
+		await mongoose.connect(MONGODB_URI, {
+			dbName: MONGODB_DB_NAME,
 		});
 
 		isConnected = true;

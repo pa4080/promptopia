@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const mltColors = {
+const ThemeColors = {
 	"mlt-gray-0": "#646464",
 	"mlt-gray-1": "#787878",
 	"mlt-gray-2": "#a0a0a0",
@@ -19,9 +19,16 @@ const mltColors = {
 	"mlt-blue-secondary": "#5d9fff",
 	"mlt-purple-primary": "#9468d8",
 	"mlt-purple-secondary": "#b07bff",
+	"mlt-purple-secondary_tr1": "#b07bff59",
+	"mlt-purple-secondary_tr2": "#b07bffaa",
 	"mlt-yellow-primary": "#facc15",
 	"mlt-yellow-secondary": "rgb(254 240 138)",
 	"mlt-yellow-tertiary": "rgb(254 249 195)",
+	"mlt-orange-primary": "#FF5722",
+	"mlt-orange-dark": "#d4491d",
+	"mlt-orange-secondary": "#ef720e",
+	"mlt-orange-secondary_tr1": "#ef720e7a",
+	"mlt-orange-secondary_tr2": "#ef720eaa",
 };
 
 module.exports = {
@@ -40,6 +47,14 @@ module.exports = {
 			},
 		},
 		extend: {
+			// https://tailwindcss.com/docs/screens
+			screens: {
+				"2sm": "480px",
+				"3sm": "420px",
+				"4sm": "380px",
+				"5sm": "320px",
+				"2md": "820px",
+			},
 			fontFamily: {
 				satoshi: ["Satoshi", "sans-serif"],
 				inter: ["Inter", "sans-serif"],
@@ -79,15 +94,10 @@ module.exports = {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
-				"primary-orange": "#FF5722",
-				"primary-orange-dark": "#d4491d",
-				"secondary-orange": "#ef720e",
-				"scrollbar-orange": "#ef720e7a",
-				"scrollbar-orange-hover": "#ef720eaa",
-				...mltColors,
+				...ThemeColors,
 			},
 			backgroundColor: {
-				...mltColors,
+				...ThemeColors,
 			},
 			borderRadius: {
 				lg: "var(--radius)",

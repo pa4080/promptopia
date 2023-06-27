@@ -22,7 +22,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 // import CredentialsProvider from "next-auth/providers/credentials";
 
-import { connectMongoDb } from "@/lib/mongodb-mongoose-connect";
+import { connectToMongoDb } from "@/lib/mongodb-mongoose";
 
 import User from "@/models/user";
 
@@ -56,36 +56,39 @@ export const authOptions: NextAuthOptions = {
 			return session; // The return type will match the one returned in `useSession()`
 		},
 		async signIn({ account, profile }) {
+			// console.log(profile, account);
+
 			// https://next-auth.js.org/providers/google
 			if (account?.provider === "google" && !profile?.email_verified) {
 				return false;
 			}
 
 			try {
-				await connectMongoDb();
+				await connectToMongoDb();
 
 				// Check if the user already exists in the database
 				const userExist = await User.findOne({ email: profile?.email });
 
 				/**
-				 * NOTE:
-				 * .picture does not exist on {session}
-				 * .image does not exist on {profile}
-				 * at all they are the same thing...
-				 * See also <Nav /> and @/types/next-auth.d.ts
+				 * NOTE: .picture does not exist on { session } depending on the provider
+				 * .image does not exist on { profile } - i.e. for GitHub 'avatar_url'...
+				 * @see '@/app/components/Nav.tsx' and '@/types/next-auth.d.ts'
 				 */
-				// console.log(profile);
 
 				// If not create a new user in the database
 				if (!userExist) {
+					const name = String(profile?.name ?? profile?.login ?? profile?.username);
+
 					await User.create({
-						email: profile?.email,
-						username: (profile?.name ?? profile?.username ?? profile?.login)
-							?.replace(/(\s|\.|-)/g, ".")
-							.replace(/\.+/g, ".")
-							.toLocaleLowerCase(),
-						name: profile?.name ?? profile?.login ?? profile?.username,
-						image: profile?.picture ?? profile?.image ?? profile?.avatar_url,
+						email: String(profile?.email),
+						username: String(
+							`${profile?.email}${name}${account?.provider}`
+								?.replace(/(\s|\.|-|@)/g, ".")
+								.replace(/\.+/g, "")
+								.toLocaleLowerCase()
+						),
+						name,
+						image: String(profile?.picture ?? profile?.image ?? profile?.avatar_url),
 					});
 				}
 

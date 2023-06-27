@@ -4,7 +4,7 @@
  * > In this state, it establishes jus a connection with
  * > MongoDB/Atlas, and doesn't select any database...
  *
- * See also ./mongodb-mongoose-connect.ts which is the current connector in use.
+ * See also ./mongodb-mongoose.ts which is the current connector in use.
  *
  * The integration with MongoDB/Atlas is created via the Vercel Dashboard,
  * where MONGODB_URI is set as an environment variable manually.
@@ -38,8 +38,9 @@ if (!process.env.MONGODB_URI) {
 	throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
 }
 
-const uri = process.env.MONGODB_URI;
-const options: MongoClientOptions = {};
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
+const MONGODB_OPTIONS: MongoClientOptions = {};
 
 let client;
 let clientPromise: Promise<MongoClient>;
@@ -52,14 +53,14 @@ if (process.env.NODE_ENV === "development") {
 	};
 
 	if (!globalWithMongo._mongoClientPromise) {
-		client = new MongoClient(uri, options);
+		client = new MongoClient(MONGODB_URI, MONGODB_OPTIONS);
 		globalWithMongo._mongoClientPromise = client.connect();
 	}
 
 	clientPromise = globalWithMongo._mongoClientPromise;
 } else {
 	// In production mode, it's best to not use a global variable.
-	client = new MongoClient(uri, options);
+	client = new MongoClient(MONGODB_URI, MONGODB_OPTIONS);
 	clientPromise = client.connect();
 }
 
