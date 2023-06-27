@@ -1,10 +1,12 @@
 import React, { CSSProperties } from "react";
 
-import IconEmbedSVG, { IconEmbSvgPathType } from "./IconEmbedSVG";
+import { ThemeColorsList } from "@/interfaces/ThemeTW";
+
+import IconEmbedSvg, { IconEmbSvgPathType } from "./IconEmbedSvg";
 
 interface Props {
 	size?: number;
-	color?: string;
+	color?: ThemeColorsList;
 	checked?: boolean;
 	type?: IconEmbSvgPathType;
 	style?: CSSProperties;
@@ -26,7 +28,7 @@ const CheckListItem: React.FC<Props> = ({
 	}
 
 	return (
-		<IconEmbedSVG
+		<IconEmbedSvg
 			color1={color}
 			color2={color}
 			height={size}

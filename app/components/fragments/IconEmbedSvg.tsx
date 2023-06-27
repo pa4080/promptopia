@@ -1,8 +1,6 @@
 import React, { CSSProperties } from "react";
 
-import twTheme from "@/tailwind.config";
-
-const mltColors = twTheme.theme.extend.colors as unknown as { [key: string]: string };
+import { allColors, ThemeColorsList } from "@/interfaces/ThemeTW";
 
 export type IconEmbSvgPathType =
 	| "check-circle"
@@ -18,13 +16,16 @@ export type IconEmbSvgPathType =
 	| "clipboard"
 	| "clipboard-check"
 	| "tag"
-	| "tags";
+	| "tags"
+	| "up-right-from-square"
+	| "link"
+	| "message-lines";
 
 interface Props {
 	width?: number;
 	height?: number;
-	color1?: string;
-	color2?: string;
+	color1?: ThemeColorsList;
+	color2?: ThemeColorsList;
 	opacity1?: string;
 	opacity2?: string;
 	type?: IconEmbSvgPathType;
@@ -44,7 +45,7 @@ interface Props {
  * @param cursor Cursor type: pointer, default, inherit
  * @returns SVG element
  */
-const IconEmbedSVG: React.FC<Props> = ({
+const IconEmbedSvg: React.FC<Props> = ({
 	width = 24,
 	height,
 	color1 = "mlt-purple-secondary",
@@ -63,8 +64,8 @@ const IconEmbedSVG: React.FC<Props> = ({
 	const displayHeight =
 		!height && width ? (viewBoxHeight / viewBoxWidth) * width : height ?? viewBoxHeight;
 
-	const applyColor1 = `${mltColors[color1]}${opacity1}`;
-	const applyColor2 = `${mltColors[color2]}${opacity2}`;
+	const applyColor1 = `${allColors[color1]}${opacity1}`;
+	const applyColor2 = `${allColors[color2]}${opacity2}`;
 
 	return (
 		<svg
@@ -81,7 +82,7 @@ const IconEmbedSVG: React.FC<Props> = ({
 	);
 };
 
-export default IconEmbedSVG;
+export default IconEmbedSvg;
 
 /**
  * The dual color SVG path library starts here.
@@ -225,6 +226,45 @@ const SvgPathLib: React.FC<SvgPathLibProps> = ({ type, c1, c2 }) => {
 					/>
 					<path
 						d="M113.2 66.3c.1-.8 .3-1.6 .4-2.3H64C28.7 64 0 92.7 0 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H270.4c.2 .8 .3 1.6 .4 2.3C290.1 72.6 304 90.7 304 112v24c0 13.3-10.7 24-24 24H192 104c-13.3 0-24-10.7-24-24V112c0-21.3 13.9-39.4 33.2-45.7zM305 273L177 401c-9.4 9.4-24.6 9.4-33.9 0L79 337c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L271 239c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
+						fill={c1}
+					/>
+				</>
+			);
+		case "up-right-from-square":
+			return (
+				<>
+					<path
+						d="M322.4 19.8C327.4 7.8 339.1 0 352 0H480c17.7 0 32 14.3 32 32V160c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9L416 141.3 246.6 310.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L370.7 96 329.4 54.6c-9.2-9.2-11.9-22.9-6.9-34.9z"
+						fill={c2}
+					/>
+					<path
+						d="M0 112C0 67.8 35.8 32 80 32H192c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16H400c8.8 0 16-7.2 16-16V320c0-17.7 14.3-32 32-32s32 14.3 32 32V432c0 44.2-35.8 80-80 80H80c-44.2 0-80-35.8-80-80V112z"
+						fill={c1}
+					/>
+				</>
+			);
+		case "link":
+			return (
+				<>
+					<path
+						d="M60.2 448.8c-56.5-56.5-56.5-148 0-204.5L172.5 132c56.5-56.5 148-56.5 204.5 0c50 50 56.5 128.8 15.4 186.3l-1.1 1.6c-10.3 14.4-30.3 17.7-44.6 7.4s-17.7-30.3-7.4-44.6l1.1-1.6c22.9-32.1 19.3-76-8.6-103.9c-31.5-31.5-82.5-31.5-114 0L105.5 289.5C74 321 74 372 105.5 403.5c27.9 27.9 71.8 31.5 103.8 8.6l1.6-1.1c14.4-10.3 34.4-6.9 44.6 7.4s6.9 34.4-7.4 44.6l-1.6 1.1C189 505.3 110.2 498.7 60.2 448.8z"
+						fill={c2}
+					/>
+					<path
+						d="M579.8 63.2c56.5 56.5 56.5 148 0 204.5L467.5 380c-56.5 56.5-148 56.5-204.5 0c-50-50-56.5-128.8-15.4-186.3l1.1-1.6c10.3-14.4 30.3-17.7 44.6-7.4s17.7 30.3 7.4 44.6l-1.1 1.6c-22.9 32.1-19.3 76 8.6 103.8c31.5 31.5 82.5 31.5 114 0L534.5 222.5c31.5-31.5 31.5-82.5 0-114C506.7 80.6 462.7 77 430.7 99.9l-1.6 1.1c-14.4 10.3-34.4 6.9-44.6-7.4s-6.9-34.4 7.4-44.6l1.6-1.1C451 6.7 529.8 13.3 579.8 63.2z"
+						fill={c1}
+					/>
+				</>
+			);
+		case "message-lines":
+			return (
+				<>
+					<path
+						d="M128 168c0-13.3 10.7-24 24-24H360c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24zm0 96c0-13.3 10.7-24 24-24H264c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24z"
+						fill={c2}
+					/>
+					<path
+						d="M0 64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L185.6 508.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V416H64c-35.3 0-64-28.7-64-64V64zm152 80c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H152zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H152z"
 						fill={c1}
 					/>
 				</>

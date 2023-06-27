@@ -7,11 +7,11 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { FormProps } from "@/interfaces/Form";
-import { AiModelTypes, PostTypeFromDb } from "@/interfaces/Post";
+import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
 import CheckList from "@/app/components/fragments/CheckList";
 
-import IconEmbedSVG from "./fragments/IconEmbedSVG";
+import IconEmbedSvg from "./fragments/IconEmbedSvg";
 
 const Form: React.FC<FormProps> = ({
 	handleSubmit,
@@ -28,8 +28,8 @@ const Form: React.FC<FormProps> = ({
 
 	const i18nFormType = { type: t(`Types.${type}`) };
 
-	const handlePostModelTypeChange = (aiModelType: AiModelTypes) => {
-		setPost((prevPost) => ({ ...prevPost, aiModelType }));
+	const handlePostAiCategoryChange = (aiCategory: AiCategories) => {
+		setPost((prevPost) => ({ ...prevPost, aiCategory }));
 	};
 
 	const haveError = (errorKey: keyof PostTypeFromDb) =>
@@ -77,31 +77,31 @@ const Form: React.FC<FormProps> = ({
 					{displayAnError("tags")}
 				</label>
 
-				{post.aiModelType === AiModelTypes.GPT && (
-					<label htmlFor="prompt-link">
-						<span
-							className="form_input_title"
-							style={{
-								opacity: 0.75,
-								filter: "sepia(.4)",
-							}}
-						>
-							{t("linkLabel")}
-						</span>
+				{/* {post.aiCategory === AiCategories.CHAT && ( */}
+				<label htmlFor="prompt-link">
+					<span
+						className="form_input_title"
+						style={{
+							opacity: 0.75,
+							filter: "sepia(.4)",
+						}}
+					>
+						{t("linkLabel")}
+					</span>
 
-						<input
-							className="form_input"
-							id="prompt-link"
-							placeholder={t("linkPlaceholder")}
-							type="url"
-							value={post.link}
-							onChange={(e) => setPost({ ...post, link: e.target.value })}
-						/>
-						{displayAnError("link")}
-					</label>
-				)}
+					<input
+						className="form_input"
+						id="prompt-link"
+						placeholder={t("linkPlaceholder")}
+						type="url"
+						value={post.link}
+						onChange={(e) => setPost({ ...post, link: e.target.value })}
+					/>
+					{displayAnError("link")}
+				</label>
+				{/* )} */}
 
-				{post.aiModelType === AiModelTypes.SD && (
+				{post.aiCategory === AiCategories.IMAGE && (
 					<label htmlFor="prompt-image">
 						<span
 							className="form_input_title"
@@ -123,9 +123,9 @@ const Form: React.FC<FormProps> = ({
 								onChange={handleChange_FileUpload}
 							/>
 							{postImageFilename && !haveError("image") ? (
-								<IconEmbedSVG height={28} type="cloud-check" width={40} />
+								<IconEmbedSvg height={28} type="cloud-check" width={40} />
 							) : (
-								<IconEmbedSVG height={28} type="cloud-arrow-up" width={40} />
+								<IconEmbedSvg height={28} type="cloud-arrow-up" width={40} />
 							)}
 							<p className="max-w-[70%] overflow-hidden text-ellipsis">
 								{postImageFilename || t("imageNoFile")}
@@ -135,15 +135,15 @@ const Form: React.FC<FormProps> = ({
 					</label>
 				)}
 
-				<div className="flex_between_start">
-					<div className="text-mlt-purple-secondary/100">
+				<div className="flex justify-between items-start gap-4 flex-col 2sm:flex-row">
+					<div className="text-mlt-dark-6 font-semibold w-full pl-0.5">
 						<CheckList
-							handleAssign={(itemLabel) => handlePostModelTypeChange(itemLabel as AiModelTypes)}
-							icon={{ size: 22 }}
-							items={Object.values(AiModelTypes).map((modelType) => ({
-								label: tCommon(`aiModelsTypes.${modelType}.label`),
-								checked: post.aiModelType === modelType,
-								value: modelType,
+							handleAssign={(itemLabel) => handlePostAiCategoryChange(itemLabel as AiCategories)}
+							icon={{ size: 22, color: "mlt-orange-secondary" }}
+							items={Object.values(AiCategories).map((aiCategory) => ({
+								label: tCommon(`aiCats.${aiCategory}`),
+								checked: post.aiCategory === aiCategory,
+								value: aiCategory,
 							}))}
 							type="singleSelect"
 						/>

@@ -5,9 +5,9 @@
 	},
 	"Common": {
 		"model": "Model",
-		"aiModelsTypes": {
-			"gpt": { "name": "GPT", "label": "GPT" },
-			"stableDiffusion": { "name": "Stable Diffusion", "label": "SD" }
+		"aiCats": {
+			"chat": "Chat",
+			"image": "Image"
 		}
 	},
 	"Nav": {
@@ -75,7 +75,8 @@
 	},
 	"PostCard": {
 		"altProfilePicture": "Prompt Creator Profile Picture",
-		"altCopyPrompt": "Copy Prompt"
+		"altCopyPrompt": "Copy Prompt",
+		"altPromptImage": "Prompt Image"
 	},
 	"CreatePost": {
 		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",

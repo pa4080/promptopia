@@ -14,24 +14,29 @@ import IconEmbedSvgPop from "./fragments/IconEmbedSvgPop";
 
 interface Props {
 	post: PostTypeFromDb;
+	copied: string;
+	setCopied: React.Dispatch<React.SetStateAction<string>>;
 	handleTagClick: (tag: string) => void;
 	handleEdit?: (tag: string) => void;
 	handleDelete?: (tag: string) => void;
 }
 
-export const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
+export const PostCard: React.FC<Props> = ({ post, copied, setCopied, handleTagClick }) => {
 	const t = useTranslations("PostCard");
-	const [copied, setCopied] = useState(false);
 
-	if (!post || !post?.creator) {
-		return null;
-	}
+	const handlePromptCopy = () => {
+		setCopied(post.prompt);
+		navigator.clipboard.writeText(post.prompt);
+		setTimeout(() => {
+			setCopied("");
+		}, 3500);
+	};
 
 	return (
 		<div className="prompt_card">
 			<div className="relative">
-				<div className="flex flex-1 justify-start gap-3 cursor-pointer flex-col 3sm:flex-row items-start 3sm:items-center ">
-					<div className="flex_center w-14 h-14 cursor-pointer rounded-full z-10 bg-white  min-w-[3.5rem] min-h-[3.5rem]">
+				<div className="flex flex-1 justify-start gap-3 cursor-pointer  flex-row items-center ">
+					<div className="flex_center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem]">
 						<Image
 							alt={t("altProfilePicture")}
 							className="rounded-full object-contain"
@@ -40,8 +45,10 @@ export const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
 							width={45}
 						/>
 					</div>
-					<div className="flex flex-col max-w-[100%] overflow-hidden px-4 3sm:px-0">
-						<h3 className="font-satoshi font-semibold text-mlt-dark-2">{post?.creator?.name}</h3>
+					<div className="flex flex-col max-w-[100%] overflow-hidden gap-1">
+						<h3 className="font-satoshi font-semibold text-mlt-dark-2 pr-7">
+							{post?.creator?.name}
+						</h3>
 
 						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden">
 							{post?.creator?.email}
@@ -53,17 +60,36 @@ export const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
 					c1="mlt-orange-secondary"
 					c2="mlt-orange-dark"
 					height={22}
+					isActive={copied === post.prompt}
 					op1="84"
-					style={{ position: "absolute", right: "0", top: "0" }}
+					style={{ position: "absolute", right: "-6px", top: "-6px" }}
 					text={t("altCopyPrompt")}
-					type={copied ? "clipboard-check" : "clipboard"}
+					type={copied === post.prompt ? "clipboard-check" : "clipboard"}
 					width={22}
-					onClick={() => handleTagClick(post?.creator?.name)}
+					onClick={handlePromptCopy}
 				/>
 			</div>
 
-			<div className="prompt_card_prompt">
-				<p>{post.prompt}</p>
+			{post?.image && (
+				<div className="prompt_card_image_container">
+					<Image
+						alt={t("altPromptImage")}
+						className="prompt_card_image"
+						height={300}
+						src={`/api/files/id/${post.image._id}`}
+						width={300}
+					/>
+				</div>
+			)}
+
+			<div
+				className={`prompt_card_prompt ${
+					post?.image ? "-mt-6 prompt_card_prompt_wit_image" : "mt-6"
+				}`}
+			>
+				<p className="prompt_card_prompt_text" onClick={handlePromptCopy}>
+					{post.prompt}
+				</p>
 				{post?.link && (
 					<a href={post.link} rel="noreferrer" style={{ display: "table-cell" }} target="_blank">
 						<IconEmbedSvgPop
@@ -82,16 +108,17 @@ export const PostCard: React.FC<Props> = ({ post, handleTagClick }) => {
 							}}
 							stylePosWrapper={{ transform: "translate(0, 0)" }}
 							text={t("altCopyPrompt")}
-							type={"message-lines"}
+							type={"up-right-from-square"}
 							width={18}
 							wrapperClass="none"
 						/>
 					</a>
 				)}
 			</div>
-			<p>
+
+			<p className="post_tags_list">
 				{(post.tags as string[]).map((tag: string, index) => (
-					<PostTag key={index} text={tag} />
+					<PostTag key={index} text={tag} onClick={() => handleTagClick && handleTagClick(tag)} />
 				))}
 			</p>
 		</div>
@@ -103,7 +130,29 @@ interface PromptCardListProps {
 	handleTagClick: (tag: string) => void;
 }
 
-const PromptCardList: React.FC<PromptCardListProps> = ({ data, handleTagClick }) =>
-	data.map((post) => <PostCard key={post._id} handleTagClick={handleTagClick} post={post} />);
+const PromptCardList: React.FC<PromptCardListProps> = ({ data, handleTagClick }) => {
+	const [copied, setCopied] = useState("");
+
+	// https://stackoverflow.com/a/46545530/6543935
+	return (
+		<>
+			{data.map((post) => {
+				if (!post || !post?.creator) {
+					return null;
+				}
+
+				return (
+					<PostCard
+						key={post._id}
+						copied={copied}
+						handleTagClick={handleTagClick}
+						post={post}
+						setCopied={setCopied}
+					/>
+				);
+			})}
+		</>
+	);
+};
 
 export default PromptCardList;

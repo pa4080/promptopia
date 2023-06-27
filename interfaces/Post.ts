@@ -4,26 +4,28 @@ import { UserTypeFromDb } from "@/interfaces/User";
 
 export interface PostType {
 	prompt: string;
-	tags: string[];
+	tags: string; // tags: string[] | string;
 	link: string;
-	aiModelType: AiModelTypes;
+	aiCategory: AiCategories;
 }
 
-export interface PostTypeFromDb extends PostType {
+// Omit: https://stackoverflow.com/a/51507473/6543935
+export interface PostTypeFromDb extends Omit<PostType, "tags"> {
 	_id: string;
+	tags: string[];
 	creator: UserTypeFromDb;
 	image: GridFSFile;
 }
 
-export enum AiModelTypes {
-	GPT = "gpt",
-	SD = "stableDiffusion",
+export enum AiCategories {
+	CHAT = "chat",
+	IMAGE = "image",
 }
 
 export const postInit: PostType = {
 	prompt: "",
-	tags: [],
-	aiModelType: AiModelTypes.GPT,
+	tags: "",
+	aiCategory: AiCategories.CHAT,
 	link: "",
 };
 

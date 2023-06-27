@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import slugify from "slugify";
 
-import { AiModelTypes, PostType, PostErrorsType, postInit } from "@/interfaces/Post";
+import { AiCategories, PostType, PostErrorsType, postInit } from "@/interfaces/Post";
 import { FormTypes } from "@/interfaces/Form";
 import Form from "@/app/components/Form";
 
@@ -23,6 +23,10 @@ const CreatePost: React.FC = () => {
 		prevErrors: PostErrorsType,
 		errorKey: keyof PostErrorsType
 	) => {
+		if (!prevErrors) {
+			return null!;
+		}
+
 		// https://stackoverflow.com/q/63702057/6543935
 		let prevErrorsCopy = { ...prevErrors } as Partial<PostErrorsType>;
 
@@ -72,12 +76,12 @@ const CreatePost: React.FC = () => {
 		e.preventDefault();
 		setSubmitting(true);
 
-		if (post.aiModelType === AiModelTypes.SD && !formDataToUpload) {
+		if (post.aiCategory === AiCategories.IMAGE && !formDataToUpload) {
 			setErrors((prevErrors) => ({ ...prevErrors, image: { message: t("imageRequiredError") } }));
 			setSubmitting(false);
 
 			return;
-		} else if (post.aiModelType === AiModelTypes.SD && formDataToUpload) {
+		} else if (post.aiCategory === AiCategories.IMAGE && formDataToUpload) {
 			setErrors((prevErrors) => clearSpecificError_useStateCb(prevErrors, "image"));
 		}
 

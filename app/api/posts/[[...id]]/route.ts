@@ -47,11 +47,11 @@ export async function GET(request: NextRequest, { params }: Context) {
 }
 
 export async function POST(request: NextRequest) {
-	const { creator, prompt, tags, aiModelType, link, image } = await request.json();
+	const { creator, prompt, tags, aiCategory, link, image } = await request.json();
 
 	try {
 		await connectToMongoDb();
-		const new_Post = new Post({ creator, prompt, tags, aiModelType, link, image });
+		const new_Post = new Post({ creator, prompt, tags, aiCategory, link, image });
 
 		await new_Post.save();
 

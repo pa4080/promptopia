@@ -1,28 +1,31 @@
 import React, { CSSProperties, useRef, useState } from "react";
 
+import { ThemeColorsList } from "@/interfaces/ThemeTW";
+
+import { AiCategories } from "@/interfaces/Post";
+
 import CheckListItem from "./CheckListItem";
-import { IconEmbSvgPathType } from "./IconEmbedSVG";
+import { IconEmbSvgPathType } from "./IconEmbedSvg";
 
 export type ListItemType = {
 	label: string;
 	checked: boolean;
-	value?: string;
+	value: string;
 };
 export type ListItemsType = ListItemType[];
-export type ListType = "singleSelect" | "multiSelect";
+export type ListType = "singleSelect" | "multiSelect" | "atLeastOneSelected";
 
 interface Props {
 	items: ListItemsType;
 	label?: string;
 	type?: ListType;
 	style?: CSSProperties;
-	handleAssign?: (item?: string) => void;
+	handleAssign?: (item: string | AiCategories) => void;
 	icon?: {
 		size?: number;
-		color?: string;
+		color?: ThemeColorsList;
 		type?: IconEmbSvgPathType;
 		style?: CSSProperties;
-		// className?: string;
 	};
 }
 
@@ -39,15 +42,16 @@ const CheckList: React.FC<Props> = ({
 	label,
 	type = "singleSelect",
 	style,
-	// className,
 	handleAssign,
 	icon,
 }) => {
-	const [itemsState, setItemsState] = useState(items);
+	const [itemsState, setItemsState] = useState(structuredClone(items));
 
 	const itemsRefArr = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
 	const handleSelect = ({ label, value }: ListItemType) => {
+		let isAssignAllowed = true;
+
 		if (type === "singleSelect") {
 			for (const item of itemsState) {
 				if (item.label === label) {
@@ -62,11 +66,25 @@ const CheckList: React.FC<Props> = ({
 					item.checked = !item.checked;
 				}
 			}
+		} else if (type === "atLeastOneSelected") {
+			for (const item of itemsState) {
+				if (item.label === label) {
+					item.checked = !item.checked;
+				}
+			}
+
+			isAssignAllowed = itemsState.some((item) => item.checked);
 		}
 
-		Object.assign(items, itemsState);
-		handleAssign?.(value);
-		setItemsState([...itemsState]);
+		if (isAssignAllowed) {
+			if (handleAssign) {
+				handleAssign(value);
+			} else {
+				Object.assign(items, itemsState);
+			}
+
+			setItemsState([...itemsState]);
+		}
 	};
 
 	return (

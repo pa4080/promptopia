@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
-import { PostTypeFromDb } from "@/interfaces/Post";
+import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
 import PromptCardList from "./PostCard";
 
@@ -12,7 +12,15 @@ import CheckList from "./fragments/CheckList";
 
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
+	const tCommon = useTranslations("Common");
 	const [searchText, setSearchText] = useState("");
+	const [aiCategories, setAiCategories] = useState(
+		Object.values(AiCategories).map((aiCategory) => ({
+			label: tCommon(`aiCats.${aiCategory}`),
+			checked: true,
+			value: aiCategory,
+		}))
+	);
 	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 
 	// TODO: Move this part to server-side rendering like in...
@@ -23,13 +31,26 @@ const Feed: React.FC = () => {
 			const data = await response.json();
 
 			// eslint-disable-next-line no-console
-			console.log("data", data);
+			// console.log("data", data);
 
 			setPosts(data.posts);
 		};
 
 		fetchPosts();
 	}, []);
+
+	const handleAiCategorySelect = (aiCategory: AiCategories) => {
+		setAiCategories(
+			aiCategories.map((cat) =>
+				cat.value === aiCategory
+					? {
+							...cat,
+							checked: !cat.checked,
+					  }
+					: cat
+			)
+		);
+	};
 
 	return (
 		<section className="feed">
@@ -44,22 +65,24 @@ const Feed: React.FC = () => {
 				/>
 			</form>
 
-			<CheckList
-				icon={{ size: 20 }}
-				items={[
-					{ label: "GPT", checked: true },
-					{ label: "SD", checked: false },
-				]}
-				type="multiSelect"
-				// label={t("model")}
-			/>
-			<PromptCardList
-				data={posts}
-				handleTagClick={(tag: string) => {
-					// eslint-disable-next-line no-console
-					console.log(tag);
-				}}
-			/>
+			<div className="text-mlt-dark-6 font-semibold w-full pl-0.5">
+				<CheckList
+					handleAssign={(item) => handleAiCategorySelect(item as AiCategories)}
+					icon={{ size: 22, color: "mlt-orange-secondary" }}
+					items={aiCategories}
+					type="atLeastOneSelected"
+				/>
+			</div>
+
+			<div className="post_feed">
+				<PromptCardList
+					data={posts}
+					handleTagClick={(tag: string) => {
+						// eslint-disable-next-line no-console
+						console.log(tag);
+					}}
+				/>
+			</div>
 		</section>
 	);
 };

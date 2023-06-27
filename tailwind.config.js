@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const mltColors = {
+const ThemeColors = {
 	"mlt-gray-0": "#646464",
 	"mlt-gray-1": "#787878",
 	"mlt-gray-2": "#a0a0a0",
@@ -49,7 +49,11 @@ module.exports = {
 		extend: {
 			// https://tailwindcss.com/docs/screens
 			screens: {
-				usm: "480px",
+				"2sm": "480px",
+				"3sm": "420px",
+				"4sm": "380px",
+				"5sm": "320px",
+				"2md": "820px",
 			},
 			fontFamily: {
 				satoshi: ["Satoshi", "sans-serif"],
@@ -90,10 +94,10 @@ module.exports = {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
-				...mltColors,
+				...ThemeColors,
 			},
 			backgroundColor: {
-				...mltColors,
+				...ThemeColors,
 			},
 			borderRadius: {
 				lg: "var(--radius)",

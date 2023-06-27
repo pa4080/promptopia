@@ -105,7 +105,7 @@ const Nav: React.FC = () => {
 	);
 
 	return (
-		<nav className="flex_between_center w-full mb-16 pt-4 sm:pt-8 h-16">
+		<nav className="flex justify-between items-center w-full mb-16 pt-4 sm:pt-8 h-16">
 			<Link
 				className="flex gap-1 flex_center hover:drop-shadow-md transition-all duration-300"
 				href="/"
