@@ -105,12 +105,14 @@ const CreatePost: React.FC = () => {
 				image_id = (await response.json())[0]._id;
 			}
 
+			/**
 			// eslint-disable-next-line no-console
 			console.log(
 				`Upload of "${postImageFnToUpload} (_id: ${image_id})" is ${
 					response ? "successful!" : "not successful."
 				}`
 			);
+			 */
 		}
 
 		try {

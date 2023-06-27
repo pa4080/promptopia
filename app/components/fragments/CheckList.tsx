@@ -2,8 +2,6 @@ import React, { CSSProperties, useRef, useState } from "react";
 
 import { ThemeColorsList } from "@/interfaces/ThemeTW";
 
-import { AiCategories } from "@/interfaces/Post";
-
 import CheckListItem from "./CheckListItem";
 import { IconEmbSvgPathType } from "./IconEmbedSvg";
 
@@ -17,10 +15,12 @@ export type ListType = "singleSelect" | "multiSelect" | "atLeastOneSelected";
 
 interface Props {
 	items: ListItemsType;
-	label?: string;
+	listTitle?: string;
 	type?: ListType;
 	style?: CSSProperties;
-	handleAssign?: (item: string | AiCategories) => void;
+	handleAssign:
+		| React.Dispatch<React.SetStateAction<ListItemsType>>
+		| ((items: ListItemsType) => void);
 	icon?: {
 		size?: number;
 		color?: ThemeColorsList;
@@ -31,7 +31,7 @@ interface Props {
 
 /**
  * @param items Array of items to be displayed
- * @param label Label of the checklist
+ * @param listTitle Title of the CheckList
  * @param type Type of the checklist: singleSelect, multiSelect
  * @param style CSS style of the checklist
  * @param icon Type and style of the Icons
@@ -39,63 +39,73 @@ interface Props {
  */
 const CheckList: React.FC<Props> = ({
 	items,
-	label,
+	listTitle,
 	type = "singleSelect",
 	style,
 	handleAssign,
 	icon,
 }) => {
 	const [itemsState, setItemsState] = useState(structuredClone(items));
-
 	const itemsRefArr = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-	const handleSelect = ({ label, value }: ListItemType) => {
+	const handleSelect = ({ value }: ListItemType) => {
 		let isAssignAllowed = true;
+		let newItemsState = structuredClone(itemsState);
+
+		const singleSelectIterator = (inputItems: ListItemsType, value: string) => {
+			return structuredClone(inputItems).map((item) =>
+				item.value === value
+					? {
+							...item,
+							checked: true,
+					  }
+					: {
+							...item,
+							checked: false,
+					  }
+			);
+		};
+
+		const multiSelectIterator = (inputItems: ListItemsType, value: string) => {
+			return structuredClone(inputItems).map((item) =>
+				item.value === value
+					? {
+							...item,
+							checked: !item.checked,
+					  }
+					: item
+			);
+		};
 
 		if (type === "singleSelect") {
-			for (const item of itemsState) {
-				if (item.label === label) {
-					item.checked = true;
-				} else {
-					item.checked = false;
-				}
-			}
+			newItemsState = singleSelectIterator(newItemsState, value);
 		} else if (type === "multiSelect") {
-			for (const item of itemsState) {
-				if (item.label === label) {
-					item.checked = !item.checked;
-				}
-			}
+			newItemsState = multiSelectIterator(newItemsState, value);
 		} else if (type === "atLeastOneSelected") {
-			for (const item of itemsState) {
-				if (item.label === label) {
-					item.checked = !item.checked;
-				}
-			}
+			isAssignAllowed = multiSelectIterator(newItemsState, value).some((item) => item.checked);
 
-			isAssignAllowed = itemsState.some((item) => item.checked);
+			if (isAssignAllowed) {
+				newItemsState = multiSelectIterator(newItemsState, value);
+			} else {
+				return;
+			}
 		}
 
 		if (isAssignAllowed) {
-			if (handleAssign) {
-				handleAssign(value);
-			} else {
-				Object.assign(items, itemsState);
-			}
-
-			setItemsState([...itemsState]);
+			handleAssign(newItemsState);
+			setItemsState(newItemsState);
 		}
 	};
 
 	return (
 		<div className="flex flex-col gap-2 w-full">
-			<div className="list_label">{label}</div>
+			<div className="list_label">{listTitle}</div>
 			<div className="flex_start gap-4 w-full items-center" style={{ ...style }}>
 				{itemsState.map((stateItem, index) => (
 					<div
 						key={index}
 						ref={(ref) => (itemsRefArr.current[stateItem.label] = ref)}
-						className="flex gap-1 items-center list_item"
+						className="flex gap-1 items-center list_item select-none"
 						onClick={() => handleSelect(stateItem)}
 					>
 						<CheckListItem

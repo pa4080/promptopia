@@ -9,7 +9,7 @@ import Link from "next/link";
 import { FormProps } from "@/interfaces/Form";
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
-import CheckList from "@/app/components/fragments/CheckList";
+import CheckList, { ListItemsType } from "@/app/components/fragments/CheckList";
 
 import IconEmbedSvg from "./fragments/IconEmbedSvg";
 
@@ -28,7 +28,9 @@ const Form: React.FC<FormProps> = ({
 
 	const i18nFormType = { type: t(`Types.${type}`) };
 
-	const handlePostAiCategoryChange = (aiCategory: AiCategories) => {
+	const handlePostAiCategoryChange = (aiCategoryList: ListItemsType) => {
+		const aiCategory = aiCategoryList.find((category) => category.checked)?.value as AiCategories;
+
 		setPost((prevPost) => ({ ...prevPost, aiCategory }));
 	};
 
@@ -138,7 +140,7 @@ const Form: React.FC<FormProps> = ({
 				<div className="flex justify-between items-start gap-4 flex-col 2sm:flex-row">
 					<div className="text-mlt-dark-6 font-semibold w-full pl-0.5">
 						<CheckList
-							handleAssign={(itemLabel) => handlePostAiCategoryChange(itemLabel as AiCategories)}
+							handleAssign={handlePostAiCategoryChange}
 							icon={{ size: 22, color: "mlt-orange-secondary" }}
 							items={Object.values(AiCategories).map((aiCategory) => ({
 								label: tCommon(`aiCats.${aiCategory}`),
