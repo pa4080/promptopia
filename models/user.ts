@@ -26,6 +26,9 @@ const UserSchema = new Schema({
 		type: String,
 		required: [true, "Account provider is required!"],
 	},
+	description: {
+		type: String,
+	},
 });
 
 /**

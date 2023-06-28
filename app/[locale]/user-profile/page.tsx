@@ -4,8 +4,26 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import UserProfile from "@/app/components/UserProfile";
+import { PostTypeFromDb } from "@/interfaces/Post";
+import { fetchPosts } from "@/lib/fetch";
+import { UserTypeFromDb } from "@/interfaces/User";
 
 const UserProfilePage: React.FC = () => {
+	const { data: session } = useSession();
+	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
+	const router = useRouter();
+
+	useEffect(() => {
+		if (session && session?.user?.id) {
+			(async () => {
+				setPosts(await fetchPosts(`/api/users/${session?.user?.id}/posts`));
+			})();
+		} else {
+			router.push("/");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	const handleEdit = () => {
 		// eslint-disable-next-line no-console
 		console.log("Edit");
@@ -18,12 +36,10 @@ const UserProfilePage: React.FC = () => {
 
 	return (
 		<UserProfile
-			description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae nisl quis nisl aliquam ultricies."
-			email="test@email.com"
 			handleDelete={handleDelete}
 			handleEdit={handleEdit}
-			name="John Doe"
-			posts={[]}
+			posts={posts}
+			user={session?.user as unknown as UserTypeFromDb}
 		/>
 	);
 };

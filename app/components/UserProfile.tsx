@@ -3,10 +3,14 @@ import { useTranslations } from "next-intl";
 
 import { Profile } from "@/interfaces/Profile";
 
-const UserProfile: React.FC<Profile> = ({}) => {
+const UserProfile: React.FC<Profile> = ({ user, posts, handleEdit, handleDelete }) => {
 	const t = useTranslations("Profile");
 
-	return <div>profile</div>;
+	return (
+		<div>
+			{user?.name}, {user?.description}
+		</div>
+	);
 };
 
 export default UserProfile;

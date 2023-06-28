@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
+import { fetchPosts } from "@/lib/fetch";
+
 import PromptCardList from "./PostCard";
 
 import CheckList, { ListItemType } from "./fragments/CheckList";
@@ -13,6 +15,7 @@ import CheckList, { ListItemType } from "./fragments/CheckList";
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
 	const tCommon = useTranslations("Common");
+	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 	const [searchText, setSearchText] = useState("");
 	const [aiCategories, setAiCategories] = useState<ListItemType[]>(
 		Object.values(AiCategories).map((aiCategory) => ({
@@ -21,22 +24,11 @@ const Feed: React.FC = () => {
 			value: aiCategory,
 		}))
 	);
-	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 
-	// TODO: Move this part to server-side rendering like in...
-	// https://github.com/metalevel-tech/template-nextjs-13-app-router/blob/master/app/[locale]/games/page.tsx
 	useEffect(() => {
-		const fetchPosts = async () => {
-			const response = await fetch("/api/posts");
-			const data = await response.json();
-
-			// eslint-disable-next-line no-console
-			// console.log("data", data);
-
-			setPosts(data.posts);
-		};
-
-		fetchPosts();
+		(async () => {
+			setPosts(await fetchPosts("/api/posts"));
+		})();
 	}, []);
 
 	return (

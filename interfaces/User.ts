@@ -4,6 +4,7 @@ export interface UserType {
 	name: string;
 	image: string;
 	accountProvider: string;
+	description?: string;
 }
 
 export interface UserTypeFromDb extends UserType {

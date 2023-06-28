@@ -22,6 +22,8 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 // import CredentialsProvider from "next-auth/providers/credentials";
 
+import { getTranslations } from "next-intl/server";
+
 import { connectToMongoDb } from "@/lib/mongodb-mongoose";
 
 import User from "@/models/user";
@@ -52,6 +54,9 @@ export const authOptions: NextAuthOptions = {
 			const sessionUser = await User.findOne({ email: session?.user?.email });
 
 			session.user.id = sessionUser?._id.toString(); // see: @/types/next-auth
+			session.user.accountProvider = sessionUser?.accountProvider;
+			session.user.username = sessionUser?.username;
+			session.user.description = sessionUser?.description;
 
 			return session; // The return type will match the one returned in `useSession()`
 		},
@@ -82,14 +87,16 @@ export const authOptions: NextAuthOptions = {
 					await User.create({
 						email: String(profile?.email),
 						username: String(
-							`${profile?.email}${name}${account?.provider}`
+							`${profile?.email}${Math.floor(Math.random() * 10000)}${account?.provider}`
 								?.replace(/(\s|\.|-|@)/g, ".")
 								.replace(/\.+/g, "")
 								.toLocaleLowerCase()
+								.replace(/[^a-z0-9]/gi, "")
 						),
 						name,
 						image: String(profile?.picture ?? profile?.image ?? profile?.avatar_url),
 						accountProvider: String(account?.provider),
+						description: (await getTranslations("Common"))("defaultUserDescription"),
 					});
 				}
 
