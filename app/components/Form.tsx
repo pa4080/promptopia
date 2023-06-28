@@ -9,7 +9,7 @@ import Link from "next/link";
 import { FormProps } from "@/interfaces/Form";
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
-import CheckList, { ListItemsType } from "@/app/components/fragments/CheckList";
+import CheckList, { ListItemType } from "@/app/components/fragments/CheckList";
 
 import IconEmbedSvg from "./fragments/IconEmbedSvg";
 
@@ -28,7 +28,7 @@ const Form: React.FC<FormProps> = ({
 
 	const i18nFormType = { type: t(`Types.${type}`) };
 
-	const handlePostAiCategoryChange = (aiCategoryList: ListItemsType) => {
+	const handlePostAiCategoryChange = (aiCategoryList: ListItemType[]) => {
 		const aiCategory = aiCategoryList.find((category) => category.checked)?.value as AiCategories;
 
 		setPost((prevPost) => ({ ...prevPost, aiCategory }));

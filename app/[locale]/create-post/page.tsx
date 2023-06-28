@@ -9,7 +9,7 @@ import { AiCategories, PostType, PostErrorsType, postInit } from "@/interfaces/P
 import { FormTypes } from "@/interfaces/Form";
 import Form from "@/app/components/Form";
 
-const CreatePost: React.FC = () => {
+const CreatePostPage: React.FC = () => {
 	const t = useTranslations("CreatePost");
 	const router = useRouter();
 	const { data: session } = useSession();
@@ -168,4 +168,4 @@ const CreatePost: React.FC = () => {
 	);
 };
 
-export default CreatePost;
+export default CreatePostPage;

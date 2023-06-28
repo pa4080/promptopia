@@ -17,7 +17,7 @@ import { BuiltInProviderType } from "next-auth/providers";
 
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 
-import Icon from "./fragments/Icon";
+import IconImageBased from "./fragments/IconImageBased";
 
 const providersIcons = ["google", "github"];
 
@@ -68,7 +68,7 @@ const Nav: React.FC = () => {
 								type="button"
 								onClick={() => signIn(provider.id)}
 							>
-								<Icon icon={{ name: provider.id, size: 22 }} />
+								<IconImageBased icon={{ name: provider.id, size: 22 }} />
 							</button>
 						);
 					}
@@ -139,7 +139,7 @@ const Nav: React.FC = () => {
 								{t("signOut")}
 							</button>
 
-							<Link href="/profile">{profilePicture}</Link>
+							<Link href="/user-profile">{profilePicture}</Link>
 						</>
 					) : (
 						listLoginProviders
@@ -155,7 +155,7 @@ const Nav: React.FC = () => {
 							<div className="dropdown">
 								<Link
 									className="dropdown_link mt-3"
-									href="/profile"
+									href="/user-profile"
 									onClick={() => setToggleDropDown(false)}
 								>
 									{t("myProfile")}

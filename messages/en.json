@@ -76,10 +76,14 @@
 	"PostCard": {
 		"altProfilePicture": "Prompt Creator Profile Picture",
 		"altCopyPrompt": "Copy Prompt",
-		"altPromptImage": "Prompt Image"
+		"altPromptImage": "Prompt Image",
+		"defaultUsername": "Promptopia Metalevel.tech",
+		"defaultEmail": "promptopia@metalevel.tech",
+		"spamProtect": "@spam.protect"
 	},
 	"CreatePost": {
 		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",
 		"imageRequiredError": "For this kind of prompt post the image is required!"
-	}
+	},
+	"Profile": {}
 }

@@ -89,6 +89,7 @@ export const authOptions: NextAuthOptions = {
 						),
 						name,
 						image: String(profile?.picture ?? profile?.image ?? profile?.avatar_url),
+						accountProvider: String(account?.provider),
 					});
 				}
 

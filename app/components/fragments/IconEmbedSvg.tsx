@@ -21,7 +21,18 @@ export type IconEmbSvgPathType =
 	| "link"
 	| "message-lines";
 
-interface Props {
+/**
+ * @param width Width of the SVG element
+ * @param height Height of the SVG element
+ * @param color1 Hex color code of the outer color
+ * @param color2 Hex color code of the inner color
+ * @param opacity1 Opacity of the outer color in hex
+ * @param opacity2 Opacity of the inner color in hex
+ * @param type Type of the SVG element: check, check-square...
+ * @param cursor Cursor type: pointer, default, inherit
+ * @returns SVG element
+ */
+interface IconEmbedSvgType {
 	width?: number;
 	height?: number;
 	color1?: ThemeColorsList;
@@ -34,18 +45,7 @@ interface Props {
 	alt?: string;
 }
 
-/**
- * @param width Width of the SVG element
- * @param height Height of the SVG element
- * @param color1 Hex color code of the outer color
- * @param color2 Hex color code of the inner color
- * @param opacity1 Opacity of the outer color in hex
- * @param opacity2 Opacity of the inner color in hex
- * @param type Type of the SVG element: check, check-square...
- * @param cursor Cursor type: pointer, default, inherit
- * @returns SVG element
- */
-const IconEmbedSvg: React.FC<Props> = ({
+const IconEmbedSvg: React.FC<IconEmbedSvgType> = ({
 	width = 24,
 	height,
 	color1 = "mlt-purple-secondary",
@@ -87,7 +87,6 @@ export default IconEmbedSvg;
 /**
  * The dual color SVG path library starts here.
  */
-
 interface SvgPathLibProps {
 	type: IconEmbSvgPathType;
 	c1: string;

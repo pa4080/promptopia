@@ -1,32 +1,22 @@
 import React, { CSSProperties, useRef, useState } from "react";
 
-import { ThemeColorsList } from "@/interfaces/ThemeTW";
-
-import CheckListItem from "./CheckListItem";
-import { IconEmbSvgPathType } from "./IconEmbedSvg";
+import CheckListItem, { CheckListItemType } from "./CheckListItem";
 
 export type ListItemType = {
 	label: string;
 	checked: boolean;
 	value: string;
 };
-export type ListItemsType = ListItemType[];
-export type ListType = "singleSelect" | "multiSelect" | "atLeastOneSelected";
 
-interface Props {
-	items: ListItemsType;
-	listTitle?: string;
-	type?: ListType;
-	style?: CSSProperties;
+interface CheckListType {
+	items: ListItemType[];
+	type: "singleSelect" | "multiSelect" | "atLeastOneSelected";
 	handleAssign:
-		| React.Dispatch<React.SetStateAction<ListItemsType>>
-		| ((items: ListItemsType) => void);
-	icon?: {
-		size?: number;
-		color?: ThemeColorsList;
-		type?: IconEmbSvgPathType;
-		style?: CSSProperties;
-	};
+		| React.Dispatch<React.SetStateAction<ListItemType[]>>
+		| ((items: ListItemType[]) => void);
+	icon?: Omit<CheckListItemType, "checked">;
+	listTitle?: string;
+	style?: CSSProperties;
 }
 
 /**
@@ -34,10 +24,11 @@ interface Props {
  * @param listTitle Title of the CheckList
  * @param type Type of the checklist: singleSelect, multiSelect
  * @param style CSS style of the checklist
+ * @param handleAssign Function to handle the assignment of the items
  * @param icon Type and style of the Icons
  * @returns CheckList component
  */
-const CheckList: React.FC<Props> = ({
+const CheckList: React.FC<CheckListType> = ({
 	items,
 	listTitle,
 	type = "singleSelect",
@@ -52,7 +43,7 @@ const CheckList: React.FC<Props> = ({
 		let isAssignAllowed = true;
 		let newItemsState = structuredClone(itemsState);
 
-		const singleSelectIterator = (inputItems: ListItemsType, value: string) => {
+		const singleSelectIterator = (inputItems: ListItemType[], value: string) => {
 			return structuredClone(inputItems).map((item) =>
 				item.value === value
 					? {
@@ -66,7 +57,7 @@ const CheckList: React.FC<Props> = ({
 			);
 		};
 
-		const multiSelectIterator = (inputItems: ListItemsType, value: string) => {
+		const multiSelectIterator = (inputItems: ListItemType[], value: string) => {
 			return structuredClone(inputItems).map((item) =>
 				item.value === value
 					? {

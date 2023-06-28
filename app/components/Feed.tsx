@@ -8,13 +8,13 @@ import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
 import PromptCardList from "./PostCard";
 
-import CheckList, { ListItemsType } from "./fragments/CheckList";
+import CheckList, { ListItemType } from "./fragments/CheckList";
 
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
 	const tCommon = useTranslations("Common");
 	const [searchText, setSearchText] = useState("");
-	const [aiCategories, setAiCategories] = useState<ListItemsType>(
+	const [aiCategories, setAiCategories] = useState<ListItemType[]>(
 		Object.values(AiCategories).map((aiCategory) => ({
 			label: tCommon(`aiCats.${aiCategory}`),
 			checked: true,

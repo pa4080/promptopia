@@ -21,7 +21,14 @@ export interface IconProps {
 	[unknownProp: string]: unknown;
 }
 
-const Icon: React.FC<IconProps> = ({ icon, size = 36, width, height, style, ...rest }) => {
+const IconImageBased: React.FC<IconProps> = ({
+	icon,
+	size = 36,
+	width,
+	height,
+	style,
+	...rest
+}) => {
 	const file = `${icon.name}.${icon.extension ?? "svg"}`;
 	const iconUri = `/${icon.location ?? "assets"}/icons/${file}`;
 
@@ -44,4 +51,4 @@ const Icon: React.FC<IconProps> = ({ icon, size = 36, width, height, style, ...r
 	);
 };
 
-export default Icon;
+export default IconImageBased;

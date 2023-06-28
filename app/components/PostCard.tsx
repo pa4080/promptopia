@@ -47,11 +47,12 @@ export const PostCard: React.FC<Props> = ({ post, copied, setCopied, handleTagCl
 					</div>
 					<div className="flex flex-col max-w-[100%] overflow-hidden gap-1">
 						<h3 className="font-satoshi font-semibold text-mlt-dark-2 pr-7">
-							{post?.creator?.name}
+							{post?.creator?.name ?? t("defaultUsername")}
 						</h3>
 
-						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden">
-							{post?.creator?.email}
+						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden whitespace-pre">
+							{post?.creator?.email.replace(/\./g, "-").replace(/@.*$/, t("spamProtect")) ??
+								t("defaultEmail")}
 						</p>
 					</div>
 				</div>
