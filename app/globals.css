@@ -123,7 +123,8 @@ body {
 /** 
  * JavaScript Mastery Tutorial CSS:
  * > Next.js 13 Full Course 2023 (https://youtu.be/wm5gMKuwSYk)
- *
+ *   @modified by: @Spas.Z.Spasov
+
  * Note: The styles for this gradient grid background is
  * heavily inspired by the creator of this amazing site (https://dub.sh)
  * – all credits go to them! 
@@ -189,7 +190,6 @@ body {
 
 /* Tailwind Styles */
 .app {
-	/* @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-12 px-6; */
 	@apply relative z-10 px-6 sm:px-8 md:px-10 2md:px-12;
 
 	overflow-x: hidden;
@@ -403,7 +403,7 @@ body {
 }
 
 /* PromptCard Component and Post/Prompt feed */
-.post_feed {
+.post_card_list {
 	@apply gap-8 mt-16 w-full
 				sm:columns-2 md:w-max
 				lg:gap-10
@@ -411,7 +411,7 @@ body {
 }
 
 .prompt_card {
-	@apply flex-1 break-inside-avoid rounded-xl border-2 border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter w-full h-fit 
+	@apply flex-1 break-inside-avoid rounded-xl border-2 border-mlt-gray-5/80 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter w-full h-fit 
 	transition-all duration-300 
 	drop-shadow-md shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.1)]
 	mb-8 lg:mb-10 2xl:mb-12;
@@ -420,7 +420,7 @@ body {
 	hover:shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.15)]; */
 }
 
-.post_feed .prompt_card {
+.post_card_list .prompt_card {
 	@apply md:max-w-[340px] 
 				2md:max-w-[380px] 
 				lg:max-w-[460px]
@@ -467,6 +467,10 @@ body {
 	@apply rounded-3xl rounded-b-none w-full 2xl:h-56 object-cover m-0;
 }
 
+.prompt_card_edit_section {
+	@apply w-full flex items-center flex-row justify-end mt-6 pt-4 border-t-2 border-t-mlt-gray-5/80;
+}
+
 .flex_center {
 	@apply flex justify-center items-center;
 }
@@ -484,6 +488,6 @@ body {
 	@apply text-red-500 text-xs italic pt-2;
 }
 
-.post_tag {
-	@apply mr-2 my-1 py-0.5 px-2 inline-block rounded-full cursor-pointer select-none transition-colors duration-200 active:scale-95 bg-opacity-60 hover:bg-opacity-100 active:bg-opacity-80;
+.post_button {
+	@apply py-0.5 px-2 inline-block rounded-full cursor-pointer select-none transition-colors duration-200 active:scale-95 bg-opacity-60 hover:bg-opacity-100 active:bg-opacity-80;
 }

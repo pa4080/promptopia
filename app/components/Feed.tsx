@@ -8,7 +8,7 @@ import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
 import { fetchPosts } from "@/lib/fetch";
 
-import PromptCardList from "./PostCard";
+import PostCardList from "./PostCardList";
 
 import CheckList, { ListItemType } from "./fragments/CheckList";
 
@@ -53,15 +53,7 @@ const Feed: React.FC = () => {
 				/>
 			</div>
 
-			<div className="post_feed">
-				<PromptCardList
-					data={posts}
-					handleTagClick={(tag: string) => {
-						// eslint-disable-next-line no-console
-						console.log(tag);
-					}}
-				/>
-			</div>
+			<PostCardList data={posts} />
 		</section>
 	);
 };

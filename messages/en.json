@@ -80,11 +80,15 @@
 		"altPromptImage": "Prompt Image",
 		"defaultUsername": "Promptopia Metalevel.tech",
 		"defaultEmail": "promptopia@metalevel.tech",
-		"spamProtect": "@spam.protect"
+		"spamProtect": "@spam.protect",
+		"edit": "Edit",
+		"delete": "Delete"
 	},
 	"CreatePost": {
 		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",
 		"imageRequiredError": "For this kind of prompt post the image is required!"
 	},
-	"Profile": {}
+	"Profile": {
+		"description": "Welcome to your profile page. Here you can see, edit or delete all your posts and edit your profile."
+	}
 }

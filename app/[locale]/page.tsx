@@ -1,12 +1,15 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 
-import Welcome from "@/app/components/Welcome";
+import Header from "@/app/components/Header";
 import Feed from "@/app/components/Feed";
 
 const Home: React.FC = () => {
+	const t = useTranslations("Home");
+
 	return (
 		<section className="w-full flex_center flex-col">
-			<Welcome />
+			<Header desc={t("subHeading")} titleBlack={t("headingLn1")} titleGradient={t("headingLn2")} />
 			<Feed />
 		</section>
 	);

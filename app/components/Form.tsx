@@ -11,7 +11,10 @@ import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
 import CheckList, { ListItemType } from "@/app/components/fragments/CheckList";
 
+import { Path } from "@/interfaces/Path";
+
 import IconEmbedSvg from "./fragments/IconEmbedSvg";
+import Header from "./Header";
 
 const Form: React.FC<FormProps> = ({
 	handleSubmit,
@@ -42,10 +45,12 @@ const Form: React.FC<FormProps> = ({
 
 	return (
 		<section className="w-full max-w-full flex_start flex-col">
-			<h1 className="head_text text-left">
-				<span className="blue_gradient">{t("postType", i18nFormType)}</span>
-			</h1>
-			<p className="desc text-left max-w-md">{t("postTypeDesc", i18nFormType)}</p>
+			<Header
+				desc={t("postTypeDesc", i18nFormType)}
+				gradient="blue_gradient"
+				textStyle="text-left"
+				titleGradient={t("postType", i18nFormType)}
+			/>
 
 			<form
 				className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
@@ -151,7 +156,10 @@ const Form: React.FC<FormProps> = ({
 						/>
 					</div>
 					<div className="flex_end gap-4 flex-row w-full">
-						<Link className="text-sm text-mlt-dark-4 hover:text-mlt-orange-primary" href="/">
+						<Link
+							className="text-sm text-mlt-dark-4 hover:text-mlt-orange-primary"
+							href={Path.HOME}
+						>
 							{t("cancel")}
 						</Link>
 						<button className="_btn orange_invert" disabled={submitting} type="submit">

@@ -8,6 +8,7 @@ import slugify from "slugify";
 import { AiCategories, PostType, PostErrorsType, postInit } from "@/interfaces/Post";
 import { FormTypes } from "@/interfaces/Form";
 import Form from "@/app/components/Form";
+import { Path } from "@/interfaces/Path";
 
 const CreatePostPage: React.FC = () => {
 	const t = useTranslations("CreatePost");
@@ -132,7 +133,7 @@ const CreatePostPage: React.FC = () => {
 			});
 
 			if (response.ok) {
-				router.push("/");
+				router.push(Path.HOME);
 			} else {
 				/**
 				 * The error handling here should be a bit

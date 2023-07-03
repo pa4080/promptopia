@@ -7,6 +7,7 @@ import UserProfile from "@/app/components/UserProfile";
 import { PostTypeFromDb } from "@/interfaces/Post";
 import { fetchPosts } from "@/lib/fetch";
 import { UserTypeFromDb } from "@/interfaces/User";
+import { Path } from "@/interfaces/Path";
 
 const UserProfilePage: React.FC = () => {
 	const { data: session } = useSession();
@@ -19,7 +20,7 @@ const UserProfilePage: React.FC = () => {
 				setPosts(await fetchPosts(`/api/users/${session?.user?.id}/posts`));
 			})();
 		} else {
-			router.push("/");
+			router.push(Path.HOME);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

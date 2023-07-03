@@ -3,13 +3,23 @@ import { useTranslations } from "next-intl";
 
 import { Profile } from "@/interfaces/Profile";
 
-const UserProfile: React.FC<Profile> = ({ user, posts, handleEdit, handleDelete }) => {
+import Header from "./Header";
+import PostCardList from "./PostCardList";
+
+const UserProfile: React.FC<Profile> = ({ user, posts }) => {
 	const t = useTranslations("Profile");
 
 	return (
-		<div>
-			{user?.name}, {user?.description}
-		</div>
+		<section className="w-full">
+			<Header
+				desc={`${user?.description}: ${t("description")}`}
+				gradient="blue_gradient"
+				textStyle="text-left"
+				titleGradient={user?.name}
+			/>
+
+			<PostCardList del edit data={posts} />
+		</section>
 	);
 };
 
