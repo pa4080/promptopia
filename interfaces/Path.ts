@@ -1,5 +1,7 @@
 export enum Path {
 	HOME = "/",
-	CREATE = "/create-post",
 	PROFILE = "/user-profile",
+	POST_CREATE = "/post-create",
+	POST_UPDATE = "/post-update",
+	POST_DELETE = "/post-delete",
 }

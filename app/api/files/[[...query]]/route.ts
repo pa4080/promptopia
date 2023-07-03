@@ -11,7 +11,7 @@ interface Context {
 	params: { query: string[] };
 }
 
-function _filename(params: Context["params"]) {
+function paramsToObject(params: Context["params"]) {
 	return Object.keys(params).length > 0 ? { filename: params?.query[0] } : {};
 }
 
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 				);
 			}
 		} else {
-			const files = await bucket.find(_filename(params)).toArray();
+			const files = await bucket.find(paramsToObject(params)).toArray();
 
 			switch (files?.length) {
 				case 0: {

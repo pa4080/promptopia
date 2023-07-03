@@ -133,7 +133,7 @@ const Nav: React.FC = () => {
 				<div className="flex_center gap-3 md:gap-3">
 					{session?.user ? (
 						<>
-							<Link className="_btn gray_invert " href={Path.CREATE}>
+							<Link className="_btn gray_invert " href={Path.POST_CREATE}>
 								{t("createPrompt")}
 							</Link>
 
@@ -164,7 +164,7 @@ const Nav: React.FC = () => {
 								</Link>
 								<Link
 									className="dropdown_link"
-									href={Path.CREATE}
+									href={Path.POST_CREATE}
 									onClick={() => setToggleDropDown(false)}
 								>
 									{t("createPrompt")}

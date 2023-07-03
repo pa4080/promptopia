@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
 
@@ -12,6 +13,7 @@ interface PromptCardListProps {
 
 const PostCardList: React.FC<PromptCardListProps> = ({ data, edit = false, del = false }) => {
 	const [copied, setCopied] = useState("");
+	const router = useRouter();
 
 	const handleTagClick = (tag: string) => {
 		// eslint-disable-next-line no-console

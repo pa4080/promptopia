@@ -31,7 +31,6 @@ const PostCard: React.FC<PostCardProps> = ({
 	handleDelete,
 }) => {
 	const t = useTranslations("PostCard");
-	const router = useRouter();
 	const pathName = usePathname();
 	const { data: session } = useSession();
 	const isEditMode = session?.user?.id === post.creator._id && pathName === Path.PROFILE;
@@ -47,7 +46,7 @@ const PostCard: React.FC<PostCardProps> = ({
 	return (
 		<div className="prompt_card">
 			<div className="relative">
-				<div className="flex flex-1 justify-start gap-3 cursor-pointer  flex-row items-center ">
+				<div className="flex flex-1 justify-start gap-3 cursor-pointer flex-row items-center ">
 					<div className="flex_center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem]">
 						<Image
 							alt={t("altProfilePicture")}
