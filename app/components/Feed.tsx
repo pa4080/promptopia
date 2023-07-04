@@ -33,7 +33,7 @@ const Feed: React.FC = () => {
 
 	return (
 		<section className="feed">
-			<form className="relative w-full flex_center">
+			<form className="relative w-full flex justify-center items-center">
 				<input
 					required
 					className="form_input search_input"

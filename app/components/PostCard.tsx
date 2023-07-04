@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 
@@ -47,7 +47,7 @@ const PostCard: React.FC<PostCardProps> = ({
 		<div className="prompt_card">
 			<div className="relative">
 				<div className="flex flex-1 justify-start gap-3 cursor-pointer flex-row items-center ">
-					<div className="flex_center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem]">
+					<div className="flex justify-center items-center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem]">
 						<Image
 							alt={t("altProfilePicture")}
 							className="rounded-full object-contain"

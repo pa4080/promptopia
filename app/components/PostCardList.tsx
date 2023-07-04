@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
 
+import { Path } from "@/interfaces/Path";
+
 import PostCard from "./PostCard";
 
 interface PromptCardListProps {
@@ -21,13 +23,11 @@ const PostCardList: React.FC<PromptCardListProps> = ({ data, edit = false, del =
 	};
 
 	const handleDelete = (post: PostTypeFromDb) => {
-		// eslint-disable-next-line no-console
-		console.log("delete", post);
+		router.push(`${Path.POST_DELETE}?id=${post._id}`);
 	};
 
 	const handleEdit = (post: PostTypeFromDb) => {
-		// eslint-disable-next-line no-console
-		console.log("edit", post);
+		router.push(`${Path.POST_UPDATE}?id=${post._id}`);
 	};
 
 	return (

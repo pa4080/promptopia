@@ -9,7 +9,7 @@ import { fetchPosts } from "@/lib/fetch";
 import { UserTypeFromDb } from "@/interfaces/User";
 import { Path } from "@/interfaces/Path";
 
-const UserProfilePage: React.FC = () => {
+const UserProfile_Page: React.FC = () => {
 	const { data: session } = useSession();
 	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 	const router = useRouter();
@@ -45,4 +45,4 @@ const UserProfilePage: React.FC = () => {
 	);
 };
 
-export default UserProfilePage;
+export default UserProfile_Page;

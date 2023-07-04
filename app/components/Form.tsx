@@ -1,7 +1,7 @@
 /**
  * https://tailwindcss-glassmorphism.vercel.app/
  */
-import React from "react";
+import React, { useCallback } from "react";
 import { useTranslations } from "next-intl";
 
 import Link from "next/link";
@@ -28,8 +28,19 @@ const Form: React.FC<FormProps> = ({
 }) => {
 	const t = useTranslations("Form");
 	const tCommon = useTranslations("Common");
-
 	const i18nFormType = { type: t(`Types.${type}`) };
+
+	const genAiCategoryList = useCallback(
+		(currentAiCat: AiCategories): ListItemType[] =>
+			Object.values(AiCategories).map(
+				(aiCategory: string): ListItemType => ({
+					label: tCommon(`aiCats.${aiCategory}`),
+					checked: currentAiCat === aiCategory,
+					value: aiCategory,
+				})
+			),
+		[tCommon]
+	);
 
 	const handlePostAiCategoryChange = (aiCategoryList: ListItemType[]) => {
 		const aiCategory = aiCategoryList.find((category) => category.checked)?.value as AiCategories;
@@ -44,7 +55,7 @@ const Form: React.FC<FormProps> = ({
 		haveError(errorKey) && <p className="form_error">{errors?.[errorKey]?.message}</p>;
 
 	return (
-		<section className="w-full max-w-full flex_start flex-col">
+		<section className="page_section_left">
 			<Header
 				desc={t("postTypeDesc", i18nFormType)}
 				gradient="blue_gradient"
@@ -93,7 +104,8 @@ const Form: React.FC<FormProps> = ({
 							filter: "sepia(.4)",
 						}}
 					>
-						{t("linkLabel")}
+						{post.aiCategory === AiCategories.CHAT && t("linkLabel")}
+						{post.aiCategory === AiCategories.IMAGE && t("srcLabel")}
 					</span>
 
 					<input
@@ -147,15 +159,11 @@ const Form: React.FC<FormProps> = ({
 						<CheckList
 							handleAssign={handlePostAiCategoryChange}
 							icon={{ size: 22, color: "mlt-orange-secondary" }}
-							items={Object.values(AiCategories).map((aiCategory) => ({
-								label: tCommon(`aiCats.${aiCategory}`),
-								checked: post.aiCategory === aiCategory,
-								value: aiCategory,
-							}))}
+							items={genAiCategoryList(post.aiCategory)}
 							type="singleSelect"
 						/>
 					</div>
-					<div className="flex_end gap-4 flex-row w-full">
+					<div className="flex justify-end items-center gap-4 flex-row w-full">
 						<Link
 							className="text-sm text-mlt-dark-4 hover:text-mlt-orange-primary"
 							href={Path.HOME}

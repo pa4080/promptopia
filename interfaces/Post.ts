@@ -29,6 +29,16 @@ export const postInit: PostType = {
 	link: "",
 };
 
+export const postFromDbInit: PostTypeFromDb = {
+	prompt: "",
+	tags: [],
+	aiCategory: AiCategories.CHAT,
+	link: "",
+	_id: "",
+	creator: {} as UserTypeFromDb,
+	image: {} as GridFSFile,
+};
+
 export type PostErrorsType = {
 	// [key: string]: {}
 	[key in keyof PostTypeFromDb]: {

@@ -1,10 +1,10 @@
-import { PostType, PostErrorsType } from "@/interfaces/Post";
+import { PostType, PostErrorsType, PostTypeFromDb } from "@/interfaces/Post";
 
 export interface FormProps {
 	handleSubmit: (e: React.SyntheticEvent) => void;
 	handleChange_FileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	post: PostType;
-	setPost: React.Dispatch<React.SetStateAction<PostType>>;
+	post: PostType | PostTypeFromDb;
+	setPost: React.Dispatch<React.SetStateAction<PostType | PostTypeFromDb>>;
 	submitting: boolean;
 	type: FormTypes;
 	errors: PostErrorsType | null;

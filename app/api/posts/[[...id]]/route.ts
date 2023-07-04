@@ -68,6 +68,30 @@ export async function POST(request: NextRequest) {
 	}
 }
 
+export async function PUT(request: NextRequest, { params }: Context) {
+	const { creator, prompt, tags, aiCategory, link, image } = await request.json();
+
+	try {
+		await connectToMongoDb();
+		const updatedPost = await Post.findOneAndUpdate(
+			paramsToObject(params),
+			{ creator, prompt, tags, aiCategory, link, image },
+			{ new: true }
+		);
+
+		if (!updatedPost) {
+			return NextResponse.json({ error: "Post not found!" }, { status: 404 });
+		}
+
+		return NextResponse.json(
+			{ message: "Post updated successfully!", post: updatedPost },
+			{ status: 200 }
+		);
+	} catch (error) {
+		return NextResponse.json({ error: "Failed to update post!" }, { status: 500 });
+	}
+}
+
 export async function PATCH(request: NextRequest, { params }: Context) {
 	const { creator, prompt, tags, aiCategory, link, image } = await request.json();
 

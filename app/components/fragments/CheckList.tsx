@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 
 import CheckListItem, { CheckListItemType } from "./CheckListItem";
 
@@ -38,6 +38,10 @@ const CheckList: React.FC<CheckListType> = ({
 }) => {
 	const [itemsState, setItemsState] = useState(structuredClone(items));
 	const itemsRefArr = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+	useEffect(() => {
+		setItemsState(structuredClone(items));
+	}, [items]);
 
 	const handleSelect = ({ value }: ListItemType) => {
 		let isAssignAllowed = true;
@@ -91,7 +95,7 @@ const CheckList: React.FC<CheckListType> = ({
 	return (
 		<div className="flex flex-col gap-2 w-full">
 			<div className="list_label">{listTitle}</div>
-			<div className="flex_start gap-4 w-full items-center" style={{ ...style }}>
+			<div className="flex justify-start gap-4 w-full items-center" style={{ ...style }}>
 				{itemsState.map((stateItem, index) => (
 					<div
 						key={index}

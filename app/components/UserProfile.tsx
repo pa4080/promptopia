@@ -10,12 +10,12 @@ const UserProfile: React.FC<Profile> = ({ user, posts }) => {
 	const t = useTranslations("Profile");
 
 	return (
-		<section className="w-full">
+		<section className="page_section_left">
 			<Header
-				desc={`${user?.description}: ${t("description")}`}
+				desc={user?.description ? `${user?.description}: ${t("description")}` : ""}
 				gradient="blue_gradient"
 				textStyle="text-left"
-				titleGradient={user?.name}
+				titleGradient={user?.name ?? ""}
 			/>
 
 			<PostCardList del edit data={posts} />
