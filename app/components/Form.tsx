@@ -1,7 +1,7 @@
 /**
  * https://tailwindcss-glassmorphism.vercel.app/
  */
-import React from "react";
+import React, { useCallback } from "react";
 import { useTranslations } from "next-intl";
 
 import Link from "next/link";
@@ -9,9 +9,12 @@ import Link from "next/link";
 import { FormProps } from "@/interfaces/Form";
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
-import CheckList from "@/app/components/fragments/CheckList";
+import CheckList, { ListItemType } from "@/app/components/fragments/CheckList";
+
+import { Path } from "@/interfaces/Path";
 
 import IconEmbedSvg from "./fragments/IconEmbedSvg";
+import Header from "./Header";
 
 const Form: React.FC<FormProps> = ({
 	handleSubmit,
@@ -25,10 +28,23 @@ const Form: React.FC<FormProps> = ({
 }) => {
 	const t = useTranslations("Form");
 	const tCommon = useTranslations("Common");
-
 	const i18nFormType = { type: t(`Types.${type}`) };
 
-	const handlePostAiCategoryChange = (aiCategory: AiCategories) => {
+	const genAiCategoryList = useCallback(
+		(currentAiCat: AiCategories): ListItemType[] =>
+			Object.values(AiCategories).map(
+				(aiCategory: string): ListItemType => ({
+					label: tCommon(`aiCats.${aiCategory}`),
+					checked: currentAiCat === aiCategory,
+					value: aiCategory,
+				})
+			),
+		[tCommon]
+	);
+
+	const handlePostAiCategoryChange = (aiCategoryList: ListItemType[]) => {
+		const aiCategory = aiCategoryList.find((category) => category.checked)?.value as AiCategories;
+
 		setPost((prevPost) => ({ ...prevPost, aiCategory }));
 	};
 
@@ -39,11 +55,13 @@ const Form: React.FC<FormProps> = ({
 		haveError(errorKey) && <p className="form_error">{errors?.[errorKey]?.message}</p>;
 
 	return (
-		<section className="w-full max-w-full flex_start flex-col">
-			<h1 className="head_text text-left">
-				<span className="blue_gradient">{t("postType", i18nFormType)}</span>
-			</h1>
-			<p className="desc text-left max-w-md">{t("postTypeDesc", i18nFormType)}</p>
+		<section className="page_section_left">
+			<Header
+				desc={t("postTypeDesc", i18nFormType)}
+				gradient="blue_gradient"
+				textStyle="text-left"
+				titleGradient={t("postType", i18nFormType)}
+			/>
 
 			<form
 				className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
@@ -86,7 +104,8 @@ const Form: React.FC<FormProps> = ({
 							filter: "sepia(.4)",
 						}}
 					>
-						{t("linkLabel")}
+						{post.aiCategory === AiCategories.CHAT && t("linkLabel")}
+						{post.aiCategory === AiCategories.IMAGE && t("srcLabel")}
 					</span>
 
 					<input
@@ -138,18 +157,17 @@ const Form: React.FC<FormProps> = ({
 				<div className="flex justify-between items-start gap-4 flex-col 2sm:flex-row">
 					<div className="text-mlt-dark-6 font-semibold w-full pl-0.5">
 						<CheckList
-							handleAssign={(itemLabel) => handlePostAiCategoryChange(itemLabel as AiCategories)}
+							handleAssign={handlePostAiCategoryChange}
 							icon={{ size: 22, color: "mlt-orange-secondary" }}
-							items={Object.values(AiCategories).map((aiCategory) => ({
-								label: tCommon(`aiCats.${aiCategory}`),
-								checked: post.aiCategory === aiCategory,
-								value: aiCategory,
-							}))}
+							items={genAiCategoryList(post.aiCategory)}
 							type="singleSelect"
 						/>
 					</div>
-					<div className="flex_end gap-4 flex-row w-full">
-						<Link className="text-sm text-mlt-dark-4 hover:text-mlt-orange-primary" href="/">
+					<div className="flex justify-end items-center gap-4 flex-row w-full">
+						<Link
+							className="text-sm text-mlt-dark-4 hover:text-mlt-orange-primary"
+							href={Path.HOME}
+						>
 							{t("cancel")}
 						</Link>
 						<button className="_btn orange_invert" disabled={submitting} type="submit">

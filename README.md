@@ -26,7 +26,6 @@ Notes:
 
 - Many improvements and added features as:
 
-  - Fetch a as many data as possible within the backend.
   - Two major types of Prompt/Posts: 1) GPT and 2) Stable Diffusion (I decide to do not spend more time to improve these categories names).
     - For the GPT category one may attach a link to a shared chat...
     - For the Stable Diffusion category one may upload an image...
@@ -44,7 +43,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## TODO
 
 - [x] Display the `<Form />` errors.
-- [x] <s>Upload images to [imgur.com](https://apidocs.imgur.com/#intro) or something similar.</s> 
+- [x] <s>Upload images to [imgur.com](https://apidocs.imgur.com/#intro) or something similar.</s>
 
   Currently we are using the the Mongo's GridFS.
   - <https://reacthustle.com/blog/how-to-upload-retrieve-images-to-mongodb-using-nextjs-13-app-router>

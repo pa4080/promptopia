@@ -1,28 +1,39 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-// import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 
-import PostTag from "./fragments/PostTag";
-import IconEmbedSvgPop from "./fragments/IconEmbedSvgPop";
+import { Path } from "@/interfaces/Path";
 
-interface Props {
+import Btn_PostTag from "./fragments/Btn_PostTag";
+import IconEmbedSvgPop from "./fragments/IconEmbedSvgPop";
+import Btn_PostActions from "./fragments/Btn_PostActions";
+
+interface PostCardProps {
 	post: PostTypeFromDb;
 	copied: string;
 	setCopied: React.Dispatch<React.SetStateAction<string>>;
 	handleTagClick: (tag: string) => void;
-	handleEdit?: (tag: string) => void;
-	handleDelete?: (tag: string) => void;
+	handleEdit?: (post: PostTypeFromDb) => void;
+	handleDelete?: (post: PostTypeFromDb) => void;
 }
 
-export const PostCard: React.FC<Props> = ({ post, copied, setCopied, handleTagClick }) => {
+const PostCard: React.FC<PostCardProps> = ({
+	post,
+	copied,
+	setCopied,
+	handleTagClick,
+	handleEdit,
+	handleDelete,
+}) => {
 	const t = useTranslations("PostCard");
+	const pathName = usePathname();
+	const { data: session } = useSession();
+	const isEditMode = session?.user?.id === post.creator._id && pathName === Path.PROFILE;
 
 	const handlePromptCopy = () => {
 		setCopied(post.prompt);
@@ -35,8 +46,8 @@ export const PostCard: React.FC<Props> = ({ post, copied, setCopied, handleTagCl
 	return (
 		<div className="prompt_card">
 			<div className="relative">
-				<div className="flex flex-1 justify-start gap-3 cursor-pointer  flex-row items-center ">
-					<div className="flex_center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem]">
+				<div className="flex flex-1 justify-start gap-3 cursor-pointer flex-row items-center ">
+					<div className="flex justify-center items-center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem]">
 						<Image
 							alt={t("altProfilePicture")}
 							className="rounded-full object-contain"
@@ -47,18 +58,20 @@ export const PostCard: React.FC<Props> = ({ post, copied, setCopied, handleTagCl
 					</div>
 					<div className="flex flex-col max-w-[100%] overflow-hidden gap-1">
 						<h3 className="font-satoshi font-semibold text-mlt-dark-2 pr-7">
-							{post?.creator?.name}
+							{post?.creator?.name ?? t("defaultUsername")}
 						</h3>
 
-						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden">
-							{post?.creator?.email}
+						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden whitespace-pre">
+							{post?.creator?.email.replace(/\./g, "-").replace(/@.*$/, t("spamProtect")) ??
+								t("defaultEmail")}
 						</p>
 					</div>
 				</div>
 
 				<IconEmbedSvgPop
-					c1="mlt-orange-secondary"
-					c2="mlt-orange-dark"
+					bgColor={isEditMode ? "bg-mlt-purple-secondary" : "bg-mlt-orange-secondary"}
+					c1={isEditMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
+					c2={isEditMode ? "mlt-purple-primary" : "mlt-orange-dark"}
 					height={22}
 					isActive={copied === post.prompt}
 					op1="84"
@@ -116,43 +129,34 @@ export const PostCard: React.FC<Props> = ({ post, copied, setCopied, handleTagCl
 				)}
 			</div>
 
-			<p className="post_tags_list">
+			<p className="post_buttons_list">
 				{(post.tags as string[]).map((tag: string, index) => (
-					<PostTag key={index} text={tag} onClick={() => handleTagClick && handleTagClick(tag)} />
+					<Btn_PostTag
+						key={index}
+						c1={isEditMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
+						c2={isEditMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
+						text={tag}
+						onClick={() => handleTagClick(tag)}
+					/>
 				))}
 			</p>
+
+			{isEditMode && (
+				<div className="prompt_card_edit_section">
+					<Btn_PostActions
+						icon={{ type: "trash", style: { transform: "translateY(-1.5px)" } }}
+						text={t("delete")}
+						onClick={() => handleDelete && handleDelete(post)}
+					/>
+					<Btn_PostActions
+						icon={{ type: "brush", style: { transform: "translateY(-1px)" } }}
+						text={t("edit")}
+						onClick={() => handleEdit && handleEdit(post)}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };
 
-interface PromptCardListProps {
-	data: PostTypeFromDb[];
-	handleTagClick: (tag: string) => void;
-}
-
-const PromptCardList: React.FC<PromptCardListProps> = ({ data, handleTagClick }) => {
-	const [copied, setCopied] = useState("");
-
-	// https://stackoverflow.com/a/46545530/6543935
-	return (
-		<>
-			{data.map((post) => {
-				if (!post || !post?.creator) {
-					return null;
-				}
-
-				return (
-					<PostCard
-						key={post._id}
-						copied={copied}
-						handleTagClick={handleTagClick}
-						post={post}
-						setCopied={setCopied}
-					/>
-				);
-			})}
-		</>
-	);
-};
-
-export default PromptCardList;
+export default PostCard;

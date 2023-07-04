@@ -6,55 +6,34 @@ import { useTranslations } from "next-intl";
 
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
-import PromptCardList from "./PostCard";
+import { fetchPosts } from "@/lib/fetch";
 
-import CheckList from "./fragments/CheckList";
+import PostCardList from "./PostCardList";
+
+import CheckList, { ListItemType } from "./fragments/CheckList";
 
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
 	const tCommon = useTranslations("Common");
+	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 	const [searchText, setSearchText] = useState("");
-	const [aiCategories, setAiCategories] = useState(
+	const [aiCategories, setAiCategories] = useState<ListItemType[]>(
 		Object.values(AiCategories).map((aiCategory) => ({
 			label: tCommon(`aiCats.${aiCategory}`),
 			checked: true,
 			value: aiCategory,
 		}))
 	);
-	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 
-	// TODO: Move this part to server-side rendering like in...
-	// https://github.com/metalevel-tech/template-nextjs-13-app-router/blob/master/app/[locale]/games/page.tsx
 	useEffect(() => {
-		const fetchPosts = async () => {
-			const response = await fetch("/api/posts");
-			const data = await response.json();
-
-			// eslint-disable-next-line no-console
-			// console.log("data", data);
-
-			setPosts(data.posts);
-		};
-
-		fetchPosts();
+		(async () => {
+			setPosts(await fetchPosts("/api/posts"));
+		})();
 	}, []);
-
-	const handleAiCategorySelect = (aiCategory: AiCategories) => {
-		setAiCategories(
-			aiCategories.map((cat) =>
-				cat.value === aiCategory
-					? {
-							...cat,
-							checked: !cat.checked,
-					  }
-					: cat
-			)
-		);
-	};
 
 	return (
 		<section className="feed">
-			<form className="relative w-full flex_center">
+			<form className="relative w-full flex justify-center items-center">
 				<input
 					required
 					className="form_input search_input"
@@ -65,24 +44,16 @@ const Feed: React.FC = () => {
 				/>
 			</form>
 
-			<div className="text-mlt-dark-6 font-semibold w-full pl-0.5">
+			<div className="text-mlt-dark-6 font-base w-full pl-0.5">
 				<CheckList
-					handleAssign={(item) => handleAiCategorySelect(item as AiCategories)}
+					handleAssign={setAiCategories}
 					icon={{ size: 22, color: "mlt-orange-secondary" }}
 					items={aiCategories}
 					type="atLeastOneSelected"
 				/>
 			</div>
 
-			<div className="post_feed">
-				<PromptCardList
-					data={posts}
-					handleTagClick={(tag: string) => {
-						// eslint-disable-next-line no-console
-						console.log(tag);
-					}}
-				/>
-			</div>
+			<PostCardList data={posts} />
 		</section>
 	);
 };

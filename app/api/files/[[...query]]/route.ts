@@ -11,15 +11,15 @@ interface Context {
 	params: { query: string[] };
 }
 
-function _filename(params: Context["params"]) {
+function paramsToObject(params: Context["params"]) {
 	return Object.keys(params).length > 0 ? { filename: params?.query[0] } : {};
 }
 
 /**
  * 1) If the query has 2 parameters,
- *    the first must be string "id" and the second must be the id.
- * 2) If the query has 1 parameter, it must be the filename.
- *    > If the filename is not found in db return the file list
+ *    the first must be the string "id" and the second must be the {id} itself.
+ * 2) If the query has 1 parameter, it must be the {filename}.
+ *    > If the filename is not found in the database then return the file list
  *      or 404 in case the bucket is empty.
  *    > It is possible to have multiple files with the same name.
  *      In this case, also, an array of files will be returned.
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 				);
 			}
 		} else {
-			const files = await bucket.find(_filename(params)).toArray();
+			const files = await bucket.find(paramsToObject(params)).toArray();
 
 			switch (files?.length) {
 				case 0: {
@@ -81,7 +81,15 @@ export async function GET(request: NextRequest, { params }: Context) {
 
 /**
  * Post a file to the database.
- * the request must be a...
+ * An example of how to post a file using fetch:
+ * 
+const formData = new FormData();
+formData.append('file', file); // 'file' is the key name for the uploaded file
+
+fetch('/api/upload', { method: 'POST', body: formData })
+ 	.then(response => response.json())
+ 	.then(data => { console.log(data); })
+ 	.catch(error => { console.error(error); });
  */
 export async function POST(request: NextRequest) {
 	try {
@@ -126,6 +134,41 @@ export async function POST(request: NextRequest) {
 
 		// return the response after all the entries have been processed.
 		return NextResponse.json(response, { status: 201 });
+	} catch (error) {
+		return NextResponse.json(error, { status: 500 });
+	}
+}
+
+/**
+ * Delete a file from the database.
+ * An example of how to delete a file using fetch:
+ * 
+fetch('/api/delete/123', { method: 'DELETE' })
+  .then(response => {
+    if (response.ok) console.log('File deleted successfully');
+    else if (response.status === 404) console.log('File not found');
+    else console.error('Error deleting file');
+  })
+  .catch(error => { console.error(error); });
+ */
+export async function DELETE(request: NextRequest, { params }: Context) {
+	try {
+		const bucket = await gridFSBucket();
+
+		if (params?.query.length === 1) {
+			const fileId = new ObjectId(params?.query[0]);
+			const file = await bucket.find({ _id: fileId }).toArray();
+
+			if (file.length === 0) {
+				return new NextResponse(null, { status: 404, statusText: "Not found" });
+			}
+
+			await bucket.delete(fileId);
+
+			return new NextResponse(null, { status: 204 });
+		} else {
+			throw new Error("Invalid query. When 1 parameter is provided, it must be the file ID.");
+		}
 	} catch (error) {
 		return NextResponse.json(error, { status: 500 });
 	}

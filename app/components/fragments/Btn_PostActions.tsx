@@ -19,19 +19,19 @@ interface Props {
 	style?: CSSProperties;
 }
 
-const PostTag: React.FC<Props> = ({
+const Btn_PostActions: React.FC<Props> = ({
 	text,
 	onClick,
 	c1 = "mlt-orange-secondary",
 	c2 = "mlt-orange-secondary",
 	bgColor = "bg-white",
 	icon = {
-		type: "tag",
+		type: "brush",
 	},
 	style,
 }) => {
 	return (
-		<span className={`post_tag ${bgColor}`} style={{ ...style }} onClick={onClick}>
+		<span className={`post_button ml-2 ${bgColor}`} style={{ ...style }} onClick={onClick}>
 			<IconEmbedSvg
 				color1={c1}
 				color2={c2}
@@ -46,4 +46,4 @@ const PostTag: React.FC<Props> = ({
 	);
 };
 
-export default PostTag;
+export default Btn_PostActions;

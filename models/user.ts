@@ -22,6 +22,13 @@ const UserSchema = new Schema({
 	image: {
 		type: String,
 	},
+	accountProvider: {
+		type: String,
+		required: [true, "Account provider is required!"],
+	},
+	description: {
+		type: String,
+	},
 });
 
 /**

@@ -5,6 +5,7 @@
 	},
 	"Common": {
 		"model": "Model",
+		"defaultUserDescription": "Promptopia User",
 		"aiCats": {
 			"chat": "Chat",
 			"image": "Image"
@@ -46,7 +47,8 @@
 		"yourPromptPlaceholder": "Write your prompt here",
 		"tags": "#Tags",
 		"tagPlaceholder": "Comma, separated, tags",
-		"linkLabel": "Link to AI Platform",
+		"linkLabel": "Link to a AI platform",
+		"srcLabel": "Source of the prompt",
 		"linkPlaceholder": "https://chat.openai.com/share/...",
 		"linkDesc": "Link to the AI platform you used to generate your prompt",
 
@@ -76,10 +78,18 @@
 	"PostCard": {
 		"altProfilePicture": "Prompt Creator Profile Picture",
 		"altCopyPrompt": "Copy Prompt",
-		"altPromptImage": "Prompt Image"
+		"altPromptImage": "Prompt Image",
+		"defaultUsername": "Promptopia Metalevel.tech",
+		"defaultEmail": "promptopia@metalevel.tech",
+		"spamProtect": "@spam.protect",
+		"edit": "Edit",
+		"delete": "Delete"
 	},
 	"CreatePost": {
 		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",
 		"imageRequiredError": "For this kind of prompt post the image is required!"
+	},
+	"Profile": {
+		"description": "Welcome to your profile page. Here you can see, edit or delete all your posts and edit your profile."
 	}
 }

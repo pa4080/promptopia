@@ -2,22 +2,52 @@
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import slugify from "slugify";
 
-import { AiCategories, PostType, PostErrorsType, postInit } from "@/interfaces/Post";
+import {
+	AiCategories,
+	PostErrorsType,
+	PostType,
+	PostTypeFromDb,
+	postFromDbInit,
+} from "@/interfaces/Post";
 import { FormTypes } from "@/interfaces/Form";
 import Form from "@/app/components/Form";
+import { Path } from "@/interfaces/Path";
+import { fetchPosts } from "@/lib/fetch";
 
-const CreatePost: React.FC = () => {
+const UpdatePost_Page: React.FC = () => {
 	const t = useTranslations("CreatePost");
 	const router = useRouter();
 	const { data: session } = useSession();
 	const [submitting, setSubmitting] = useState(false);
-	const [post, setPost] = useState<PostType>(postInit);
+	const [post, setPost] = useState<PostType | PostTypeFromDb>(postFromDbInit);
 	const [errors, setErrors] = useState<PostErrorsType>(null!);
 	const [formDataToUpload, setFormDataToUpload] = useState<FormData | undefined>(undefined);
 	const [postImageFilename, setPostImageFilename] = useState<string | null>(null);
+
+	const searchParams = useSearchParams();
+	const postId = searchParams.get("id");
+
+	useEffect(() => {
+		if (!session || !session?.user?.id) {
+			router.push(Path.HOME);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		(async () => {
+			setPost((await fetchPosts(`/api/posts/${postId}`))[0]);
+		})();
+	}, [postId]);
+
+	useEffect(() => {
+		if (post) {
+			setPostImageFilename((post as PostTypeFromDb)?.image?.filename || null);
+		}
+	}, [post]);
 
 	const clearSpecificError_useStateCb = (
 		prevErrors: PostErrorsType,
@@ -57,25 +87,14 @@ const CreatePost: React.FC = () => {
 			const formData = new FormData();
 
 			formData.append("fileToUpload", promptFile);
-			/**
-			 * "fileToUpload" is a name of the form field.
-			 * The form can have multiple fields.
-			 * We can loop through the fields like this:
-			 * 
-			 formData.forEach((value, key) => {
-				 console.log({ [key]: value });
-			 });
-			 */
-
 			setFormDataToUpload(formData);
 			setPostImageFilename(promptFile.name);
 		}
 	};
 
-	const createPost = async (e: React.SyntheticEvent) => {
+	const updatePost = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		setSubmitting(true);
-
 		if (post.aiCategory === AiCategories.IMAGE && !formDataToUpload) {
 			setErrors((prevErrors) => ({ ...prevErrors, image: { message: t("imageRequiredError") } }));
 			setSubmitting(false);
@@ -103,19 +122,24 @@ const CreatePost: React.FC = () => {
 
 			if (response.ok) {
 				image_id = (await response.json())[0]._id;
-			}
 
-			// eslint-disable-next-line no-console
-			console.log(
-				`Upload of "${postImageFnToUpload} (_id: ${image_id})" is ${
-					response ? "successful!" : "not successful."
-				}`
-			);
+				const old_id = (post as PostTypeFromDb)?.image?._id?.toString();
+
+				if (image_id && old_id && image_id !== old_id) {
+					const response = await fetch(`/api/files/${old_id}`, {
+						method: "DELETE",
+					});
+
+					if (!response.ok) {
+						console.error(response);
+					}
+				}
+			}
 		}
 
 		try {
-			const response = await fetch("/api/posts", {
-				method: "POST",
+			const response = await fetch(`/api/posts/${postId}`, {
+				method: "PUT",
 				body: JSON.stringify({
 					...post,
 					tags: String(post.tags)
@@ -123,14 +147,13 @@ const CreatePost: React.FC = () => {
 						.map((tag) => tag.trim().toLowerCase())
 						.filter((value, index, array) => array.indexOf(value) === index)
 						.sort((a, b) => a.localeCompare(b)),
-					// https://stackoverflow.com/a/14438954/6543935
 					image: image_id,
 					creator: session?.user.id,
 				}),
 			});
 
 			if (response.ok) {
-				router.push("/");
+				router.push(Path.HOME);
 			} else {
 				/**
 				 * The error handling here should be a bit
@@ -147,23 +170,18 @@ const CreatePost: React.FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		// eslint-disable-next-line no-console
-		console.log(errors);
-	}, [errors]);
-
 	return (
 		<Form
 			errors={errors}
 			handleChange_FileUpload={handleChange_FileUpload}
-			handleSubmit={createPost}
+			handleSubmit={updatePost}
 			post={post}
 			postImageFilename={postImageFilename}
 			setPost={setPost}
 			submitting={submitting}
-			type={FormTypes.CREATE}
+			type={FormTypes.EDIT}
 		/>
 	);
 };
 
-export default CreatePost;
+export default UpdatePost_Page;

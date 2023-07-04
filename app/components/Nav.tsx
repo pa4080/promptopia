@@ -17,7 +17,9 @@ import { BuiltInProviderType } from "next-auth/providers";
 
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 
-import Icon from "./fragments/Icon";
+import { Path } from "@/interfaces/Path";
+
+import IconImageBased from "./fragments/IconImageBased";
 
 const providersIcons = ["google", "github"];
 
@@ -68,7 +70,7 @@ const Nav: React.FC = () => {
 								type="button"
 								onClick={() => signIn(provider.id)}
 							>
-								<Icon icon={{ name: provider.id, size: 22 }} />
+								<IconImageBased icon={{ name: provider.id, size: 22 }} />
 							</button>
 						);
 					}
@@ -89,7 +91,7 @@ const Nav: React.FC = () => {
 
 	const profilePicture = (
 		<div
-			className={`flex_center w-12 h-12 cursor-pointer rounded-full z-10  ${
+			className={`flex justify-center items-center w-12 h-12 cursor-pointer rounded-full z-10  ${
 				toggleDropDown ? "bg-white drop-shadow-sm" : "bg-white drop-shadow-md "
 			}`}
 			onClick={openMobileNavBar}
@@ -107,8 +109,8 @@ const Nav: React.FC = () => {
 	return (
 		<nav className="flex justify-between items-center w-full mb-16 pt-4 sm:pt-8 h-16">
 			<Link
-				className="flex gap-1 flex_center hover:drop-shadow-md transition-all duration-300"
-				href="/"
+				className="flex justify-center items-center gap-1 hover:drop-shadow-md transition-all duration-300"
+				href={Path.HOME}
 			>
 				<Image
 					alt={t("altLogo")}
@@ -128,10 +130,10 @@ const Nav: React.FC = () => {
 			</Link>
 
 			<div className="sm:flex hidden">
-				<div className="flex_center gap-3 md:gap-3">
+				<div className="flex justify-center items-center gap-3 md:gap-3">
 					{session?.user ? (
 						<>
-							<Link className="_btn gray_invert " href="/create-post">
+							<Link className="_btn gray_invert " href={Path.POST_CREATE}>
 								{t("createPrompt")}
 							</Link>
 
@@ -139,7 +141,7 @@ const Nav: React.FC = () => {
 								{t("signOut")}
 							</button>
 
-							<Link href="/profile">{profilePicture}</Link>
+							<Link href={Path.PROFILE}>{profilePicture}</Link>
 						</>
 					) : (
 						listLoginProviders
@@ -155,14 +157,14 @@ const Nav: React.FC = () => {
 							<div className="dropdown">
 								<Link
 									className="dropdown_link mt-3"
-									href="/profile"
+									href={Path.PROFILE}
 									onClick={() => setToggleDropDown(false)}
 								>
 									{t("myProfile")}
 								</Link>
 								<Link
 									className="dropdown_link"
-									href="/create-post"
+									href={Path.POST_CREATE}
 									onClick={() => setToggleDropDown(false)}
 								>
 									{t("createPrompt")}
@@ -182,7 +184,9 @@ const Nav: React.FC = () => {
 						)}
 					</div>
 				) : (
-					<div className="flex_center gap-3 md:gap-3">{listLoginProviders}</div>
+					<div className="flex justify-center items-center gap-3 md:gap-3">
+						{listLoginProviders}
+					</div>
 				)}
 			</div>
 		</nav>

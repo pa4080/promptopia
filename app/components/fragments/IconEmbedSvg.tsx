@@ -19,20 +19,10 @@ export type IconEmbSvgPathType =
 	| "tags"
 	| "up-right-from-square"
 	| "link"
-	| "message-lines";
-
-interface Props {
-	width?: number;
-	height?: number;
-	color1?: ThemeColorsList;
-	color2?: ThemeColorsList;
-	opacity1?: string;
-	opacity2?: string;
-	type?: IconEmbSvgPathType;
-	cursor?: "pointer" | "default" | "inherit";
-	style?: CSSProperties;
-	alt?: string;
-}
+	| "message-lines"
+	| "brush"
+	| "trash"
+	| "trash-check";
 
 /**
  * @param width Width of the SVG element
@@ -45,7 +35,20 @@ interface Props {
  * @param cursor Cursor type: pointer, default, inherit
  * @returns SVG element
  */
-const IconEmbedSvg: React.FC<Props> = ({
+interface IconEmbedSvgType {
+	width?: number;
+	height?: number;
+	color1?: ThemeColorsList;
+	color2?: ThemeColorsList;
+	opacity1?: string;
+	opacity2?: string;
+	type?: IconEmbSvgPathType;
+	cursor?: "pointer" | "default" | "inherit";
+	style?: CSSProperties;
+	alt?: string;
+}
+
+const IconEmbedSvg: React.FC<IconEmbedSvgType> = ({
 	width = 24,
 	height,
 	color1 = "mlt-purple-secondary",
@@ -87,7 +90,6 @@ export default IconEmbedSvg;
 /**
  * The dual color SVG path library starts here.
  */
-
 interface SvgPathLibProps {
 	type: IconEmbSvgPathType;
 	c1: string;
@@ -266,6 +268,46 @@ const SvgPathLib: React.FC<SvgPathLibProps> = ({ type, c1, c2 }) => {
 					<path
 						d="M0 64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L185.6 508.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V416H64c-35.3 0-64-28.7-64-64V64zm152 80c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H152zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H152z"
 						fill={c1}
+					/>
+				</>
+			);
+		case "brush":
+			return (
+				<>
+					<path
+						d="M0 288H384v32c0 35.3-28.7 64-64 64H256v64c0 35.3-28.7 64-64 64s-64-28.7-64-64V384H64c-35.3 0-64-28.7-64-64V288zM192 464a16 16 0 1 0 0-32 16 16 0 1 0 0 32z"
+						fill={c2}
+					/>
+					<path
+						d="M162.4 6c-1.5-3.6-5-6-8.9-6h-19c-3.9 0-7.5 2.4-8.9 6L104.9 57.7c-3.2 8-14.6 8-17.8 0L66.4 6c-1.5-3.6-5-6-8.9-6H48C21.5 0 0 21.5 0 48V256v22.4V288H9.6 374.4 384v-9.6V256 48c0-26.5-21.5-48-48-48H230.5c-3.9 0-7.5 2.4-8.9 6L200.9 57.7c-3.2 8-14.6 8-17.8 0L162.4 6z"
+						fill={c1}
+					/>
+				</>
+			);
+
+		case "trash":
+			return (
+				<>
+					<path
+						d="M163.8 0c-12.1 0-23.2 6.8-28.6 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8z"
+						fill={c2}
+					/>
+					<path
+						d="M394.6 466.8L416 96H32L53.4 466.8c1.5 25.4 22.5 45.2 47.9 45.2H346.7c25.4 0 46.5-19.8 47.9-45.2z"
+						fill={c1}
+					/>
+				</>
+			);
+		case "trash-check":
+			return (
+				<>
+					<path
+						d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM337 241c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L337 241z"
+						fill={c1}
+					/>
+					<path
+						d="M416 96H32L53.4 466.8c1.5 25.4 22.5 45.2 47.9 45.2H346.7c25.4 0 46.5-19.8 47.9-45.2L416 96zM337 241L209 369c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 207c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
+						fill={c2}
 					/>
 				</>
 			);

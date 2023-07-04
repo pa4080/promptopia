@@ -4,7 +4,7 @@ import { ThemeColorsList } from "@/interfaces/ThemeTW";
 
 import IconEmbedSvg, { IconEmbSvgPathType } from "./IconEmbedSvg";
 
-interface Props {
+export interface CheckListItemType {
 	size?: number;
 	color?: ThemeColorsList;
 	checked?: boolean;
@@ -12,7 +12,7 @@ interface Props {
 	style?: CSSProperties;
 }
 
-const CheckListItem: React.FC<Props> = ({
+const CheckListItem: React.FC<CheckListItemType> = ({
 	size = 32,
 	color = "mlt-purple-secondary",
 	checked,
