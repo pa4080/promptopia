@@ -1,24 +1,15 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Link from "next/link";
 
-import { fetchPosts, preparePostBodyToUpload, uploadOrReplaceImage } from "@/lib/fetch-helpers";
+import { fetchPosts } from "@/lib/fetch-helpers";
 
-import {
-	AiCategories,
-	PostErrorsType,
-	PostType,
-	PostTypeFromDb,
-	postFromDbInit,
-} from "@/interfaces/Post";
-import { FormTypes } from "@/interfaces/Form";
-import Form from "@/app/components/Form";
+import { PostTypeFromDb, postFromDbInit } from "@/interfaces/Post";
 import { Path } from "@/interfaces/Path";
-import PostCardList from "@/app/components/PostCardList";
 import Header from "@/app/components/Header";
 import PostCard from "@/app/components/PostCard";
 
@@ -30,7 +21,6 @@ const DeletePost_Page: React.FC = () => {
 	const [copied, setCopied] = useState("");
 	const [submitting, setSubmitting] = useState(false);
 	const [post, setPost] = useState<PostTypeFromDb>(postFromDbInit);
-	const [postImageFilename, setPostImageFilename] = useState<string | null>(null);
 	const i18nFormType = { type: tForm(`Types.delete`) };
 
 	const searchParams = useSearchParams();
@@ -48,12 +38,6 @@ const DeletePost_Page: React.FC = () => {
 			setPost((await fetchPosts(`/api/posts/${postId}`))[0]);
 		})();
 	}, [postId]);
-
-	useEffect(() => {
-		if (post) {
-			setPostImageFilename((post as PostTypeFromDb)?.image?.filename || null);
-		}
-	}, [post]);
 
 	const handleDeleteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
