@@ -17,7 +17,7 @@ interface PostCardProps {
 	post: PostTypeFromDb;
 	copied: string;
 	setCopied: React.Dispatch<React.SetStateAction<string>>;
-	handleTagClick: (tag: string) => void;
+	handleTagClick?: (tag: string) => void;
 	handleEdit?: (post: PostTypeFromDb) => void;
 	handleDelete?: (post: PostTypeFromDb) => void;
 }
@@ -34,8 +34,13 @@ const PostCard: React.FC<PostCardProps> = ({
 	const pathName = usePathname();
 	const { data: session } = useSession();
 	const isEditMode = session?.user?.id === post.creator._id && pathName === Path.PROFILE;
+	const isDelMode = session?.user?.id === post.creator._id && pathName === Path.POST_DELETE;
 
 	const handlePromptCopy = () => {
+		if (setCopied === undefined) {
+			return;
+		}
+
 		setCopied(post.prompt);
 		navigator.clipboard.writeText(post.prompt);
 		setTimeout(() => {
@@ -44,7 +49,7 @@ const PostCard: React.FC<PostCardProps> = ({
 	};
 
 	return (
-		<div className="prompt_card">
+		<div className={`${isDelMode ? "post_card_del_mode" : "post_card"}`}>
 			<div className="relative">
 				<div className="flex flex-1 justify-start gap-3 cursor-pointer flex-row items-center ">
 					<div className="flex justify-center items-center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem]">
@@ -62,16 +67,16 @@ const PostCard: React.FC<PostCardProps> = ({
 						</h3>
 
 						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden whitespace-pre">
-							{post?.creator?.email.replace(/\./g, "-").replace(/@.*$/, t("spamProtect")) ??
+							{post?.creator?.email?.replace(/\./g, "-").replace(/@.*$/, t("spamProtect")) ??
 								t("defaultEmail")}
 						</p>
 					</div>
 				</div>
 
 				<IconEmbedSvgPop
-					bgColor={isEditMode ? "bg-mlt-purple-secondary" : "bg-mlt-orange-secondary"}
-					c1={isEditMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
-					c2={isEditMode ? "mlt-purple-primary" : "mlt-orange-dark"}
+					bgColor={isEditMode || isDelMode ? "bg-mlt-purple-secondary" : "bg-mlt-orange-secondary"}
+					c1={isEditMode || isDelMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
+					c2={isEditMode || isDelMode ? "mlt-purple-primary" : "mlt-orange-dark"}
 					height={22}
 					isActive={copied === post.prompt}
 					op1="84"
@@ -83,24 +88,23 @@ const PostCard: React.FC<PostCardProps> = ({
 				/>
 			</div>
 
-			{post?.image && (
-				<div className="prompt_card_image_container">
+			{post?.image?._id && (
+				<div className="post_card_image_container">
 					<Image
 						alt={t("altPromptImage")}
-						className="prompt_card_image"
+						className="post_card_image"
 						height={300}
-						src={`/api/files/id/${post.image._id}`}
+						priority={isDelMode ? true : false}
+						src={post.image ? `/api/files/id/${post.image._id}` : logo}
 						width={300}
 					/>
 				</div>
 			)}
 
 			<div
-				className={`prompt_card_prompt ${
-					post?.image ? "-mt-6 prompt_card_prompt_wit_image" : "mt-6"
-				}`}
+				className={`post_card_prompt ${post?.image ? "-mt-6 post_card_prompt_wit_image" : "mt-6"}`}
 			>
-				<p className="prompt_card_prompt_text" onClick={handlePromptCopy}>
+				<p className="post_card_prompt_text" onClick={handlePromptCopy}>
 					{post.prompt}
 				</p>
 				{post?.link && (
@@ -133,16 +137,16 @@ const PostCard: React.FC<PostCardProps> = ({
 				{(post.tags as string[]).map((tag: string, index) => (
 					<Btn_PostTag
 						key={index}
-						c1={isEditMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
-						c2={isEditMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
+						c1={isEditMode || isDelMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
+						c2={isEditMode || isDelMode ? "mlt-purple-secondary" : "mlt-orange-secondary"}
 						text={tag}
-						onClick={() => handleTagClick(tag)}
+						onClick={() => handleTagClick && handleTagClick(tag)}
 					/>
 				))}
 			</p>
 
 			{isEditMode && (
-				<div className="prompt_card_edit_section">
+				<div className="post_card_edit_section">
 					<Btn_PostActions
 						icon={{ type: "trash", style: { transform: "translateY(-1.5px)" } }}
 						text={t("delete")}

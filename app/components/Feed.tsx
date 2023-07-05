@@ -4,9 +4,9 @@
 import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
-import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
+import { fetchPosts } from "@/lib/fetch-helpers";
 
-import { fetchPosts } from "@/lib/fetch";
+import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
 import PostCardList from "./PostCardList";
 

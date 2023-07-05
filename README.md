@@ -53,12 +53,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   - [x] Limit the image size to ~100-200KB.
   - [x] 1) Upload the file, 2) Get the file ID, 3) Attach the file ID to the post and populate it on retrieve.
   - [ ] Further use Imgur or similar service.
-- [ ] Combine the API requests to `/api/posts/` and `/api/files/` to a single one. This will reduce the number of requests to the server.
-
-  The request should use `new FormData()` withe `post` and `file` fields.
+- [x] <s>Combine the API requests to `/api/posts/` and `/api/files/` to a single one. This will reduce the number of requests to the server.</s>.. The request should use `new FormData()` withe `post` and `file` fields... **I will leave it as it is for now. Because I will not learn anything new from this.**
   
 - [ ] Complete the google application.
-- [ ] Apply `useForm()` hook for the `<Form />` component.
+- [x] Apply `useForm()` hook for the `<Form />` component... **I will leave it as it is for now. Because I will not learn anything new from this.** ...Right now the errors are handled good enough, despite there is an API call that could be avoided.
+- [x] Delete posts functionality.
+- [x] Edit posts functionality.
+- [ ] Pagination for the `/api/posts/` REST API.
+- [ ] Search functionality with filters for the `/api/posts/` REST API.
+- [ ] Delete user functionality.
 
 ## Getting Started
 

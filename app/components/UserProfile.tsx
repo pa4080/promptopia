@@ -1,16 +1,16 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 
-import { Profile } from "@/interfaces/Profile";
+import { UserProfileType } from "@/interfaces/Profile";
 
 import Header from "./Header";
 import PostCardList from "./PostCardList";
 
-const UserProfile: React.FC<Profile> = ({ user, posts }) => {
+const UserProfile: React.FC<UserProfileType> = ({ user, posts }) => {
 	const t = useTranslations("Profile");
 
 	return (
-		<section className="page_section_left">
+		<section className="page_section_left w-full">
 			<Header
 				desc={user?.description ? `${user?.description}: ${t("description")}` : ""}
 				gradient="blue_gradient"

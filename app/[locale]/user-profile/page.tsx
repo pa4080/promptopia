@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import UserProfile from "@/app/components/UserProfile";
 import { PostTypeFromDb } from "@/interfaces/Post";
-import { fetchPosts } from "@/lib/fetch";
+import { fetchPosts } from "@/lib/fetch-helpers";
 import { UserTypeFromDb } from "@/interfaces/User";
 import { Path } from "@/interfaces/Path";
 
@@ -25,20 +25,20 @@ const UserProfile_Page: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const handleEdit = () => {
-		// eslint-disable-next-line no-console
-		console.log("Edit");
-	};
+	// const handleEdit = () => {
+	// 	// eslint-disable-next-line no-console
+	// 	console.log("Edit");
+	// };
 
-	const handleDelete = async () => {
-		// eslint-disable-next-line no-console
-		console.log("Delete");
-	};
+	// const handleDelete = async () => {
+	// 	// eslint-disable-next-line no-console
+	// 	console.log("Delete");
+	// };
 
 	return (
 		<UserProfile
-			handleDelete={handleDelete}
-			handleEdit={handleEdit}
+			// handleDelete={handleDelete}
+			// handleEdit={handleEdit}
 			posts={posts}
 			user={session?.user as unknown as UserTypeFromDb}
 		/>

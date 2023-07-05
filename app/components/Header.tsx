@@ -4,7 +4,7 @@ interface Props {
 	titleBlack?: string;
 	titleGradient?: string;
 	desc?: string;
-	gradient?: "orange_gradient" | "blue_gradient";
+	gradient?: "orange_gradient" | "blue_gradient" | "red_gradient" | "green_gradient";
 	textStyle?: "text-left" | "text-center" | "text-right";
 }
 

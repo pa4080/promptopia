@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import slugify from "slugify";
 
 import {
 	AiCategories,
@@ -15,6 +14,7 @@ import {
 import { FormTypes } from "@/interfaces/Form";
 import Form from "@/app/components/Form";
 import { Path } from "@/interfaces/Path";
+import { preparePostBodyToUpload, uploadOrReplaceImage } from "@/lib/fetch-helpers";
 
 const CreatePost_Page: React.FC = () => {
 	const t = useTranslations("CreatePost");
@@ -33,10 +33,7 @@ const CreatePost_Page: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const clearSpecificError_useStateCb = (
-		prevErrors: PostErrorsType,
-		errorKey: keyof PostErrorsType
-	) => {
+	const clearSpecificError = (prevErrors: PostErrorsType, errorKey: keyof PostErrorsType) => {
 		if (!prevErrors) {
 			return null!;
 		}
@@ -53,7 +50,7 @@ const CreatePost_Page: React.FC = () => {
 		return prevErrorsCopy as PostErrorsType;
 	};
 
-	const handleChange_FileUpload = async (e: React.FormEvent<HTMLInputElement>) => {
+	const handleFileUploadChange = async (e: React.FormEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		if (e.currentTarget.files?.length && e.currentTarget.files?.length > 0) {
 			const promptFile: File = e.currentTarget.files[0];
@@ -65,21 +62,14 @@ const CreatePost_Page: React.FC = () => {
 
 				return;
 			} else if (promptFile.size <= 131072) {
-				setErrors((prevErrors) => clearSpecificError_useStateCb(prevErrors, "image"));
+				setErrors((prevErrors) => clearSpecificError(prevErrors, "image"));
 			}
 
 			const formData = new FormData();
 
 			formData.append("fileToUpload", promptFile);
-			/**
-			 * "fileToUpload" is a name of the form field.
-			 * The form can have multiple fields.
-			 * We can loop through the fields like this:
-			 * 
-			 formData.forEach((value, key) => {
-				 console.log({ [key]: value });
-			 });
-			 */
+			// "fileToUpload" is a name of a form field. The form can have multiple fields.
+			// formData.forEach((value, key) => { console.log({ [key]: value }); });
 
 			setFormDataToUpload(formData);
 			setPostImageFilename(promptFile.name);
@@ -96,64 +86,30 @@ const CreatePost_Page: React.FC = () => {
 
 			return;
 		} else if (post.aiCategory === AiCategories.IMAGE && formDataToUpload) {
-			setErrors((prevErrors) => clearSpecificError_useStateCb(prevErrors, "image"));
+			setErrors((prevErrors) => clearSpecificError(prevErrors, "image"));
 		}
 
-		let image_id: string | null = null;
-
-		if (formDataToUpload) {
-			const postImageFnToUpload = slugify(String(postImageFilename), {
-				lower: true,
-				remove: /[*+~()'"!:@]/g,
-				locale: "en",
-			});
-			const fileToRename = formDataToUpload.get("fileToUpload") as File;
-
-			formDataToUpload.set("fileToUpload", fileToRename, postImageFnToUpload);
-			const response = await fetch("/api/files", {
-				method: "POST",
-				body: formDataToUpload,
-			});
-
-			if (response.ok) {
-				image_id = (await response.json())[0]._id;
-			}
-
-			/**
-			// eslint-disable-next-line no-console
-			console.log(
-				`Upload of "${postImageFnToUpload} (_id: ${image_id})" is ${
-					response ? "successful!" : "not successful."
-				}`
-			);
-			 */
-		}
+		const image_id: string | null = await uploadOrReplaceImage({
+			formDataToUpload,
+			postImageFilename,
+			post,
+		});
 
 		try {
 			const response = await fetch("/api/posts", {
 				method: "POST",
-				body: JSON.stringify({
-					...post,
-					tags: String(post.tags)
-						.split(",")
-						.map((tag) => tag.trim().toLowerCase())
-						.filter((value, index, array) => array.indexOf(value) === index)
-						.sort((a, b) => a.localeCompare(b)),
-					// https://stackoverflow.com/a/14438954/6543935
-					image: image_id,
-					creator: session?.user.id,
+				body: preparePostBodyToUpload({
+					post,
+					image_id,
+					user_id: session?.user.id, // can be skipped on PUT/Update
 				}),
 			});
 
 			if (response.ok) {
 				router.push(Path.HOME);
 			} else {
-				/**
-				 * The error handling here should be a bit
-				 * complex in order to apply the translations.
-				 * At all it is better to make a complete
-				 * check on the FE, before fetch the API.
-				 */
+				// The error handling here should be a bit complex in order to apply the translations.
+				// At all it is better to make a complete check on the FE, before fetch the API.
 				setErrors((await response.json()).errors);
 			}
 		} catch (error) {
@@ -166,7 +122,7 @@ const CreatePost_Page: React.FC = () => {
 	return (
 		<Form
 			errors={errors}
-			handleChange_FileUpload={handleChange_FileUpload}
+			handleFileUploadChange={handleFileUploadChange}
 			handleSubmit={createPost}
 			post={post}
 			postImageFilename={postImageFilename}
