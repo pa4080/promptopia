@@ -89,6 +89,10 @@
 		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",
 		"imageRequiredError": "For this kind of prompt post the image is required!"
 	},
+	"DeletePost": {
+		"title": "Delete Post id:{ id }",
+		"description": "This action is irreversible. Are you sure you want to delete this post?"
+	},
 	"Profile": {
 		"description": "Welcome to your profile page. Here you can see, edit or delete all your posts and edit your profile."
 	}

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 import Link from "next/link";
 
-import { FormProps } from "@/interfaces/Form";
+import { FormProps, FormTypes } from "@/interfaces/Form";
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
 import CheckList, { ListItemType } from "@/app/components/fragments/CheckList";
@@ -23,7 +23,7 @@ const Form: React.FC<FormProps> = ({
 	submitting,
 	type,
 	errors,
-	handleChange_FileUpload,
+	handleFileUploadChange,
 	postImageFilename,
 }) => {
 	const t = useTranslations("Form");
@@ -55,7 +55,7 @@ const Form: React.FC<FormProps> = ({
 		haveError(errorKey) && <p className="form_error">{errors?.[errorKey]?.message}</p>;
 
 	return (
-		<section className="page_section_left">
+		<section className="page_section_left w-full">
 			<Header
 				desc={t("postTypeDesc", i18nFormType)}
 				gradient="blue_gradient"
@@ -139,7 +139,7 @@ const Form: React.FC<FormProps> = ({
 								placeholder={t("imagePlaceholder")}
 								type="file"
 								// value={fileName}
-								onChange={handleChange_FileUpload}
+								onChange={handleFileUploadChange}
 							/>
 							{postImageFilename && !haveError("image") ? (
 								<IconEmbedSvg height={28} type="cloud-check" width={40} />
@@ -166,7 +166,7 @@ const Form: React.FC<FormProps> = ({
 					<div className="flex justify-end items-center gap-4 flex-row w-full">
 						<Link
 							className="text-sm text-mlt-dark-4 hover:text-mlt-orange-primary"
-							href={Path.HOME}
+							href={type === FormTypes.EDIT ? Path.PROFILE : Path.HOME}
 						>
 							{t("cancel")}
 						</Link>

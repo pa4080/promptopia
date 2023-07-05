@@ -64,7 +64,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 
 					return new NextResponse(stream, {
 						headers: {
-							"Content-Type": file.contentType!,
+							"Content-Type": file?.contentType || "image",
 						},
 						status: 200,
 					});
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 const formData = new FormData();
 formData.append('file', file); // 'file' is the key name for the uploaded file
 
-fetch('/api/upload', { method: 'POST', body: formData })
+fetch('/api/files/', { method: 'POST', body: formData })
  	.then(response => response.json())
  	.then(data => { console.log(data); })
  	.catch(error => { console.error(error); });
@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
  * Delete a file from the database.
  * An example of how to delete a file using fetch:
  * 
-fetch('/api/delete/123', { method: 'DELETE' })
+fetch('/api/files/123', { method: 'DELETE' })
   .then(response => {
     if (response.ok) console.log('File deleted successfully');
     else if (response.status === 404) console.log('File not found');
@@ -157,6 +157,7 @@ export async function DELETE(request: NextRequest, { params }: Context) {
 
 		if (params?.query.length === 1) {
 			const fileId = new ObjectId(params?.query[0]);
+
 			const file = await bucket.find({ _id: fileId }).toArray();
 
 			if (file.length === 0) {
