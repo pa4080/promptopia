@@ -7,11 +7,13 @@ import { Inter } from "next/font/google";
 
 // import { getServerSession } from "next-auth";
 
+import { PromptopiaContextProvider } from "@/contexts/PromptopiaContext";
+
 import Nav from "@/components/Nav";
 
 // import { authOptions } from "@/lib/auth-options";
 
-import Provider from "../../components/Provider";
+import AuthSessionProvider from "../../contexts/AuthSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,7 +56,7 @@ const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) =
 		<html lang={locale}>
 			<body className={inter.className}>
 				{/* <Provider session={session}> */}
-				<Provider>
+				<AuthSessionProvider>
 					<div className="main">
 						<div className="gradient" />
 					</div>
@@ -62,12 +64,11 @@ const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) =
 						<NextIntlClientProvider locale={locale} messages={messages}>
 							<div className="app_inner">
 								<Nav />
-
-								{children}
+								<PromptopiaContextProvider>{children}</PromptopiaContextProvider>
 							</div>
 						</NextIntlClientProvider>
 					</main>
-				</Provider>
+				</AuthSessionProvider>
 			</body>
 		</html>
 	);

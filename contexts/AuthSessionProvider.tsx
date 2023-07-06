@@ -20,8 +20,8 @@ interface Props {
  * you can avoid checking the session twice on pages that
  * support both server and client side rendering.
  */
-const Provider: React.FC<Props> = ({ children }) => {
+const AuthSessionProvider: React.FC<Props> = ({ children }) => {
 	return <SessionProvider>{children}</SessionProvider>;
 };
 
-export default Provider;
+export default AuthSessionProvider;
