@@ -14,7 +14,7 @@ import {
 	postFromDbInit,
 } from "@/interfaces/Post";
 import { FormTypes } from "@/interfaces/Form";
-import Form from "@/app/components/Form";
+import Form from "@/components/Form";
 import { Path } from "@/interfaces/Path";
 
 const UpdatePost_Page: React.FC = () => {

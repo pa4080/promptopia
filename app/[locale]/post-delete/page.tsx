@@ -10,8 +10,8 @@ import { fetchPosts } from "@/lib/fetch-helpers";
 
 import { PostTypeFromDb, postFromDbInit } from "@/interfaces/Post";
 import { Path } from "@/interfaces/Path";
-import Header from "@/app/components/Header";
-import PostCard from "@/app/components/PostCard";
+import Header from "@/components/Header";
+import PostCard from "@/components/PostCard";
 
 const DeletePost_Page: React.FC = () => {
 	const t = useTranslations("DeletePost");

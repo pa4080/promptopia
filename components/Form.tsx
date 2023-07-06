@@ -9,7 +9,7 @@ import Link from "next/link";
 import { FormProps, FormTypes } from "@/interfaces/Form";
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
 
-import CheckList, { ListItemType } from "@/app/components/fragments/CheckList";
+import CheckList, { ListItemType } from "@/components/fragments/CheckList";
 
 import { Path } from "@/interfaces/Path";
 

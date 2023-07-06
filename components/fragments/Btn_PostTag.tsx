@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 
 import { ThemeColorsList } from "@/interfaces/ThemeTW";
 
-import IconEmbedSvg, { IconEmbSvgPathType } from "@/app/components/fragments/IconEmbedSvg";
+import IconEmbedSvg, { IconEmbSvgPathType } from "@/components/fragments/IconEmbedSvg";
 
 interface Props {
 	text: string;
@@ -19,19 +19,19 @@ interface Props {
 	style?: CSSProperties;
 }
 
-const Btn_PostActions: React.FC<Props> = ({
+const Btn_PostTag: React.FC<Props> = ({
 	text,
 	onClick,
 	c1 = "mlt-orange-secondary",
 	c2 = "mlt-orange-secondary",
 	bgColor = "bg-white",
 	icon = {
-		type: "brush",
+		type: "tag",
 	},
 	style,
 }) => {
 	return (
-		<span className={`post_button ml-2 ${bgColor}`} style={{ ...style }} onClick={onClick}>
+		<span className={`post_button mr-2 my-1 ${bgColor}`} style={{ ...style }} onClick={onClick}>
 			<IconEmbedSvg
 				color1={c1}
 				color2={c2}
@@ -46,4 +46,4 @@ const Btn_PostActions: React.FC<Props> = ({
 	);
 };
 
-export default Btn_PostActions;
+export default Btn_PostTag;

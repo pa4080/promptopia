@@ -7,11 +7,11 @@ import { Inter } from "next/font/google";
 
 // import { getServerSession } from "next-auth";
 
-import Nav from "@/app/components/Nav";
+import Nav from "@/components/Nav";
 
 // import { authOptions } from "@/lib/auth-options";
 
-import Provider from "../components/Provider";
+import Provider from "../../components/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
