@@ -190,7 +190,7 @@ body {
 
 /* Tailwind Styles */
 .app {
-	@apply relative z-10 px-6 sm:px-8 md:px-10 2md:px-12;
+	@apply relative z-10 px-6 sm:px-8 md:px-10 md820:px-12;
 
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -416,7 +416,9 @@ body {
 }
 
 .dropdown_link {
-	@apply text-sm font-inter text-gray-700 hover:text-gray-500 font-medium pr-1;
+	@apply text-sm font-inter text-gray-700 pr-1 hover:text-mlt-purple-primary font-semibold py-1;
+
+	letter-spacing: 0.4px;
 }
 
 /* PromptCard Component and Post/Prompt feed */
@@ -448,7 +450,7 @@ body {
 
 .post_card_list .post_card {
 	@apply md:max-w-[340px] 
-				2md:max-w-[380px] 
+				md820:max-w-[380px] 
 				lg:max-w-[460px]
 				xl:max-w-[480px]
 				2xl:max-w-[420px];

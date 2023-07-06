@@ -31,7 +31,7 @@ const ThemeColors = {
 	"mlt-orange-secondary_tr2": "#ef720eaa",
 };
 
-module.exports = {
+const appTwConfig = {
 	darkMode: ["class"],
 	content: [
 		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -49,11 +49,11 @@ module.exports = {
 		extend: {
 			// https://tailwindcss.com/docs/screens
 			screens: {
-				"2sm": "480px",
-				"3sm": "420px",
-				"4sm": "380px",
-				"5sm": "320px",
-				"2md": "820px",
+				xs: "480px",
+				xs420: "420px",
+				xs380: "380px",
+				xs320: "320px",
+				md820: "820px",
 			},
 			fontFamily: {
 				satoshi: ["Satoshi", "sans-serif"],
@@ -122,3 +122,5 @@ module.exports = {
 	},
 	plugins: [require("tailwindcss-animate")],
 };
+
+export default appTwConfig;
