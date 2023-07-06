@@ -4,6 +4,8 @@
 import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
+
 import { fetchPosts } from "@/lib/fetch-helpers";
 
 import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
@@ -15,7 +17,8 @@ import CheckList, { ListItemType } from "./fragments/CheckList";
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
 	const tCommon = useTranslations("Common");
-	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
+	// const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
+	const { posts } = usePromptopiaContext();
 	const [searchText, setSearchText] = useState("");
 	const [aiCategories, setAiCategories] = useState<ListItemType[]>(
 		Object.values(AiCategories).map((aiCategory) => ({
@@ -25,11 +28,11 @@ const Feed: React.FC = () => {
 		}))
 	);
 
-	useEffect(() => {
-		(async () => {
-			setPosts(await fetchPosts("/api/posts"));
-		})();
-	}, []);
+	// useEffect(() => {
+	// 	(async () => {
+	// 		setPosts(await fetchPosts("/api/posts"));
+	// 	})();
+	// }, []);
 
 	return (
 		<section className="feed">

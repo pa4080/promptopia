@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 
-import Header from "@/app/components/Header";
-import Feed from "@/app/components/Feed";
+import Header from "@/components/Header";
+import Feed from "@/components/Feed";
 
 const Home: React.FC = () => {
 	const t = useTranslations("Home");

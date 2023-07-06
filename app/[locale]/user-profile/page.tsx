@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import UserProfile from "@/app/components/UserProfile";
+import UserProfile from "@/components/UserProfile";
 import { PostTypeFromDb } from "@/interfaces/Post";
 import { fetchPosts } from "@/lib/fetch-helpers";
 import { UserTypeFromDb } from "@/interfaces/User";

@@ -30,8 +30,6 @@ const Nav: React.FC = () => {
 
 	const { data: session } = useSession();
 
-	// console.log(session);
-
 	const [providers, setProviders] = useState<ProvidersType>(null);
 	const [toggleDropDown, setToggleDropDown] = useState(false);
 
