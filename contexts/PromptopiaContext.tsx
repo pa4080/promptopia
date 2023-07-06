@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
 import { fetchPosts } from "@/lib/fetch-helpers";

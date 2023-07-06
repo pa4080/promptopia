@@ -5,15 +5,15 @@ import { getTranslations } from "next-intl/server";
 
 import { Inter } from "next/font/google";
 
-// import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
 
 import { PromptopiaContextProvider } from "@/contexts/PromptopiaContext";
 
 import Nav from "@/components/Nav";
 
-// import { authOptions } from "@/lib/auth-options";
+import { authOptions } from "@/lib/auth-options";
 
-import AuthSessionProvider from "../../contexts/AuthSessionProvider";
+import AuthSessionProvider from "@/contexts/AuthSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +36,7 @@ interface LocaleLayoutProps {
 const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) => {
 	const locale = useLocale();
 
-	// const session = await getServerSession(authOptions);
+	const session = await getServerSession(authOptions);
 	// console.log(session);
 
 	// Show a 404 error if the user requests an unknown locale
@@ -56,7 +56,7 @@ const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) =
 		<html lang={locale}>
 			<body className={inter.className}>
 				{/* <Provider session={session}> */}
-				<AuthSessionProvider>
+				<AuthSessionProvider session={session}>
 					<div className="main">
 						<div className="gradient" />
 					</div>

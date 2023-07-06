@@ -23,7 +23,7 @@ export interface IconProps {
 
 const IconImageBased: React.FC<IconProps> = ({
 	icon,
-	size = 36,
+	size = 22,
 	width,
 	height,
 	style,
@@ -46,7 +46,7 @@ const IconImageBased: React.FC<IconProps> = ({
 			{...rest}
 			className="icon"
 			draggable={false}
-			style={{ ...icon.style, ...style }}
+			style={{ width, height, ...icon.style, ...style }}
 		/>
 	);
 };

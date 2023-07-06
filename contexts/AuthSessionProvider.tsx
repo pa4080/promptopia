@@ -7,7 +7,7 @@ import { Session } from "next-auth";
 
 interface Props {
 	children: React.ReactNode;
-	session?: Session | null;
+	session: Session | null;
 }
 
 /**
