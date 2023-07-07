@@ -115,22 +115,20 @@ const UpdatePost_Page: React.FC = () => {
 		});
 
 		try {
-			const postToEditToUpload = preparePostBodyToUpload({
-				post: postToEdit,
-				image_id,
-				user_id: (postToEdit as PostTypeFromDb).creator._id,
-			});
-
 			const response = await fetch(`/api/posts/${postId}`, {
 				method: "PUT",
-				body: postToEditToUpload,
+				body: preparePostBodyToUpload({
+					post: postToEdit,
+					image_id,
+					user_id: (postToEdit as PostTypeFromDb).creator._id,
+				}),
 			});
 
 			if (response.ok) {
+				const updatedPost = (await response.json()).post;
+
 				setPosts(
-					posts.map((post) =>
-						post._id !== postId ? post : JSON.parse(postToEditToUpload)
-					) as PostTypeFromDb[]
+					posts.map((post) => (post._id !== postId ? post : updatedPost)) as PostTypeFromDb[]
 				);
 				router.push(Path.HOME);
 			} else {
