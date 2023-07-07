@@ -27,14 +27,16 @@ const DeletePost_Page: React.FC = () => {
 	const postId = searchParams.get("id");
 
 	useEffect(() => {
-		const findPost = posts.find((post) => post._id === postId) as PostTypeFromDb;
+		const findPost =
+			postId && posts && (posts.find((post) => post._id === postId) as PostTypeFromDb);
 
 		if (findPost) {
 			setPostToDelete(findPost);
 		} else {
-			// If the post is not in the context, fetch it from the db
+			// If the post is not in the context, fetch it from the db...
+			// TODO: ...this looks like a nonsense and likely to be deleted!
 			(async () => {
-				setPostToDelete((await fetchPosts(`/api/posts/${postId}`))[0]);
+				postId && setPostToDelete((await fetchPosts(`/api/posts/${postId}`))[0]);
 			})();
 		}
 	}, [postId, posts]);
