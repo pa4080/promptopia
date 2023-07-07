@@ -19,8 +19,8 @@ const DeletePost_Page: React.FC = () => {
 	const router = useRouter();
 	const { posts, setPosts } = usePromptopiaContext();
 	const [copied, setCopied] = useState("");
-	const [submitting, setSubmitting] = useState(false);
 	const [postToDelete, setPostToDelete] = useState<PostTypeFromDb>(postFromDbInit);
+	const [submitting, setSubmitting] = useState(false);
 	const i18nFormType = { type: tForm(`Types.delete`) };
 
 	const searchParams = useSearchParams();
@@ -75,10 +75,11 @@ const DeletePost_Page: React.FC = () => {
 				}
 
 				setPosts(posts.filter((post) => post._id !== postId));
-				setSubmitting(false);
 				router.push(Path.PROFILE);
 			} catch (error) {
 				console.error("Something went wrong on post delete:", error);
+			} finally {
+				setSubmitting(false);
 			}
 		} else {
 			setSubmitting(false);

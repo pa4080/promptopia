@@ -30,8 +30,8 @@ export const postInit: PostType = {
 };
 
 export const postFromDbInit: PostTypeFromDb = {
-	prompt: "",
-	tags: [],
+	prompt: "Prompt placeholder...",
+	tags: ["tag1", "tag2"],
 	aiCategory: AiCategories.CHAT,
 	link: "",
 	_id: "",
