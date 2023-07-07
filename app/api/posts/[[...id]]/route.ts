@@ -16,8 +16,8 @@
  * export async function HEAD(request: Request) {}    // HEAD: Retrieve resource metadata
  * export async function POST(request: Request) {}    // POST: Create a new resource
  * export async function PUT(request: Request) {}     // PUT:  Update a resource
- * export async function DELETE(request: Request) {}  // DELETE: Delete a resource
  * export async function PATCH(request: Request) {}   // PATCH: Partially update a resource
+ * export async function DELETE(request: Request) {}  // DELETE: Delete a resource
  * export async function OPTIONS(request: Request) {} // OPTIONS: Retrieve resource options
  *
  * If `OPTIONS` is not defined, Next.js will automatically
@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
 		const newPost = new Post({ creator, prompt, tags, aiCategory, link, image });
 
 		await newPost.save();
+		await newPost.populate(["creator", "image"]);
 
 		return NextResponse.json(
 			{ message: "Prompt created successfully!", post: newPost },

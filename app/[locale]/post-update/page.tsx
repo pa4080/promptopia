@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { fetchPosts, preparePostBodyToUpload, uploadOrReplaceImage } from "@/lib/fetch-helpers";
@@ -16,13 +15,14 @@ import {
 import { FormTypes } from "@/interfaces/Form";
 import Form from "@/components/Form";
 import { Path } from "@/interfaces/Path";
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 const UpdatePost_Page: React.FC = () => {
 	const t = useTranslations("CreatePost");
 	const router = useRouter();
-	const { data: session } = useSession();
+	const { posts, setPosts } = usePromptopiaContext();
+	const [postToEdit, setPostToEdit] = useState<PostType | PostTypeFromDb>(postFromDbInit);
 	const [submitting, setSubmitting] = useState(false);
-	const [post, setPost] = useState<PostType | PostTypeFromDb>(postFromDbInit);
 	const [errors, setErrors] = useState<PostErrorsType>(null!);
 	const [formDataToUpload, setFormDataToUpload] = useState<FormData | undefined>(undefined);
 	const [postImageFilename, setPostImageFilename] = useState<string | null>(null);
@@ -31,23 +31,25 @@ const UpdatePost_Page: React.FC = () => {
 	const postId = searchParams.get("id");
 
 	useEffect(() => {
-		if (!session || !session?.user?.id) {
-			router.push(Path.HOME);
+		const findPost =
+			postId && posts && (posts.find((post) => post._id === postId) as PostTypeFromDb);
+
+		if (findPost) {
+			setPostToEdit(findPost);
+		} else {
+			// If the post is not in the context, fetch it from the db...
+			// TODO: ...this looks like a nonsense and likely to be deleted!
+			(async () => {
+				postId && setPostToEdit((await fetchPosts(`/api/posts/${postId}`))[0]);
+			})();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [postId, posts]);
 
 	useEffect(() => {
-		(async () => {
-			setPost((await fetchPosts(`/api/posts/${postId}`))[0]);
-		})();
-	}, [postId]);
-
-	useEffect(() => {
-		if (post) {
-			setPostImageFilename((post as PostTypeFromDb)?.image?.filename || null);
+		if (postToEdit) {
+			setPostImageFilename((postToEdit as PostTypeFromDb)?.image?.filename || null);
 		}
-	}, [post]);
+	}, [postToEdit]);
 
 	const clearSpecificError = (prevErrors: PostErrorsType, errorKey: keyof PostErrorsType) => {
 		if (!prevErrors) {
@@ -94,35 +96,42 @@ const UpdatePost_Page: React.FC = () => {
 		setSubmitting(true);
 
 		if (
-			post.aiCategory === AiCategories.IMAGE &&
+			postToEdit.aiCategory === AiCategories.IMAGE &&
 			!formDataToUpload &&
-			!(post as PostTypeFromDb).image
+			!(postToEdit as PostTypeFromDb).image
 		) {
 			setErrors((prevErrors) => ({ ...prevErrors, image: { message: t("imageRequiredError") } }));
 			setSubmitting(false);
 
 			return;
-		} else if (post.aiCategory === AiCategories.IMAGE && formDataToUpload) {
+		} else if (postToEdit.aiCategory === AiCategories.IMAGE && formDataToUpload) {
 			setErrors((prevErrors) => clearSpecificError(prevErrors, "image"));
 		}
 
 		const image_id: string | null = await uploadOrReplaceImage({
 			formDataToUpload,
 			postImageFilename,
-			post,
+			post: postToEdit,
 		});
 
 		try {
+			const postToEditToUpload = preparePostBodyToUpload({
+				post: postToEdit,
+				image_id,
+				user_id: (postToEdit as PostTypeFromDb).creator._id,
+			});
+
 			const response = await fetch(`/api/posts/${postId}`, {
 				method: "PUT",
-				body: preparePostBodyToUpload({
-					post,
-					image_id,
-					user_id: session?.user.id, // can be skipped on PUT/Update
-				}),
+				body: postToEditToUpload,
 			});
 
 			if (response.ok) {
+				setPosts(
+					posts.map((post) =>
+						post._id !== postId ? post : JSON.parse(postToEditToUpload)
+					) as PostTypeFromDb[]
+				);
 				router.push(Path.HOME);
 			} else {
 				// The error handling here should be a bit complex in order to apply the translations.
@@ -141,9 +150,9 @@ const UpdatePost_Page: React.FC = () => {
 			errors={errors}
 			handleFileUploadChange={handleFileUploadChange}
 			handleSubmit={updatePost}
-			post={post}
+			post={postToEdit}
 			postImageFilename={postImageFilename}
-			setPost={setPost}
+			setPost={setPostToEdit}
 			submitting={submitting}
 			type={FormTypes.EDIT}
 		/>

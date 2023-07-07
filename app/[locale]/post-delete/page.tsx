@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Link from "next/link";
@@ -12,32 +11,35 @@ import { PostTypeFromDb, postFromDbInit } from "@/interfaces/Post";
 import { Path } from "@/interfaces/Path";
 import Header from "@/components/Header";
 import PostCard from "@/components/PostCard";
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 const DeletePost_Page: React.FC = () => {
 	const t = useTranslations("DeletePost");
 	const tForm = useTranslations("Form");
 	const router = useRouter();
-	const { data: session } = useSession();
+	const { posts, setPosts } = usePromptopiaContext();
 	const [copied, setCopied] = useState("");
+	const [postToDelete, setPostToDelete] = useState<PostTypeFromDb>(postFromDbInit);
 	const [submitting, setSubmitting] = useState(false);
-	const [post, setPost] = useState<PostTypeFromDb>(postFromDbInit);
 	const i18nFormType = { type: tForm(`Types.delete`) };
 
 	const searchParams = useSearchParams();
 	const postId = searchParams.get("id");
 
 	useEffect(() => {
-		if (!session || !session?.user?.id) {
-			router.push(Path.HOME);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		const findPost =
+			postId && posts && (posts.find((post) => post._id === postId) as PostTypeFromDb);
 
-	useEffect(() => {
-		(async () => {
-			setPost((await fetchPosts(`/api/posts/${postId}`))[0]);
-		})();
-	}, [postId]);
+		if (findPost) {
+			setPostToDelete(findPost);
+		} else {
+			// If the post is not in the context, fetch it from the db...
+			// TODO: ...this looks like a nonsense and likely to be deleted!
+			(async () => {
+				postId && setPostToDelete((await fetchPosts(`/api/posts/${postId}`))[0]);
+			})();
+		}
+	}, [postId, posts]);
 
 	const handleDeleteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -47,8 +49,8 @@ const DeletePost_Page: React.FC = () => {
 
 		if (hasConfirmed) {
 			try {
-				const imageId = (post as PostTypeFromDb)?.image?._id;
-				const postId = (post as PostTypeFromDb)?._id;
+				const imageId = (postToDelete as PostTypeFromDb)?.image?._id;
+				const postId = (postToDelete as PostTypeFromDb)?._id;
 
 				if (imageId) {
 					const imgDelResponse = await fetch(`/api/files/${imageId}`, {
@@ -72,10 +74,12 @@ const DeletePost_Page: React.FC = () => {
 					throw new Error(`Could not delete post id:${postId}`);
 				}
 
-				setSubmitting(false);
+				setPosts(posts.filter((post) => post._id !== postId));
 				router.push(Path.PROFILE);
 			} catch (error) {
 				console.error("Something went wrong on post delete:", error);
+			} finally {
+				setSubmitting(false);
 			}
 		} else {
 			setSubmitting(false);
@@ -85,31 +89,35 @@ const DeletePost_Page: React.FC = () => {
 	};
 
 	return (
-		<section className="page_section_left w-fit max-w-3xl">
-			<Header
-				desc={t("description")}
-				gradient="red_gradient"
-				textStyle="text-left"
-				titleGradient={t("title", { id: `${post._id.slice(0, 3)}...${post._id.slice(-3)}` })}
-			/>
-			<form className="mt-10 w-full" onSubmit={handleDeleteSubmit}>
-				<div className="flex justify-end items-center gap-4 flex-row w-full mb-8">
-					<Link
-						className="text-sm text-mlt-dark-4 hover:text-mlt-purple-primary"
-						href={Path.PROFILE}
-					>
-						{tForm("cancel")}
-					</Link>
-					<button className="_btn red_invert" disabled={submitting} type="submit">
-						{submitting ? tForm("processing", i18nFormType) : tForm("submit", i18nFormType)}
-					</button>
-				</div>
+		postToDelete && (
+			<section className="page_section_left w-fit max-w-3xl">
+				<Header
+					desc={t("description")}
+					gradient="red_gradient"
+					textStyle="text-left"
+					titleGradient={t("title", {
+						id: `${postToDelete._id.slice(0, 3)}...${postToDelete._id.slice(-3)}`,
+					})}
+				/>
+				<form className="mt-10 w-full" onSubmit={handleDeleteSubmit}>
+					<div className="flex justify-end items-center gap-4 flex-row w-full mb-8">
+						<Link
+							className="text-sm text-mlt-dark-4 hover:text-mlt-purple-primary"
+							href={Path.PROFILE}
+						>
+							{tForm("cancel")}
+						</Link>
+						<button className="_btn red_invert" disabled={submitting} type="submit">
+							{submitting ? tForm("processing", i18nFormType) : tForm("submit", i18nFormType)}
+						</button>
+					</div>
 
-				<div className="max-w-md">
-					<PostCard copied={copied} post={post} setCopied={setCopied} />
-				</div>
-			</form>
-		</section>
+					<div className="max-w-md">
+						<PostCard copied={copied} post={postToDelete} setCopied={setCopied} />
+					</div>
+				</form>
+			</section>
+		)
 	);
 };
 

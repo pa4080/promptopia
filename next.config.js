@@ -56,7 +56,6 @@ const nextConfig = {
 		];
 	},
    */
-	/**
 	async headers() {
 		return [
 			{
@@ -71,7 +70,6 @@ const nextConfig = {
 			},
 		];
 	},
-   */
 };
 
 module.exports = withNextIntl(nextConfig);

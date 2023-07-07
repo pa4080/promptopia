@@ -22,10 +22,8 @@ const providersIcons = ["google", "github"];
 
 const Nav: React.FC = () => {
 	const t = useTranslations("Nav");
-
 	const { authProviders, session } = usePromptopiaContext();
 	const [toggleDropDown, setToggleDropDown] = useState(false);
-
 	const { isBelowSm } = useBreakpoint("sm");
 
 	const openMobileNavBar = () => {
@@ -112,7 +110,11 @@ const Nav: React.FC = () => {
 								{t("createPrompt")}
 							</Link>
 
-							<button className="_btn gray_light" type="button" onClick={() => signOut()}>
+							<button
+								className="_btn gray_light"
+								type="button"
+								onClick={() => signOut({ callbackUrl: "/" })}
+							>
 								{t("signOut")}
 							</button>
 

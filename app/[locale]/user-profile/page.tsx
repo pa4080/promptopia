@@ -1,47 +1,35 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 import UserProfile from "@/components/UserProfile";
 import { PostTypeFromDb } from "@/interfaces/Post";
 import { fetchPosts } from "@/lib/fetch-helpers";
 import { UserTypeFromDb } from "@/interfaces/User";
-import { Path } from "@/interfaces/Path";
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 const UserProfile_Page: React.FC = () => {
-	const { data: session } = useSession();
-	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
-	const router = useRouter();
+	const { posts, session } = usePromptopiaContext();
+	const [userPosts, setUserPosts] = useState<PostTypeFromDb[]>([]);
 
 	useEffect(() => {
-		if (session && session?.user?.id) {
-			(async () => {
-				setPosts(await fetchPosts(`/api/users/${session?.user?.id}/posts`));
-			})();
+		const findUserPosts =
+			posts &&
+			session &&
+			(posts.filter((post) => post.creator._id === session?.user?.id) as PostTypeFromDb[]);
+
+		if (findUserPosts) {
+			setUserPosts(findUserPosts);
 		} else {
-			router.push(Path.HOME);
+			// If the users posts are not in the posts array, fetch them...
+			// TODO: ...this looks like a nonsense and likely to be deleted!
+			(async () => {
+				session && setUserPosts(await fetchPosts(`/api/users/${session?.user?.id}/posts`));
+			})();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	// const handleEdit = () => {
-	// 	// eslint-disable-next-line no-console
-	// 	console.log("Edit");
-	// };
-
-	// const handleDelete = async () => {
-	// 	// eslint-disable-next-line no-console
-	// 	console.log("Delete");
-	// };
+	}, [posts, session]);
 
 	return (
-		<UserProfile
-			// handleDelete={handleDelete}
-			// handleEdit={handleEdit}
-			posts={posts}
-			user={session?.user as unknown as UserTypeFromDb}
-		/>
+		session && <UserProfile posts={userPosts} user={session?.user as unknown as UserTypeFromDb} />
 	);
 };
 
