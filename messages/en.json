@@ -83,7 +83,8 @@
 		"defaultEmail": "promptopia@metalevel.tech",
 		"spamProtect": "@spam.protect",
 		"edit": "Edit",
-		"delete": "Delete"
+		"delete": "Delete",
+		"linkAreaLabel": "Link to the AI platform or source of the prompt"
 	},
 	"CreatePost": {
 		"imageSizeError": "Image size is too large. Maximum allowed size is 128KB.",

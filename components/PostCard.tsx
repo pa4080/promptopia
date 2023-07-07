@@ -61,9 +61,9 @@ const PostCard: React.FC<PostCardProps> = ({
 						/>
 					</div>
 					<div className="flex flex-col max-w-[100%] overflow-hidden gap-1">
-						<h3 className="font-satoshi font-semibold text-mlt-dark-2 pr-7">
+						<h2 className="font-satoshi font-semibold text-mlt-dark-2 pr-7">
 							{post?.creator?.name ?? t("defaultUsername")}
-						</h3>
+						</h2>
 
 						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden whitespace-pre">
 							{post?.creator?.email?.replace(/\./g, "-").replace(/@.*$/, t("spamProtect")) ??
@@ -107,7 +107,13 @@ const PostCard: React.FC<PostCardProps> = ({
 					{post.prompt}
 				</p>
 				{post?.link && (
-					<a href={post.link} rel="noreferrer" style={{ display: "table-cell" }} target="_blank">
+					<a
+						aria-label={t("linkAreaLabel")}
+						href={post.link}
+						rel="noreferrer"
+						style={{ display: "table-cell" }}
+						target="_blank"
+					>
 						<IconEmbedSvgPop
 							bgColor="bg-mlt-purple-secondary"
 							c1="mlt-purple-secondary"
