@@ -2,12 +2,11 @@ import React from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useSession } from "next-auth/react";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
-
 import { Path } from "@/interfaces/Path";
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 import Btn_PostTag from "./fragments/Btn_PostTag";
 import IconEmbedSvgPop from "./fragments/IconEmbedSvgPop";
@@ -32,7 +31,7 @@ const PostCard: React.FC<PostCardProps> = ({
 }) => {
 	const t = useTranslations("PostCard");
 	const pathName = usePathname();
-	const { data: session } = useSession();
+	const { session } = usePromptopiaContext();
 	const isEditMode = session?.user?.id === post.creator._id && pathName === Path.PROFILE;
 	const isDelMode = session?.user?.id === post.creator._id && pathName === Path.POST_DELETE;
 
