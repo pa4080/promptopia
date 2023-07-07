@@ -1,64 +1,41 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
-import {
-	signIn,
-	signOut,
-	useSession,
-	getProviders,
-	LiteralUnion,
-	ClientSafeProvider,
-} from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
-import { BuiltInProviderType } from "next-auth/providers";
+// import { BuiltInProviderType } from "next-auth/providers";
+
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 
 import { Path } from "@/interfaces/Path";
 
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
+
 import IconImageBased from "./fragments/IconImageBased";
 
 const providersIcons = ["google", "github"];
 
-type ProvidersType = Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
-
 const Nav: React.FC = () => {
 	const t = useTranslations("Nav");
 
-	const { data: session } = useSession();
-
-	const [providers, setProviders] = useState<ProvidersType>(null);
+	const { authProviders, session } = usePromptopiaContext();
 	const [toggleDropDown, setToggleDropDown] = useState(false);
 
-	useEffect(() => {
-		(async () => {
-			const response = await getProviders();
-
-			setProviders(response);
-		})();
-	}, []);
+	const { isBelowSm } = useBreakpoint("sm");
 
 	const openMobileNavBar = () => {
 		setToggleDropDown((prevState) => !prevState);
 	};
 
-	/**
-	useEffect(() => {
-		if (toggleDropDown) {
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "unset";
-		}
-	}, [toggleDropDown]);
-	*/
-
 	const listLoginProviders = (
 		<>
-			{providers &&
-				Object.values(providers).map((provider) => {
+			{authProviders &&
+				Object.values(authProviders).map((provider) => {
 					if (providersIcons.includes(provider.id)) {
 						return (
 							<button
@@ -90,9 +67,9 @@ const Nav: React.FC = () => {
 	const profilePicture = (
 		<div
 			className={`flex justify-center items-center w-12 h-12 cursor-pointer rounded-full z-10  ${
-				toggleDropDown ? "bg-white drop-shadow-sm" : "bg-white drop-shadow-md "
+				toggleDropDown ? "bg-white drop-shadow-sm" : "bg-white drop-shadow-md"
 			}`}
-			onClick={openMobileNavBar}
+			onClick={isBelowSm ? openMobileNavBar : undefined}
 		>
 			<Image
 				alt={t("altUserProfile")}

@@ -1,14 +1,12 @@
 //Ref.:https://youtu.be/wm5gMKuwSYk?t=8082
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
-import { fetchPosts } from "@/lib/fetch-helpers";
-
-import { AiCategories, PostTypeFromDb } from "@/interfaces/Post";
+import { AiCategories } from "@/interfaces/Post";
 
 import PostCardList from "./PostCardList";
 
@@ -17,7 +15,6 @@ import CheckList, { ListItemType } from "./fragments/CheckList";
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
 	const tCommon = useTranslations("Common");
-	// const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 	const { posts } = usePromptopiaContext();
 	const [searchText, setSearchText] = useState("");
 	const [aiCategories, setAiCategories] = useState<ListItemType[]>(
@@ -27,12 +24,6 @@ const Feed: React.FC = () => {
 			value: aiCategory,
 		}))
 	);
-
-	// useEffect(() => {
-	// 	(async () => {
-	// 		setPosts(await fetchPosts("/api/posts"));
-	// 	})();
-	// }, []);
 
 	return (
 		<section className="feed">

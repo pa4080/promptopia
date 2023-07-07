@@ -2,11 +2,23 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+import { useSession, getProviders, LiteralUnion, ClientSafeProvider } from "next-auth/react";
+import { Session } from "next-auth";
+
+import { BuiltInProviderType } from "next-auth/providers";
+
 import { PostTypeFromDb } from "@/interfaces/Post";
 import { fetchPosts } from "@/lib/fetch-helpers";
 
+type AuthProvidersType = Record<
+	LiteralUnion<BuiltInProviderType, string>,
+	ClientSafeProvider
+> | null;
+
 interface PromptopiaContextProps {
 	posts: PostTypeFromDb[];
+	authProviders: AuthProvidersType;
+	session: Session | null;
 }
 
 const PromptopiaContext = createContext<PromptopiaContextProps>({} as PromptopiaContextProps);
@@ -19,9 +31,12 @@ export const PromptopiaContextProvider: React.FC<PromptopiaContextProviderProps>
 	children,
 }) => {
 	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
+	const [authProviders, setAuthProviders] = useState<AuthProvidersType>(null);
+	const { data: session } = useSession();
 
 	useEffect(() => {
 		(async () => {
+			setAuthProviders(await getProviders());
 			setPosts(await fetchPosts("/api/posts"));
 		})();
 	}, []);
@@ -30,6 +45,8 @@ export const PromptopiaContextProvider: React.FC<PromptopiaContextProviderProps>
 		<PromptopiaContext.Provider
 			value={{
 				posts,
+				authProviders,
+				session,
 			}}
 		>
 			{children}
