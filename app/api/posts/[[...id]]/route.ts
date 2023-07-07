@@ -84,6 +84,8 @@ export async function PUT(request: NextRequest, { params }: Context) {
 			return NextResponse.json({ error: "Post not found!" }, { status: 404 });
 		}
 
+		await updatedPost.populate(["creator", "image"]);
+
 		return NextResponse.json(
 			{ message: "Post updated successfully!", post: updatedPost },
 			{ status: 200 }
