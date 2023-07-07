@@ -154,7 +154,7 @@ const Form: React.FC<FormProps> = ({
 					</label>
 				)}
 
-				<div className="flex justify-between items-start gap-4 flex-col 2sm:flex-row">
+				<div className="flex justify-between items-start gap-4 flex-col xs:flex-row">
 					<div className="text-mlt-dark-6 font-semibold w-full pl-0.5">
 						<CheckList
 							handleAssign={handlePostAiCategoryChange}

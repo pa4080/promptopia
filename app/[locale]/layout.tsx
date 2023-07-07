@@ -63,8 +63,10 @@ const LocaleLayout: React.FC<LocaleLayoutProps> = async ({ children, params }) =
 					<main className="app">
 						<NextIntlClientProvider locale={locale} messages={messages}>
 							<div className="app_inner">
-								<Nav />
-								<PromptopiaContextProvider>{children}</PromptopiaContextProvider>
+								<PromptopiaContextProvider>
+									<Nav />
+									{children}
+								</PromptopiaContextProvider>
 							</div>
 						</NextIntlClientProvider>
 					</main>
