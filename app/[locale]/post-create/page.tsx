@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -20,7 +19,6 @@ import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 const CreatePost_Page: React.FC = () => {
 	const t = useTranslations("CreatePost");
 	const router = useRouter();
-	// const { data: session } = useSession();
 	const { setPosts, session } = usePromptopiaContext();
 	const [submitting, setSubmitting] = useState(false);
 	const [post, setPost] = useState<PostType | PostTypeFromDb>(postInit);
