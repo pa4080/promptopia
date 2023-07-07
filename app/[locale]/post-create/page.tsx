@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -15,23 +15,18 @@ import { FormTypes } from "@/interfaces/Form";
 import Form from "@/components/Form";
 import { Path } from "@/interfaces/Path";
 import { preparePostBodyToUpload, uploadOrReplaceImage } from "@/lib/fetch-helpers";
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 const CreatePost_Page: React.FC = () => {
 	const t = useTranslations("CreatePost");
 	const router = useRouter();
-	const { data: session } = useSession();
+	// const { data: session } = useSession();
+	const { setPosts, session } = usePromptopiaContext();
 	const [submitting, setSubmitting] = useState(false);
 	const [post, setPost] = useState<PostType | PostTypeFromDb>(postInit);
 	const [errors, setErrors] = useState<PostErrorsType>(null!);
 	const [formDataToUpload, setFormDataToUpload] = useState<FormData | undefined>(undefined);
 	const [postImageFilename, setPostImageFilename] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (!session || !session?.user?.id) {
-			router.push(Path.HOME);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	const clearSpecificError = (prevErrors: PostErrorsType, errorKey: keyof PostErrorsType) => {
 		if (!prevErrors) {
@@ -106,6 +101,9 @@ const CreatePost_Page: React.FC = () => {
 			});
 
 			if (response.ok) {
+				const newPost = (await response.json()).post;
+
+				setPosts((prevPosts) => [...prevPosts, newPost]);
 				router.push(Path.HOME);
 			} else {
 				// The error handling here should be a bit complex in order to apply the translations.

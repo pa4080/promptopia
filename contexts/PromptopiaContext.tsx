@@ -17,6 +17,7 @@ type AuthProvidersType = Record<
 
 interface PromptopiaContextProps {
 	posts: PostTypeFromDb[];
+	setPosts: React.Dispatch<React.SetStateAction<PostTypeFromDb[]>>;
 	authProviders: AuthProvidersType;
 	session: Session | null;
 }
@@ -45,6 +46,7 @@ export const PromptopiaContextProvider: React.FC<PromptopiaContextProviderProps>
 		<PromptopiaContext.Provider
 			value={{
 				posts,
+				setPosts,
 				authProviders,
 				session,
 			}}

@@ -23,6 +23,10 @@ export async function uploadOrReplaceImage({
 	postImageFilename: string | null;
 	post: PostType | PostTypeFromDb;
 }): Promise<string | null> {
+	if (!postImageFilename || !formDataToUpload) {
+		return null;
+	}
+
 	let image_id: string | null = null;
 	const old_image = (post as PostTypeFromDb)?.image;
 

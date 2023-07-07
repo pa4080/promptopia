@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
 		const newPost = new Post({ creator, prompt, tags, aiCategory, link, image });
 
 		await newPost.save();
+		await newPost.populate(["creator", "image"]);
 
 		return NextResponse.json(
 			{ message: "Prompt created successfully!", post: newPost },
