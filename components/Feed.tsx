@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { useSearchParams, useRouter } from "next/navigation";
@@ -141,6 +141,7 @@ const Feed: React.FC = () => {
 							/>
 						</div>
 					)}
+
 					<input
 						required
 						className="form_input search_input"

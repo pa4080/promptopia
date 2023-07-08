@@ -434,14 +434,16 @@ body {
 /* PromptCard Component and Post/Prompt feed */
 .post_card_list {
 	@apply gap-8 mt-16 w-full
-				sm:columns-2 md:w-max
+				md:w-max
 				lg:gap-10
-				2xl:columns-3 2xl:gap-12
-				min-h-[15rem];
+				2xl:gap-12
+				min-h-[10rem];
 
 	/**
-	 * This fix a bug in Firefox where the container is not expanding
-	 * while height (or min-height) is not provided as concrete value!?
+	 * > "min-h-[10rem]" fix a bug in Firefox where the container is not expanding
+	 *   while height (or min-height) is not provided as concrete value!?
+	 * > "sm:columns-2 2xl:columns-3" is moved in the component  because
+	 *   we calculating the number of columns based on the post number.
 	 */
 }
 
