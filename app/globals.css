@@ -426,7 +426,13 @@ body {
 	@apply gap-8 mt-16 w-full
 				sm:columns-2 md:w-max
 				lg:gap-10
-				2xl:columns-3 2xl:gap-12;
+				2xl:columns-3 2xl:gap-12
+				min-h-[15rem];
+
+	/**
+	 * This fix a bug in Firefox where the container is not expanding
+	 * while height (or min-height) is not provided as concrete value!?
+	 */
 }
 
 .post_card {
@@ -437,6 +443,13 @@ body {
 
 	/* shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.05)]
 	hover:shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.15)]; */
+}
+
+.post_card_header {
+	/* @apply flex flex-1 justify-start gap-3 cursor-pointer flex-row items-center z-10; */
+	@apply grid justify-start gap-3 cursor-pointer flex-row items-center z-10;
+
+	grid-template-columns: 56px 1fr;
 }
 
 .post_card_del_mode {
