@@ -40,6 +40,7 @@ const Feed: React.FC = () => {
 
 	const searchParams = useSearchParams();
 	const tagId = searchParams.get("tag");
+	const wipe = searchParams.get("wipe");
 	const router = useRouter();
 
 	const filterPosts = () => {
@@ -53,7 +54,7 @@ const Feed: React.FC = () => {
 			: posts.filter((post) => aiCAtegoriesNames.includes(post.aiCategory));
 
 		if (tagId) {
-			router.push(`${Path.HOME}`);
+			router.push(Path.HOME);
 		}
 
 		const filter = searchTypes.reduce(
@@ -101,13 +102,17 @@ const Feed: React.FC = () => {
 	}, [tagId]);
 
 	const handleWipe = () => {
+		router.push(Path.HOME);
+
 		setSearchText("");
+
 		setSearchTypes(
 			searchTypes.map((searchType) => ({
 				...searchType,
 				checked: true,
 			}))
 		);
+
 		setAiCategories(
 			aiCategories.map((aiCategory) => ({
 				...aiCategory,
@@ -115,6 +120,13 @@ const Feed: React.FC = () => {
 			}))
 		);
 	};
+
+	useEffect(() => {
+		if (wipe) {
+			handleWipe();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [wipe]);
 
 	return (
 		<section className="feed">
