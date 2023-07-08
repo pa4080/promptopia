@@ -262,8 +262,10 @@ body {
 .login_provider_btn {
 	@apply border border-mlt-gray-4 rounded-full
 	bg-white hover:bg-mlt-orange-secondary hover:border-mlt-orange-secondary
-	transition-all duration-300 opacity-90 drop-shadow-md w-10 h-10
+	transition-all opacity-90 drop-shadow-md w-10 h-10
 	flex justify-center items-center;
+
+	/* duration-300 */
 
 	transform: scale(1.02);
 }
@@ -437,9 +439,11 @@ body {
 
 .post_card {
 	@apply flex-1 break-inside-avoid rounded-xl border-2 border-mlt-gray-5/80 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter w-full h-fit 
-	transition-all duration-300 
 	drop-shadow-md shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.1)]
-	mb-8 lg:mb-10 2xl:mb-12;
+	mb-8 lg:mb-10 2xl:mb-12
+	transition-all;
+
+	/* duration-300 -- this duration overrides the <Skeleton />'s animation-pulse duration */
 
 	/* shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.05)]
 	hover:shadow-[inset_10px_-50px_94px_0_rgb(176,123,255,0.15)]; */

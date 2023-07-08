@@ -6,7 +6,7 @@ import IconEmbedSvg, { IconEmbSvgPathType } from "@/components/fragments/IconEmb
 
 interface Props {
 	text: string;
-	onClick: () => void;
+	onClick?: () => void;
 	c1?: ThemeColorsList;
 	c2?: ThemeColorsList;
 	bgColor?: string;

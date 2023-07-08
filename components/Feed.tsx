@@ -11,6 +11,7 @@ import { AiCategories } from "@/interfaces/Post";
 import PostCardList from "./PostCardList";
 
 import CheckList, { ListItemType } from "./fragments/CheckList";
+import PostCardListLoading from "./PostCardListLoading";
 
 const Feed: React.FC = () => {
 	const t = useTranslations("Feed");
@@ -25,6 +26,14 @@ const Feed: React.FC = () => {
 		}))
 	);
 
+	// const [data, setData] = useState(posts);
+	// useEffect(() => {
+	// 	(async () => {
+	// 		await new Promise((resolve) => setTimeout(resolve, 300000));
+	// 		setData(posts);
+	// 	})();
+	// }, [posts]);
+
 	return (
 		<section className="feed">
 			<form className="relative w-full flex justify-center items-center">
@@ -37,7 +46,6 @@ const Feed: React.FC = () => {
 					onChange={(e) => setSearchText(e.target.value)}
 				/>
 			</form>
-
 			<div className="text-mlt-dark-6 font-base w-full pl-0.5">
 				<CheckList
 					handleAssign={setAiCategories}
@@ -47,7 +55,7 @@ const Feed: React.FC = () => {
 				/>
 			</div>
 
-			<PostCardList data={posts} />
+			{posts.length === 0 ? <PostCardListLoading /> : <PostCardList data={posts} />}
 		</section>
 	);
 };
