@@ -137,12 +137,9 @@ const Feed: React.FC = () => {
 					e.preventDefault();
 				}}
 			>
-				<div className="w-full flex justify-center items-center relative">
+				<div className="search_input_container">
 					{searchText && (
-						<div
-							className="absolute z-10 right-4 translate-y-[3.5px] hover:brightness-75 hover:saturate-150 transition-all hover:drop-shadow-lg duration-300"
-							onClick={handleWipe}
-						>
+						<div className="wipe_search_btn" onClick={handleWipe}>
 							<IconEmbedSvg
 								color1="mlt-purple-secondary"
 								color2="mlt-purple-secondary"
@@ -165,7 +162,7 @@ const Feed: React.FC = () => {
 					/>
 				</div>
 
-				<div className="text-mlt-dark-6 font-base w-full pl-0.5 flex items-center justify-between gap-1 mt-1 flex-col xs:flex-row">
+				<div className="search_filters_container">
 					<CheckList
 						handleAssign={setAiCategories}
 						icon={{ size: 22, color: "mlt-orange-secondary" }}

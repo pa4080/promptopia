@@ -356,6 +356,10 @@ body {
 }
 
 /* Feed Component */
+.home_page_section {
+	@apply w-full flex justify-center items-center flex-col;
+}
+
 .feed {
 	@apply mt-16 mx-auto w-full max-w-xl flex justify-center items-center flex-col gap-2;
 }
@@ -396,6 +400,18 @@ body {
 
 .input_file_wrapper input[type="file"] {
 	display: none;
+}
+
+.search_input_container {
+	@apply w-full flex justify-center items-center relative;
+}
+
+.wipe_search_btn {
+	@apply absolute z-10 right-4 translate-y-[3.5px] hover:brightness-75 hover:saturate-150 transition-all hover:drop-shadow-lg duration-300;
+}
+
+.search_filters_container {
+	@apply w-full pl-0.5 flex items-center justify-between gap-1 mt-1 text-mlt-dark-6 flex-col xs:flex-row;
 }
 
 /* Nav Component */
