@@ -8,7 +8,7 @@ const Home: React.FC = () => {
 	const t = useTranslations("Home");
 
 	return (
-		<section className="w-full flex justify-center items-center flex-col">
+		<section className="home_page_section">
 			<Header desc={t("subHeading")} titleBlack={t("headingLn1")} titleGradient={t("headingLn2")} />
 			<Feed />
 		</section>
