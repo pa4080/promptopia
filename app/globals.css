@@ -196,6 +196,14 @@ body {
 	overflow-y: auto;
 }
 
+.app a {
+	@apply text-mlt-purple-primary;
+}
+
+.app a:hover {
+	@apply text-mlt-purple-secondary;
+}
+
 .app_inner {
 	@apply mb-24;
 }

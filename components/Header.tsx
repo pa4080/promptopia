@@ -30,7 +30,7 @@ const Header: React.FC<Props> = ({
 					</>
 				)}
 			</h1>
-			{desc && <p className="desc max-w-md">{desc}</p>}
+			{desc && <p dangerouslySetInnerHTML={{ __html: desc }} className="desc max-w-md"></p>}
 		</header>
 	);
 };
