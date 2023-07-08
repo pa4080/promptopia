@@ -37,6 +37,7 @@ References:
 - <https://nextjs.org/docs>
 - <https://next-intl-docs.vercel.app/docs/next-13>
 - <https://www.npmjs.com/package/slugify>
+- [***Setting the properties in an object parameter to optional > Set the entire object parameter to optional***](https://bobbyhadz.com/blog/typescript-function-optional-parameters#setting-the-properties-in-an-object-parameter-to-optional)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

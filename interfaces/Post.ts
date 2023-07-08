@@ -22,6 +22,12 @@ export enum AiCategories {
 	IMAGE = "image",
 }
 
+export enum SearchTypes {
+	AUTHOR = "author",
+	TAGS = "tags",
+	PROMPT = "prompt",
+}
+
 export const postInit: PostType = {
 	prompt: "",
 	tags: "",
