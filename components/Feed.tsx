@@ -165,7 +165,7 @@ const Feed: React.FC = () => {
 					/>
 				</div>
 
-				<div className="text-mlt-dark-6 font-base w-full pl-0.5 flex items-center justify-between gap-1 mt-1 max-xs:flex-col">
+				<div className="text-mlt-dark-6 font-base w-full pl-0.5 flex items-center justify-between gap-1 mt-1 flex-col xs:flex-row">
 					<CheckList
 						handleAssign={setAiCategories}
 						icon={{ size: 22, color: "mlt-orange-secondary" }}
