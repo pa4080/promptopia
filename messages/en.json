@@ -9,6 +9,11 @@
 		"aiCats": {
 			"chat": "Chat",
 			"image": "Image"
+		},
+		"searchTypes": {
+			"prompt": "Prompt",
+			"tags": "Tags",
+			"author": "Author"
 		}
 	},
 	"Nav": {

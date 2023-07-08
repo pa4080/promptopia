@@ -15,7 +15,7 @@ const PostCardListLoading: React.FC = () => {
 	}));
 
 	return (
-		<div className="post_card_list">
+		<div className="post_card_list sm:columns-2 2xl:columns-3">
 			{data.map((fakePost) => {
 				return (
 					<Skeleton key={fakePost.id} className="post_card">

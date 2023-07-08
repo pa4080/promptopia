@@ -5,15 +5,11 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { signIn, signOut } from "next-auth/react";
-
-// import { BuiltInProviderType } from "next-auth/providers";
-
-import { useBreakpoint } from "@/hooks/useBreakpoint";
+import { usePathname } from "next/navigation";
 
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
-
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { Path } from "@/interfaces/Path";
-
 import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 import IconImageBased from "./fragments/IconImageBased";
@@ -25,6 +21,7 @@ const Nav: React.FC = () => {
 	const t = useTranslations("Nav");
 	const { authProviders, session } = usePromptopiaContext();
 	const [toggleDropDown, setToggleDropDown] = useState(false);
+	const pathName = usePathname();
 	const { isBelowSm } = useBreakpoint("sm");
 
 	const openMobileNavBar = () => {
@@ -94,7 +91,7 @@ const Nav: React.FC = () => {
 		<nav className="flex justify-between items-center w-full mb-16 pt-4 sm:pt-8 h-16">
 			<Link
 				className="flex justify-center items-center gap-1 hover:drop-shadow-md transition-all duration-300"
-				href={Path.HOME}
+				href={pathName === Path.HOME ? `${Path.HOME}?wipe=true` : Path.HOME}
 			>
 				<Image
 					alt={t("altLogo")}
