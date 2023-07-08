@@ -17,6 +17,7 @@ import { Path } from "@/interfaces/Path";
 import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 import IconImageBased from "./fragments/IconImageBased";
+import { Skeleton } from "./ui/skeleton";
 
 const providersIcons = ["google", "github"];
 
@@ -32,7 +33,7 @@ const Nav: React.FC = () => {
 
 	const listLoginProviders = (
 		<>
-			{authProviders &&
+			{authProviders ? (
 				Object.values(authProviders).map((provider) => {
 					if (providersIcons.includes(provider.id)) {
 						return (
@@ -58,7 +59,17 @@ const Nav: React.FC = () => {
 							{t("signIn")}
 						</button>
 					);
-				})}
+				})
+			) : (
+				<>
+					<Skeleton className="login_provider_btn">
+						<div className="w-[28px] h-[28px] rounded-full bg-mlt-gray-6" />
+					</Skeleton>
+					<Skeleton className="login_provider_btn">
+						<div className="w-[28px] h-[28px] rounded-full bg-mlt-gray-5" />
+					</Skeleton>
+				</>
+			)}
 		</>
 	);
 
