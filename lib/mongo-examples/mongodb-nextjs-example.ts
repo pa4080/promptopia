@@ -39,7 +39,7 @@ if (!process.env.MONGODB_URI) {
 }
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
+// const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
 const MONGODB_OPTIONS: MongoClientOptions = {};
 
 let client;

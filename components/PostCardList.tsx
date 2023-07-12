@@ -9,11 +9,9 @@ import PostCard from "./PostCard";
 
 interface PromptCardListProps {
 	data: PostTypeFromDb[];
-	edit?: boolean;
-	del?: boolean;
 }
 
-const PostCardList: React.FC<PromptCardListProps> = ({ data, edit = false, del = false }) => {
+const PostCardList: React.FC<PromptCardListProps> = ({ data }) => {
 	const [copied, setCopied] = useState("");
 	const router = useRouter();
 
@@ -52,8 +50,8 @@ const PostCardList: React.FC<PromptCardListProps> = ({ data, edit = false, del =
 					<PostCard
 						key={post._id}
 						copied={copied}
-						handleDelete={() => (del ? handleDelete(post) : undefined)}
-						handleEdit={() => (edit ? handleEdit(post) : undefined)}
+						handleDelete={() => handleDelete(post)}
+						handleEdit={() => handleEdit(post)}
 						handleTagClick={handleTagClick}
 						post={post}
 						setCopied={setCopied}

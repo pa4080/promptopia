@@ -26,7 +26,7 @@ const UserProfile: React.FC<UserProfileType> = ({ user, posts }) => {
 				titleGradient={user?.name ?? ""}
 			/>
 
-			<PostCardList del edit data={posts} />
+			<PostCardList data={posts} />
 		</section>
 	);
 };

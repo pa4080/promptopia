@@ -38,6 +38,7 @@ References:
 - <https://next-intl-docs.vercel.app/docs/next-13>
 - <https://www.npmjs.com/package/slugify>
 - [***Setting the properties in an object parameter to optional > Set the entire object parameter to optional***](https://bobbyhadz.com/blog/typescript-function-optional-parameters#setting-the-properties-in-an-object-parameter-to-optional)
+- <https://pagespeed.web.dev/analysis/https-promptopia-metalevel-tech/n0pcgydmgq?form_factor=mobile>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -160,12 +161,14 @@ npm i bcrypt mongodb mongoose next-auth
 - <https://next-auth.js.org/getting-started/typescript>
 - <https://next-auth.js.org/providers/google>
 - <https://youtu.be/wm5gMKuwSYk?t=4800>
+- **<https://www.youtube.com/watch?v=w2h54xz6Ndw>**
 - <https://console.cloud.google.com/apis/credentials/>
 - <https://next-auth.js.org/configuration/options#options> (`NEXTAUTH_SECRET`)
 - **<https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/>**
   - <https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/#implement-the-nextauth-authentication-code>
   - <https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/#different-ways-to-protect-routes>
-
+- **<https://next-intl-docs.vercel.app/docs/routing/middleware#example-auth-js>**
+ 
 ...Access blocked: This app’s request is invalid:
 
 - <https://youtu.be/wm5gMKuwSYk?t=6217>
