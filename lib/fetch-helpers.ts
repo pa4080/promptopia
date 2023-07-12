@@ -3,15 +3,43 @@ import slugify from "slugify";
 import { PostType, PostTypeFromDb } from "@/interfaces/Post";
 
 export async function fetchPosts(uri: string) {
-	const response = await fetch(uri);
+	try {
+		const response = await fetch(uri);
 
-	if (!response.ok) {
-		throw new Error("Error in 'fetchPosts()'", (await response.json()).message);
+		if (!response.ok) {
+			// throw new Error("Error in 'fetchPosts()'", (await response.json()).message);
+			return null;
+		}
+
+		const data = await response.json();
+
+		return data.hasOwnProperty("posts") ? data.posts : null;
+	} catch (error) {
+		// console.error(error);
+		return null;
 	}
+}
 
-	const data = await response.json();
+export async function fetchSingleUser(userId: string | null) {
+	try {
+		if (!userId) {
+			throw new Error("Error in 'fetchPosts()' 'userId' is null");
+		}
 
-	return data.hasOwnProperty("posts") ? data.posts : null;
+		const response = await fetch(`/api/users/${userId}/data`);
+
+		if (!response.ok) {
+			// throw new Error("Error in 'fetchPosts()'", (await response.json()).message);
+			return null;
+		}
+
+		const user = await response.json();
+
+		return user.hasOwnProperty("_id") ? user : null;
+	} catch (error) {
+		// console.error(error);
+		return null;
+	}
 }
 
 export async function uploadOrReplaceImage({

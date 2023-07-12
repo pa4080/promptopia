@@ -4,22 +4,23 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { connectToMongoDb } from "@/lib/mongodb-mongoose";
-import Post from "@/models/post";
+import User from "@/models/user";
 
-/**
- * @example fetch(`/api/users/${useId}/posts`)
- */
 interface Context {
 	params: { id: string };
 }
+
+/**
+ * @example fetch(`/api/users/${useId}/data`)
+ */
 export async function GET(request: NextRequest, { params }: Context) {
 	try {
 		await connectToMongoDb();
 		const userId = params?.id;
-		const posts = await Post.find({ creator: userId }).populate(["creator", "image"]);
+		const user = (await User.find({ _id: userId }))[0];
 
-		return NextResponse.json({ posts }, { status: 200 });
+		return NextResponse.json(user, { status: 200 });
 	} catch (error) {
-		return NextResponse.json({ error: "Failed to retrieve posts!" }, { status: 500 });
+		return NextResponse.json({ error: "Failed to retrieve a user!" }, { status: 200 });
 	}
 }

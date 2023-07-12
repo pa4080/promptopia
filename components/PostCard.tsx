@@ -3,6 +3,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
+import Link from "next/link";
+
 import { PostTypeFromDb } from "@/interfaces/Post";
 import logo from "@/public/icons/svg/mlt.promptopia.logo.favicon.svg";
 import { Path } from "@/interfaces/Path";
@@ -50,27 +52,29 @@ const PostCard: React.FC<PostCardProps> = ({
 	return (
 		<div className={`${isDelMode ? "post_card_del_mode" : "post_card"}`}>
 			<div className="relative">
-				<div className="post_card_header">
-					<div className="flex justify-center items-center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem] relative">
-						<Image
-							alt={t("altProfilePicture")}
-							className="rounded-full object-contain"
-							height={45}
-							src={post?.creator?.image ?? logo}
-							width={45}
-						/>
-					</div>
-					<div className="flex flex-col max-w-[100%] overflow-hidden gap-1">
-						<h2 className="font-satoshi font-semibold text-mlt-dark-2 pr-7">
-							{post?.creator?.name ?? t("defaultUsername")}
-						</h2>
+				<Link href={`${Path.POSTS}?user_id=${post.creator._id}`}>
+					<div className="post_card_header">
+						<div className="flex justify-center items-center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem] relative">
+							<Image
+								alt={t("altProfilePicture")}
+								className="rounded-full object-contain"
+								height={45}
+								src={post?.creator?.image ?? logo}
+								width={45}
+							/>
+						</div>
+						<div className="flex flex-col max-w-[100%] overflow-hidden gap-1">
+							<h2 className="font-satoshi font-semibold text-mlt-dark-2 pr-7">
+								{post?.creator?.name ?? t("defaultUsername")}
+							</h2>
 
-						<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden whitespace-pre">
-							{post?.creator?.email?.replace(/\./g, "-").replace(/@.*$/, t("spamProtect")) ??
-								t("defaultEmail")}
-						</p>
+							<p className="font-inter text-mlt-dark-6 text-ellipsis overflow-hidden whitespace-pre">
+								{post?.creator?.email?.replace(/\./g, "-").replace(/@.*$/, t("spamProtect")) ??
+									t("defaultEmail")}
+							</p>
+						</div>
 					</div>
-				</div>
+				</Link>
 
 				<IconEmbedSvgPop
 					bgColor={isEditMode || isDelMode ? "bg-mlt-purple-secondary" : "bg-mlt-orange-secondary"}
