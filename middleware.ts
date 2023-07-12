@@ -10,7 +10,14 @@ import { NextMiddlewareResult } from "next/dist/server/web/types";
 import { NextFetchEvent, NextRequest } from "next/server";
 
 const locales = ["en"]; // ["en", "bg"];
-const publicPages = ["/", "/login", "/privacy-policy", "/cookies-consent", "/terms-of-use"];
+const publicPages = [
+	"/",
+	"/login",
+	"/user-posts",
+	"/privacy-policy",
+	"/cookies-consent",
+	"/terms-of-use",
+];
 
 const intlMiddleware = createIntlMiddleware({
 	locales,
