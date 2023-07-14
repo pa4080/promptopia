@@ -63,8 +63,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [x] Delete posts functionality.
 - [x] Edit posts functionality.
 - [x] Search functionality with filters.
-- [ ] Page footer.
-- [ ] Post page user description.
+- [x] Page footer.
+- [x] Post page user description.
 - [ ] Profile page. Edit and delete user profile.
 - [ ] Complete the google application.
 - [ ] Pagination for the `/api/posts/` REST API. Include search functionality.
