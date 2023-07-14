@@ -101,7 +101,9 @@
 	},
 	"Profile": {
 		"description": "Welcome to your profile page. Here you can see, edit or delete all your posts.",
-		"accountRemoveDisclaimer": "If you need to remove your account, please contact us at { email } and we will do it for you."
+		"accountRemoveDisclaimer": "If you need to remove your account, please contact us at { email } and we will do it for you.",
+		"placeholderUser": "User...",
+		"placeholderUserDescription": "User description..."
 	},
 	"Footer": {
 		"projectDesc": "Check out the project at",
