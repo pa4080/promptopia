@@ -8,12 +8,24 @@
  *    const { isAboveSm, isBelowSm, sm } = useBreakpoint("sm");
  *    console.log({ isAboveSm, isBelowSm, sm });
  *
+ * @usage
  *    const { isAboveMd } = useBreakpoint("md");
  *    const { isAboveLg } = useBreakpoint("lg");
  *    const { isAbove2Xl } = useBreakpoint("2xl");
  *    console.log({ isAboveMd, isAboveLg, isAbove2Xl });
  *
- * @see https://stackoverflow.com/a/71098593/6543935
+ * @usage
+ * 	In case Next.js complains the Server side rendering
+ * 	doesn't match with the Client side:
+ *
+ * 		const [isBwXs, setIsBwXs] = React.useState<boolean>(false);
+ * 		const { isBelowXs } = useBreakpoint("xs");
+ *
+ * 		useLayoutEffect(() => {
+ *   		setIsBwXs(isBelowXs);
+ * 		}, [isBelowXs]);
+ *
+ * @see https://stackoverflow.com/a/76630444/6543935
  * @requirements npm install react-responsive
  */
 import { useMediaQuery } from "react-responsive";

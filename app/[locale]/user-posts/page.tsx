@@ -3,12 +3,12 @@ import React, { useState, useEffect } from "react";
 
 import { redirect, useSearchParams, useRouter } from "next/navigation";
 
-import UserProfile from "@/components/UserProfile";
 import { PostTypeFromDb } from "@/interfaces/Post";
 import { fetchPosts, fetchSingleUser } from "@/lib/fetch-helpers";
 import { UserTypeFromDb } from "@/interfaces/User";
 import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 import { Path } from "@/interfaces/Path";
+import UserPosts from "@/components/UserPosts";
 
 const UserProfile_Page: React.FC = () => {
 	const { posts, users, setUsers } = usePromptopiaContext();
@@ -59,7 +59,7 @@ const UserProfile_Page: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [posts, userId, users]);
 
-	return <UserProfile posts={userPosts} user={user} />;
+	return <UserPosts posts={userPosts} user={user} />;
 };
 
 export default UserProfile_Page;

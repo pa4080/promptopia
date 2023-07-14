@@ -23,6 +23,8 @@ interface PromptopiaContextProps {
 	setUsers: React.Dispatch<React.SetStateAction<UserTypeFromDb[]>>;
 	authProviders: AuthProvidersType;
 	session: Session | null;
+	postCardListSize: number;
+	setPostCardListSize: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const PromptopiaContext = createContext<PromptopiaContextProps>({} as PromptopiaContextProps);
@@ -37,6 +39,7 @@ export const PromptopiaContextProvider: React.FC<PromptopiaContextProviderProps>
 	const [posts, setPosts] = useState<PostTypeFromDb[]>([]);
 	const [users, setUsers] = useState<UserTypeFromDb[]>([]);
 	const [authProviders, setAuthProviders] = useState<AuthProvidersType>(null);
+	const [postCardListSize, setPostCardListSize] = useState(0);
 	const { data: session } = useSession();
 
 	useEffect(() => {
@@ -55,6 +58,8 @@ export const PromptopiaContextProvider: React.FC<PromptopiaContextProviderProps>
 				setUsers,
 				authProviders,
 				session,
+				postCardListSize,
+				setPostCardListSize,
 			}}
 		>
 			{children}

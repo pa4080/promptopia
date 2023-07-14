@@ -14,13 +14,9 @@ const UserProfile: React.FC<UserProfileType> = ({ user, posts }) => {
 	return (
 		<section className="page_section_left w-full">
 			<Header
-				desc={
-					user?.description
-						? `${user?.description}: ${t("description")} ${t("accountRemoveDisclaimer", {
-								email: `<a href="mailto:${SUPPORT_EMAIL}" target="_blank">${SUPPORT_EMAIL}</a>`,
-						  })}`
-						: ""
-				}
+				desc={`<span>${t("description")}</span> <apan>${t("accountRemoveDisclaimer", {
+					email: `<a href="mailto:${SUPPORT_EMAIL}" target="_blank">${SUPPORT_EMAIL}</a>`,
+				})}</apan>`}
 				gradient="blue_gradient"
 				textStyle="text-left"
 				titleGradient={user?.name ?? ""}
