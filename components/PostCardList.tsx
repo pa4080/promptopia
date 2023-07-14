@@ -15,7 +15,6 @@ const PostCardList: React.FC<PromptCardListProps> = ({ data }) => {
 	const [copied, setCopied] = useState("");
 	const router = useRouter();
 	const { setPostCardListSize } = usePromptopiaContext();
-
 	const postCardListRef = React.useRef<HTMLDivElement>(null);
 
 	useLayoutEffect(() => {
