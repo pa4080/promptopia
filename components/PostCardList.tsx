@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { PostTypeFromDb } from "@/interfaces/Post";
-
 import { Path } from "@/interfaces/Path";
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 import PostCard from "./PostCard";
 
@@ -14,6 +14,19 @@ interface PromptCardListProps {
 const PostCardList: React.FC<PromptCardListProps> = ({ data }) => {
 	const [copied, setCopied] = useState("");
 	const router = useRouter();
+	const { setPostCardListSize } = usePromptopiaContext();
+	const postCardListRef = React.useRef<HTMLDivElement>(null);
+
+	useLayoutEffect(() => {
+		function updateSize() {
+			setPostCardListSize(postCardListRef?.current?.clientWidth ?? 0);
+		}
+
+		window.addEventListener("resize", updateSize);
+		updateSize();
+
+		return () => window.removeEventListener("resize", updateSize);
+	}, [setPostCardListSize]);
 
 	const handleTagClick = (tag: string) => {
 		// eslint-disable-next-line no-console
@@ -40,7 +53,7 @@ const PostCardList: React.FC<PromptCardListProps> = ({ data }) => {
 	};
 
 	return (
-		<div className={`post_card_list ${calculateColumns(data.length)}`}>
+		<div ref={postCardListRef} className={`post_card_list ${calculateColumns(data.length)}`}>
 			{data.map((post) => {
 				if (!post || !post?.creator || !post?.prompt) {
 					return null;

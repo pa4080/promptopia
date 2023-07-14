@@ -57,12 +57,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   - [ ] Further use Imgur or similar service.
 - [x] <s>Combine the API requests to `/api/posts/` and `/api/files/` to a single one. This will reduce the number of requests to the server.</s>.. The request should use `new FormData()` withe `post` and `file` fields... **I will leave it as it is for now. Because I will not learn anything new from this.**
   
-- [ ] Complete the google application.
 - [x] Apply `useForm()` hook for the `<Form />` component... **I will leave it as it is for now. Because I will not learn anything new from this.** ...Right now the errors are handled good enough, despite there is an API call that could be avoided.
 - [x] Delete posts functionality.
 - [x] Edit posts functionality.
-- [ ] Pagination for the `/api/posts/` REST API.
-- [ ] Search functionality with filters for the `/api/posts/` REST API.
+- [x] Search functionality with filters.
+- [ ] Page footer.
+- [ ] Post page user description.
+- [ ] Profile page. Edit and delete user profile.
+- [ ] Complete the google application.
+- [ ] Pagination for the `/api/posts/` REST API. Include search functionality.
 - [ ] Delete user functionality.
 
 ## Getting Started
@@ -168,7 +171,7 @@ npm i bcrypt mongodb mongoose next-auth
   - <https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/#implement-the-nextauth-authentication-code>
   - <https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/#different-ways-to-protect-routes>
 - **<https://next-intl-docs.vercel.app/docs/routing/middleware#example-auth-js>**
- 
+
 ...Access blocked: This app’s request is invalid:
 
 - <https://youtu.be/wm5gMKuwSYk?t=6217>

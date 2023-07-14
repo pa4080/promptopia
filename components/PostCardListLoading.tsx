@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
+
+import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
 import { Skeleton } from "./ui/skeleton";
 import Btn_PostTag from "./fragments/Btn_PostTag";
 import IconEmbedSvgPop from "./fragments/IconEmbedSvgPop";
 
 const PostCardListLoading: React.FC = () => {
+	const { setPostCardListSize } = usePromptopiaContext();
+	const postCardListRef = React.useRef<HTMLDivElement>(null);
+
+	useLayoutEffect(() => {
+		function updateSize() {
+			setPostCardListSize(postCardListRef?.current?.clientWidth ?? 0);
+		}
+
+		window.addEventListener("resize", updateSize);
+		updateSize();
+
+		return () => window.removeEventListener("resize", updateSize);
+	}, [setPostCardListSize]);
+
 	const data = Array.from({ length: 9 }, (_, i) => ({
 		id: i + 1,
 		prompt: ". ".repeat(i % 2.4 === 0 ? 70 : 140),
@@ -15,7 +31,7 @@ const PostCardListLoading: React.FC = () => {
 	}));
 
 	return (
-		<div className="post_card_list sm:columns-2 2xl:columns-3">
+		<div ref={postCardListRef} className="post_card_list sm:columns-2 2xl:columns-3">
 			{data.map((fakePost) => {
 				return (
 					<Skeleton key={fakePost.id} className="post_card">
