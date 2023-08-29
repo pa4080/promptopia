@@ -27,7 +27,9 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
 
+import { authOptions } from "@/lib/auth-options";
 import { connectToMongoDb } from "@/lib/mongodb-mongoose";
 import Post from "@/models/post";
 
@@ -51,9 +53,15 @@ export async function GET(request: NextRequest, { params }: Context) {
 }
 
 export async function POST(request: NextRequest) {
-	const { creator, prompt, tags, aiCategory, link, image } = await request.json();
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
+		return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+	}
 
 	try {
+		const { creator, prompt, tags, aiCategory, link, image } = await request.json();
+
 		await connectToMongoDb();
 		const newPost = new Post({ creator, prompt, tags, aiCategory, link, image });
 
@@ -70,9 +78,15 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest, { params }: Context) {
-	const { creator, prompt, tags, aiCategory, link, image } = await request.json();
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
+		return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+	}
 
 	try {
+		const { creator, prompt, tags, aiCategory, link, image } = await request.json();
+
 		await connectToMongoDb();
 		const updatedPost = await Post.findOneAndUpdate(
 			paramsToObject(params),
@@ -96,9 +110,15 @@ export async function PUT(request: NextRequest, { params }: Context) {
 }
 
 export async function PATCH(request: NextRequest, { params }: Context) {
-	const { creator, prompt, tags, aiCategory, link, image } = await request.json();
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
+		return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+	}
 
 	try {
+		const { creator, prompt, tags, aiCategory, link, image } = await request.json();
+
 		await connectToMongoDb();
 
 		const updatedPost = await Post.findOneAndUpdate(
@@ -121,6 +141,12 @@ export async function PATCH(request: NextRequest, { params }: Context) {
 }
 
 export async function DELETE(request: NextRequest, { params }: Context) {
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
+		return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+	}
+
 	try {
 		await connectToMongoDb();
 
