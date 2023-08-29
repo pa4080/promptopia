@@ -1,9 +1,9 @@
 /**
- * https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/
- * https://next-auth.js.org/configuration/nextjs#getServerSession
- * https://next-auth.js.org/getting-started/client#usesession
- * https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
- * https://developers.google.com/identity/protocols/oauth2
+ * @see https://codevoweb.com/setup-and-use-nextauth-in-nextjs-13-app-directory/
+ * @see https://next-auth.js.org/configuration/nextjs#getServerSession
+ * @see https://next-auth.js.org/getting-started/client#usesession
+ * @see https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
+ * @see https://developers.google.com/identity/protocols/oauth2
  *
  * There are three locations where we can obtain the session data.
  * 1) The first is server-side in a React server component

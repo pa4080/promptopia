@@ -2,6 +2,9 @@ import { NextResponse, NextRequest } from "next/server";
 
 import { ObjectId, GridFSFile } from "mongodb";
 
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/lib/auth-options";
 import { gridFSBucket } from "@/lib/mongodb-mongoose";
 import { GridFS } from "@/models/grid_fs";
 
@@ -82,7 +85,7 @@ export async function GET(request: NextRequest, { params }: Context) {
 /**
  * Post a file to the database.
  * An example of how to post a file using fetch:
- * 
+ *
 const formData = new FormData();
 formData.append('file', file); // 'file' is the key name for the uploaded file
 
@@ -92,6 +95,12 @@ fetch('/api/files/', { method: 'POST', body: formData })
  	.catch(error => { console.error(error); });
  */
 export async function POST(request: NextRequest) {
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
+		return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+	}
+
 	try {
 		// connect to the database and get the bucket
 		const bucket = await gridFSBucket();
@@ -142,7 +151,7 @@ export async function POST(request: NextRequest) {
 /**
  * Delete a file from the database.
  * An example of how to delete a file using fetch:
- * 
+ *
 fetch('/api/files/123', { method: 'DELETE' })
   .then(response => {
     if (response.ok) console.log('File deleted successfully');
@@ -152,6 +161,12 @@ fetch('/api/files/123', { method: 'DELETE' })
   .catch(error => { console.error(error); });
  */
 export async function DELETE(request: NextRequest, { params }: Context) {
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
+		return NextResponse.json({ error: "Unauthorized!" }, { status: 401 });
+	}
+
 	try {
 		const bucket = await gridFSBucket();
 
