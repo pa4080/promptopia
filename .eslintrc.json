@@ -145,7 +145,10 @@
 			"@typescript-eslint/parser": [".ts", ".tsx"]
 		},
 		"import/resolver": {
-			"typescript": {}
+			"typescript": {},
+			"node": {
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
 		}
 	}
 }
