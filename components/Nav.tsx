@@ -32,6 +32,11 @@ const Nav: React.FC = () => {
 		<>
 			{authProviders ? (
 				Object.values(authProviders).map((provider) => {
+					// Disable Google for production
+					if (provider.id === "google" && process.env.VERCEL_ENV === "production") {
+						return null;
+					}
+
 					if (providersIcons.includes(provider.id)) {
 						return (
 							<button

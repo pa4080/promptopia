@@ -56,6 +56,7 @@ const PostCard: React.FC<PostCardProps> = ({
 					<div className="post_card_header">
 						<div className="flex justify-center items-center w-14 h-14 cursor-pointer rounded-full z-10 bg-white min-w-[3.5rem] min-h-[3.5rem] relative">
 							<Image
+								unoptimized
 								alt={t("altProfilePicture")}
 								className="rounded-full object-contain"
 								height={45}
