@@ -13,6 +13,8 @@ const withNextIntl = require("next-intl/plugin")(
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
+		// https://vercel.com/docs/image-optimization/managing-image-optimization-costs
+		unoptimized: true,
 		// https://nextjs.org/docs/messages/next-image-unconfigured-host
 		remotePatterns: [
 			{
