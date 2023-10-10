@@ -33,7 +33,7 @@ const Nav: React.FC = () => {
 			{authProviders ? (
 				Object.values(authProviders).map((provider) => {
 					// Disable Google for production
-					if (provider.id === "google" && process.env.VERCEL_ENV === "production") {
+					if (provider.id === "google" && process.env.NEXT_PUBLIC_ENV === "production") {
 						return null;
 					}
 
@@ -64,9 +64,11 @@ const Nav: React.FC = () => {
 				})
 			) : (
 				<>
-					<Skeleton className="login_provider_btn">
-						<div className="w-[28px] h-[28px] rounded-full bg-mlt-gray-6" />
-					</Skeleton>
+					{process.env.NEXT_PUBLIC_ENV !== "production" && (
+						<Skeleton className="login_provider_btn">
+							<div className="w-[28px] h-[28px] rounded-full bg-mlt-gray-6" />
+						</Skeleton>
+					)}
 					<Skeleton className="login_provider_btn">
 						<div className="w-[28px] h-[28px] rounded-full bg-mlt-gray-5" />
 					</Skeleton>
