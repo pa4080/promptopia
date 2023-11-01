@@ -1,5 +1,9 @@
 # Next.js 13 Full Course 2023
 
+*Platform that serves as a hub for exchanging AI prompts in a format similar to blog posts.*
+
+[![image](public/images/promptopia-screenshot-1.png)](https://promptopia.metalevel.tech/)
+
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/10f065d50d484d40ba42320f8814cc7d)](https://app.codacy.com/gh/metalevel-tech/prj-nextjs-promptopia-shared-propmpts/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ***Fullstack <s>CRUD</s> REST App with Next.js, MongoDB, Tailwind CSS, and TypeScript***
@@ -58,7 +62,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   - [x] 1) Upload the file, 2) Get the file ID, 3) Attach the file ID to the post and populate it on retrieve.
   - [ ] Further use Imgur or similar service.
 - [x] <s>Combine the API requests to `/api/posts/` and `/api/files/` to a single one. This will reduce the number of requests to the server.</s>.. The request should use `new FormData()` withe `post` and `file` fields... **I will leave it as it is for now. Because I will not learn anything new from this.**
-  
+
 - [x] Apply `useForm()` hook for the `<Form />` component... **I will leave it as it is for now. Because I will not learn anything new from this.** ...Right now the errors are handled good enough, despite there is an API call that could be avoided.
 - [x] Delete posts functionality.
 - [x] Edit posts functionality.
