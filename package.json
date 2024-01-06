@@ -1,6 +1,6 @@
 {
 	"name": "promptopia.metalevel.tech",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"private": true,
 	"scripts": {
 		"check-branch-name": "chmod 755 githooks/check_branch_name.sh && bash githooks/check_branch_name.sh",
@@ -72,6 +72,6 @@
 		"stylelint": "^15.10.3",
 		"stylelint-config-standard": "^34.0.0",
 		"stylelint-order": "^6.0.3",
-		"vercel": "^32.4.1"
+		"vercel": "^33.0.2"
 	}
 }

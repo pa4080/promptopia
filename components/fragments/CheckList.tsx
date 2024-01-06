@@ -49,26 +49,13 @@ const CheckList: React.FC<CheckListType> = ({
 
 		const singleSelectIterator = (inputItems: ListItemType[], value: string) => {
 			return structuredClone(inputItems).map((item) =>
-				item.value === value
-					? {
-							...item,
-							checked: true,
-					  }
-					: {
-							...item,
-							checked: false,
-					  }
+				item.value === value ? { ...item, checked: true } : { ...item, checked: false }
 			);
 		};
 
 		const multiSelectIterator = (inputItems: ListItemType[], value: string) => {
 			return structuredClone(inputItems).map((item) =>
-				item.value === value
-					? {
-							...item,
-							checked: !item.checked,
-					  }
-					: item
+				item.value === value ? { ...item, checked: !item.checked } : item
 			);
 		};
 
