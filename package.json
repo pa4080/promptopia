@@ -72,6 +72,6 @@
 		"stylelint": "^15.10.3",
 		"stylelint-config-standard": "^34.0.0",
 		"stylelint-order": "^6.0.3",
-		"vercel": "^32.4.1"
+		"vercel": "^33.0.2"
 	}
 }

@@ -16,6 +16,8 @@ import { Path } from "@/interfaces/Path";
 import { preparePostBodyToUpload, uploadOrReplaceImage } from "@/lib/fetch-helpers";
 import { usePromptopiaContext } from "@/contexts/PromptopiaContext";
 
+const maxFileSize = Number(process.env.NEXT_PUBLIC_MAX_FILE_SIZE) || 131072;
+
 const CreatePost_Page: React.FC = () => {
 	const t = useTranslations("CreatePost");
 	const router = useRouter();
@@ -48,13 +50,13 @@ const CreatePost_Page: React.FC = () => {
 		if (e.currentTarget.files?.length && e.currentTarget.files?.length > 0) {
 			const promptFile: File = e.currentTarget.files[0];
 
-			if (promptFile.size > 131072) {
+			if (promptFile.size > maxFileSize) {
 				setPostImageFilename(promptFile.name);
 
 				setErrors((prevErrors) => ({ ...prevErrors, image: { message: t("imageSizeError") } }));
 
 				return;
-			} else if (promptFile.size <= 131072) {
+			} else if (promptFile.size <= maxFileSize) {
 				setErrors((prevErrors) => clearSpecificError(prevErrors, "image"));
 			}
 

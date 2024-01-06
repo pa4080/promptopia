@@ -48,9 +48,11 @@ export const authOptions: NextAuthOptions = {
 			authorization: { params: { scope: "user:email login name avatar_url" } },
 		}),
 	],
+	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
 		// https://next-auth.js.org/configuration/options#session
 		async session({ session }) {
+			await connectToMongoDb();
 			const sessionUser = await User.findOne({ email: session?.user?.email });
 
 			session.user.id = sessionUser?._id.toString(); // see: @/types/next-auth
