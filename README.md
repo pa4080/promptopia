@@ -4,8 +4,6 @@
 
 [![image](public/images/promptopia-screenshot-1.png)](https://promptopia.metalevel.tech/)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/10f065d50d484d40ba42320f8814cc7d)](https://app.codacy.com/gh/metalevel-tech/prj-nextjs-promptopia-shared-propmpts/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
 ***Fullstack <s>CRUD</s> REST App with Next.js, MongoDB, Tailwind CSS, and TypeScript***
 
 This project is based on [**Next.js 13 Full Course 2023 | Build and Deploy a Full Stack App Using the Official React Framework**](https://youtu.be/wm5gMKuwSYk), with the following objectives:
