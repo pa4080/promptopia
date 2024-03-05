@@ -1,10 +1,10 @@
 # Next.js 13 Full Course 2023
 
-*Platform that serves as a hub for exchanging AI prompts in a format similar to blog posts.*
+_Platform that serves as a hub for exchanging AI prompts in a format similar to blog posts._
 
 [![image](public/images/promptopia-screenshot-1.png)](https://promptopia.metalevel.tech/)
 
-***Fullstack <s>CRUD</s> REST App with Next.js, MongoDB, Tailwind CSS, and TypeScript***
+**_Fullstack <s>CRUD</s> REST App with Next.js, MongoDB, Tailwind CSS, and TypeScript_**
 
 This project is based on [**Next.js 13 Full Course 2023 | Build and Deploy a Full Stack App Using the Official React Framework**](https://youtu.be/wm5gMKuwSYk), with the following objectives:
 
@@ -22,17 +22,16 @@ This project is based on [**Next.js 13 Full Course 2023 | Build and Deploy a Ful
 Notes:
 
 - **This is a [TypeScript](https://www.typescriptlang.org/) implementation of the tutorial.**
-- Another cool feature that is implemented here is the [Internationalization](https://next-intl-docs.vercel.app/docs/next-13) support. It is enabled via `middleware.ts` as it is described in the official documentation. It is possible to use the client components or the (beta) server side rendering.
-
+- Another feature that is implemented here is the [Internationalization](https://next-intl-docs.vercel.app/docs/next-13) support. It is enabled via `middleware.ts` as it is described in the official documentation. It is possible to use the client components or the (beta) server side rendering.
   If one prefers they can setup [`next-i18next`](https://github.com/i18next/next-i18next) instead.
 
-  *Currently the we are supporting only English language, but the project is ready to be extended to support more languages.*
+  _Currently the we are supporting only English language, but the project is ready to be extended to support more languages._
 
 - Many improvements and added features as:
 
-  - Two major types of Prompt/Posts: 1) GPT and 2) Stable Diffusion (I decide to do not spend more time to improve these categories names).
-    - For the GPT category one may attach a link to a shared chat...
-    - For the Stable Diffusion category one may upload an image...
+  - Two major Prompt/Posts categories: 1) Chats and 2) Images.
+    - For the Chat category one may attach a link to a shared chat...
+    - For the Image category one may upload an image...
 
 References:
 
@@ -41,36 +40,10 @@ References:
 - <https://nextjs.org/docs>
 - <https://next-intl-docs.vercel.app/docs/next-13>
 - <https://www.npmjs.com/package/slugify>
-- [***Setting the properties in an object parameter to optional > Set the entire object parameter to optional***](https://bobbyhadz.com/blog/typescript-function-optional-parameters#setting-the-properties-in-an-object-parameter-to-optional)
+- [**_Setting the properties in an object parameter to optional > Set the entire object parameter to optional_**](https://bobbyhadz.com/blog/typescript-function-optional-parameters#setting-the-properties-in-an-object-parameter-to-optional)
 - <https://pagespeed.web.dev/analysis/https-promptopia-metalevel-tech/n0pcgydmgq?form_factor=mobile>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## TODO
-
-- [x] Display the `<Form />` errors.
-- [x] <s>Upload images to [imgur.com](https://apidocs.imgur.com/#intro) or something similar.</s>
-
-  Currently we are using the the Mongo's GridFS.
-  - <https://reacthustle.com/blog/how-to-upload-retrieve-images-to-mongodb-using-nextjs-13-app-router>
-  - <https://www.mongodb.com/docs/manual/core/gridfs/>
-  - [x] Modify `/api/posts/new/`... to `/api/files` REST API ready path.
-  - [x] Rewrite the `/api/files/` to use **Mongoose**.
-  - [x] Limit the image size to ~100-200KB.
-  - [x] 1) Upload the file, 2) Get the file ID, 3) Attach the file ID to the post and populate it on retrieve.
-  - [ ] Further use Imgur or similar service.
-- [x] <s>Combine the API requests to `/api/posts/` and `/api/files/` to a single one. This will reduce the number of requests to the server.</s>.. The request should use `new FormData()` withe `post` and `file` fields... **I will leave it as it is for now. Because I will not learn anything new from this.**
-
-- [x] Apply `useForm()` hook for the `<Form />` component... **I will leave it as it is for now. Because I will not learn anything new from this.** ...Right now the errors are handled good enough, despite there is an API call that could be avoided.
-- [x] Delete posts functionality.
-- [x] Edit posts functionality.
-- [x] Search functionality with filters.
-- [x] Page footer.
-- [x] Post page user description.
-- [ ] Profile page. Edit and delete user profile.
-- [ ] Complete the google application.
-- [ ] Pagination for the `/api/posts/` REST API. Include search functionality.
-- [ ] Delete user functionality.
 
 ## Getting Started
 
@@ -118,7 +91,7 @@ npm i react-hook-form
 
 ## Shadcn-UI
 
-Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source. **Re-usable components built using *Radix UI* and *Tailwind CSS*.** This is NOT a component library. It's a collection of re-usable components that you can copy and paste into your apps.
+Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source. **Re-usable components built using _Radix UI_ and _Tailwind CSS_.** This is NOT a component library. It's a collection of re-usable components that you can copy and paste into your apps.
 
 - <https://youtu.be/7MKEOfSP2s4> - An example how to implement the [`<Skeleton />`](./app/components/ui/skeleton.tsx) component, while fetch data from the [RAWG](https://rawg.io/) API. This example illustrate also ho to use Next.js 13 App Router [`loading.tsx`](./app/%5Blocale%5D/games/loading.tsx) component.
 - <https://ui.shadcn.com/>
@@ -126,7 +99,7 @@ Beautifully designed components that you can copy and paste into your apps. Acce
 
 ### CLI
 
-**Use the CLI to add components to your project.** Use the `init` command to initialize dependencies for a new project. The `init` command installs dependencies, adds the cn util, *configures `tailwind.config.js`*, and CSS variables for the project.
+**Use the CLI to add components to your project.** Use the `init` command to initialize dependencies for a new project. The `init` command installs dependencies, adds the cn util, _configures `tailwind.config.js`_, and CSS variables for the project.
 
 ```bash
 npx shadcn-ui init slugify
@@ -155,12 +128,6 @@ Plugins:
 
 - [Flowbite (quick start)](https://flowbite.com/docs/getting-started/quickstart/) used for the [radio buttons](https://flowbite.com/docs/forms/radio/).
 
-## Promptopia additional packages
-
-```bash
-npm i bcrypt mongodb mongoose next-auth
-```
-
 ## NextAuth (GoogleProvider) and Google OAuth
 
 - <https://next-auth.js.org/getting-started/example>
@@ -185,12 +152,13 @@ npm i bcrypt mongodb mongoose next-auth
 
 ## MongoDB
 
-See my dedicated to **Next.js and MongoDB integration** exercise repository:
+```bash
+npm i bcrypt mongodb mongoose next-auth
+```
 
-<https://github.com/metalevel-tech/exc-nextjs-2023-with-mongodb-example>
+References:
 
-More references:
-
+- [Next.js and MongoDB integration exercise repository](https://github.com/metalevel-tech/exc-nextjs-2023-with-mongodb-example)
 - [How to Integrate Vercel & MongoDB Step-by-Step: YouTube](https://youtu.be/JIlYroSsInU)
 - <https://www.mongodb.com/atlas>
 - <https://youtu.be/wm5gMKuwSYk?t=5285>
