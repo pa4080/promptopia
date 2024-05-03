@@ -80,8 +80,7 @@
 
 body {
 	display: block;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden auto;
 	min-width: 320px;
 }
 
@@ -97,7 +96,7 @@ body {
 	-webkit-tap-highlight-color: transparent;
 	-webkit-touch-callout: none;
 	scrollbar-color: theme("colors.mlt-purple-secondary_tr2") transparent;
-	scrollbar-width: auto;
+	scrollbar-width: thin;
 }
 
 *::-webkit-scrollbar {
@@ -192,8 +191,7 @@ body {
 .app {
 	@apply relative z-10 px-6 sm:px-8 md:px-10 md820:px-12;
 
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden auto;
 }
 
 .app a {
