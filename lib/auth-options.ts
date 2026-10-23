@@ -22,8 +22,6 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 // import CredentialsProvider from "next-auth/providers/credentials"; // For DB auth...
 
-import { getTranslations } from "next-intl/server";
-
 import { connectToMongoDb } from "@/lib/mongodb-mongoose";
 
 import User from "@/models/user";
@@ -98,7 +96,7 @@ export const authOptions: NextAuthOptions = {
 						name,
 						image: String(profile?.picture ?? profile?.image ?? profile?.avatar_url),
 						accountProvider: String(account?.provider),
-						description: (await getTranslations("Common"))("defaultUserDescription"),
+						description: "Hello! I am a new member of this prompt sharing community.",
 					});
 				}
 
